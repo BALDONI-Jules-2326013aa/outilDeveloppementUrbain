@@ -22,4 +22,5 @@ class HomePageView extends View {
     {
         parent::afficher();
     }
+
 }

@@ -1,6 +1,7 @@
 <?php
+include __DIR__ . '/Autoloader.php';
 
-use blog\views\HomePageController;
+use blog\controllers\HomePageController;
 
 include __DIR__ . "/AutoLoader.php";
 

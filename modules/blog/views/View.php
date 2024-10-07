@@ -1,6 +1,5 @@
 <?php
-namespace TenRac\views;
-
+namespace blog\views;
 /**
  * Class AbstractView
  *
@@ -43,8 +42,8 @@ abstract class View
      */
     private function footer(): void
     {
-        include __DIR__ . '/footer.php';
-        footer_page();
+//        include __DIR__ . '/footer.php';
+//        footer_page();
     }
 
     /**
@@ -61,9 +60,12 @@ abstract class View
      */
     public function afficher(): void
     {
+        $this->pageTitle();
+        $this->css();
         $this->header();
         $this->body();
         $this->footer();
+
     }
 
 }

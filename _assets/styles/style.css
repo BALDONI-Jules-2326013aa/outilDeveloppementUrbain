@@ -1,0 +1,18 @@
+.header{
+    position: sticky;
+    top:0;
+}
+nav{
+    background-color: darkgreen;
+}
+ul{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1em 0.5em 0;
+    margin: 0;
+    list-style-type: none;
+
+}
+.nav-hidden {
+    display: block;
+}

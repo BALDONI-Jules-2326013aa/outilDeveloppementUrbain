@@ -15,7 +15,7 @@ class AutoLoader
      *
      * @return void
      */
-    public static function register(): bool
+    public static function register(): void
     {
         spl_autoload_register(function ($class) {
             $file = __DIR__ . '/modules/' . str_replace('\\', DIRECTORY_SEPARATOR, $class).'.php';
@@ -27,4 +27,4 @@ class AutoLoader
         });
     }
 }
-Autoloader::register();
+AutoLoader::register();
