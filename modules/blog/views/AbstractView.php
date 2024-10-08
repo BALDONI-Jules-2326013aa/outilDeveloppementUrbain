@@ -1,5 +1,6 @@
 <?php
-namespace blog\views;
+
+namespace blog\useblog\views;
 /**
  * Class AbstractView
  *
@@ -7,7 +8,7 @@ namespace blog\views;
  * Elle exige que les classes qui l'étendent définissent certaines méthodes
  * pour gérer l'affichage de contenu HTML.
  */
-abstract class View
+abstract class AbstractView
 {
 
     /**
