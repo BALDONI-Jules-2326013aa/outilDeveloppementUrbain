@@ -1,7 +1,5 @@
 <?php
 namespace blog\views;
-use blog\views\AbstractView;
-use blog\views;
 
 class HomePageView extends AbstractView {
     protected function body(): void

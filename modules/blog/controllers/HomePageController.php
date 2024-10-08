@@ -1,7 +1,7 @@
 <?php
 
 namespace blog\controllers;
-use views\Fragments\HomePageView;
+use blog\views\HomePageView;
 class HomePageController
 {
     public static function affichePage():void

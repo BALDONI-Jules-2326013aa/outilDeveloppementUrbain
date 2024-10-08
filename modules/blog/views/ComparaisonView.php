@@ -2,8 +2,6 @@
 
 namespace blog\views;
 
-
-
 class ComparaisonView extends AbstractView
 {
     protected function body(): void

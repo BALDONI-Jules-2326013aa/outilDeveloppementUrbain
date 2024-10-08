@@ -27,4 +27,5 @@ class AutoLoader
         });
     }
 }
+
 AutoLoader::register();
