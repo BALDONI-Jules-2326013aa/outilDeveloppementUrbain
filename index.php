@@ -1,5 +1,5 @@
 <?php
-include __DIR__ . '/Autoloader.php';
+include __DIR__ . '/AutoLoader.php';
 
 use blog\controllers\HomePageController;
 

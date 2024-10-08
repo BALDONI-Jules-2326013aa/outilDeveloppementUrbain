@@ -16,3 +16,21 @@ ul{
 .nav-hidden {
     display: block;
 }
+a{
+    display: inline-block;
+    list-style-type: none;
+    margin: 10px;
+}
+a{
+    text-decoration: none;
+    padding: 8px;
+}
+a:hover{
+    transition: 0.5s;
+    background-color: blue;
+    color: chartreuse;
+}
+img{
+    height: 130px;
+    width: 130px;
+}
