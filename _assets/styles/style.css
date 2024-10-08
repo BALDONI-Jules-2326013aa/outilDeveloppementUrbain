@@ -1,12 +1,15 @@
 .header{
-    position: sticky;
+    width: 100%;
+    position: fixed;
     top:0;
+    left: 0;
+    z-index: 1;
 }
 body{
     background-color: dimgray;
 }
 nav{
-    background-color: beige;
+    background-color: #c1c1b0;
 }
 ul{
     display: flex;
@@ -43,11 +46,12 @@ a:hover{
     width: 130px;
 }
 .a{
+    margin: 160px 0 0 0;
     width: 100%;
     min-height: 80vh;
-    overflow: hidden;
+    position: relative;
 }
-img{
+.imgAccueil{
     width: 98%;
     height: 40%;
     object-fit: cover;
@@ -61,5 +65,33 @@ img{
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-    z-index: 1;
+
 }
+.c{
+    display: flex;
+    justify-content: space-between;
+    width: 99%;
+    padding: 0.5em;
+
+    margin: auto;
+}
+.leftbox{
+    width: 50%;
+    background-color: #454444;
+}
+.rightbox{
+    width: 49%;
+    background-color: #454444;
+}
+h3{
+    text-align: center;
+}
+.consiste{
+    width: 250px;
+    height: 250px;
+    margin: 10px;
+}
+.pp{
+    display: flex;
+}
+
