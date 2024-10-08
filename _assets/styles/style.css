@@ -35,7 +35,28 @@ a:hover{
     background-color: white;
     color: black;
 }
-img{
+.imgH{
     height: 130px;
     width: 130px;
+}
+.a{
+    width: 100%;
+    min-height: 80vh;
+    overflow: hidden;
+}
+img{
+    width: 98%;
+    height: 40%;
+    object-fit: cover;
+    filter: brightness(50%);
+    display: block;
+    margin: auto;
+}
+.b {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 1;
 }
