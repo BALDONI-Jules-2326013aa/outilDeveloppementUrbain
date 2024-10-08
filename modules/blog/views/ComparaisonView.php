@@ -16,7 +16,7 @@ class ComparaisonView extends AbstractView
 
     function pageTitle(): string
     {
-        return 'Accueil';
+        return 'Comparaison';
     }
 
     #[Override] public function afficher(): void
