@@ -1,12 +1,14 @@
 <?php
-namespace blog\views;
-use blog\views\AbstractView;
-use blog\views;
 
-class HomePageView extends AbstractView {
+namespace blog\views;
+
+
+
+class ComparaisonView extends AbstractView
+{
     protected function body(): void
     {
-        include __DIR__ . '/Fragments/homePage.html';
+        include __DIR__ . '/Fragments/comparaison.html';
     }
 
     function css(): string
@@ -23,5 +25,4 @@ class HomePageView extends AbstractView {
     {
         parent::afficher();
     }
-
 }
