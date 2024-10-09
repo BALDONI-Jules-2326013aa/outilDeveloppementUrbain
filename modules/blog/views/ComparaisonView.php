@@ -11,7 +11,7 @@ class ComparaisonView extends AbstractView
 
     function css(): string
     {
-        return 'style.css';
+        return 'comparaison.css';
     }
 
     function pageTitle(): string
