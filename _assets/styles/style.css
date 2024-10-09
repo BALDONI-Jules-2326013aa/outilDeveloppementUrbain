@@ -55,11 +55,12 @@ a:hover{
     width: 98%;
     height: 70%;
     object-fit: cover;
-    filter: brightness(50%);
+    filter: brightness(40%);
     display: block;
     margin: auto;
 }
 .b {
+    color: gainsboro;
     position: absolute;
     top: 50%;
     left: 50%;
