@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <title>Comparaison</title>
@@ -8,5 +8,12 @@
   <h1>
     Comparaison entre deux fichier
   </h1>
+  <form method="post" action="/comparaisonFichier">
+    <label for="file1">Fichier Simulation</label>
+    <input type="file" name="file1" id="file1">
+    <label for="file2">Fichier données réel</label>
+    <input type="file" name="file2" id="file2">
+    <button type="submit">Comparer</button>
+  </form>
 </body>
 </html>

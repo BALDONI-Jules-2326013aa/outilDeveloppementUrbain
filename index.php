@@ -18,6 +18,10 @@ switch ($request_uri) {
         $comparaison = new ComparaisonController();
         $comparaison::affichePage();
         break;
+    case 'comparaisonFichier':
+        $ficher = new ComparaisonController();
+        $ficher::afficheFichier();
+        break;
     case 'Analyse':
         $analyse = new AnalyseController();
         $analyse::affichePage();
