@@ -46,14 +46,14 @@ a:hover{
     width: 130px;
 }
 .a{
-    margin: 160px 0 0 0;
+    margin: 12% 0 0 0;
     width: 100%;
     min-height: 80vh;
     position: relative;
 }
 .imgAccueil{
     width: 98%;
-    height: 40%;
+    height: 70%;
     object-fit: cover;
     filter: brightness(50%);
     display: block;
@@ -90,8 +90,5 @@ h3{
     width: 250px;
     height: 250px;
     margin: 10px;
-}
-.pp{
-    display: flex;
 }
 

@@ -9,6 +9,7 @@ abstract class AbstractView
 
     private function header():void
     {
+
         include __DIR__ . '/Fragments/header.html';
     }
 
