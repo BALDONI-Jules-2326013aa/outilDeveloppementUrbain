@@ -1,13 +1,21 @@
 <?php
 
 namespace blog\controllers;
+
 use blog\views\AnalyseView;
+use blog\models\ShapefileModel;
+
 class AnalyseController
 {
-    public static function affichePage():void
+    public static function affichePage(): void
     {
         session_start();
-        $view = new AnalyseView();
+
+        // Appeler le modèle pour obtenir les données Shapefile
+        $data = ShapefileModel::litSHP();
+
+        // Créer la vue et afficher les données
+        $view = new AnalyseView($data);
         $view->afficher();
     }
 }
