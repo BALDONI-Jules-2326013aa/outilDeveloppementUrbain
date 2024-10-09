@@ -38,7 +38,7 @@ a{
 }
 a:hover{
     transition: 0.5s;
-    background-color: white;
+    background-color: rgba(105, 105, 105, 0.377);
     color: black;
 }
 .imgH{

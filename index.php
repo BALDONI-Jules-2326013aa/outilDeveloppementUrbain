@@ -3,6 +3,7 @@ include __DIR__ . '/AutoLoader.php';
 
 use blog\controllers\ComparaisonController;
 use blog\controllers\HomePageController;
+use blog\controllers\AnalyseController;
 
 
 $request_uri = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
@@ -16,5 +17,9 @@ switch ($request_uri) {
     case 'comparaison':
         $comparaison = new ComparaisonController();
         $comparaison::affichePage();
+        break;
+    case 'Analyse':
+        $analyse = new AnalyseController();
+        $analyse::affichePage();
         break;
 }
