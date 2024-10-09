@@ -11,6 +11,12 @@ class ShapefileModel
         // Exécuter la commande ogrinfo pour lire le fichier Shapefile
         $output = shell_exec("ogrinfo -al -geom=geojson " . escapeshellarg($shapefilePath));
 
-        return $output ?: "Aucune donnée trouvée ou erreur lors de la lecture du fichier Shapefile.";
+        // Trouver et extraire la partie GeoJSON (si présente)
+        if (preg_match('/\{(?:[^{}]|(?R))*\}/', $output, $matches)) {
+            return $matches[0];
+        }
+
+        return "Erreur : les données GeoJSON n'ont pas été trouvées.";
     }
+
 }

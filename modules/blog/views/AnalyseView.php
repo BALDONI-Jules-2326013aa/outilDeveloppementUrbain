@@ -24,6 +24,31 @@ class AnalyseView extends AbstractView
     protected function body()
     {
         include __DIR__ . '/Fragments/analyse.html';
-        echo "<section id='shapefile-data'><h2>Shapefile Data</h2><pre>{$this->data}</pre></section>";
+
+        // Assure-toi que les données sont bien encodées en JSON
+        $geojsonData = json_encode(json_decode($this->data, true));
+
+        echo "<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const geojsonData = $geojsonData;
+
+            // Initialise la carte Leaflet sans couche de fond
+            const map = L.map('map', {
+                center: [0, 0], // Centre initial, ajuste selon tes besoins
+                zoom: 2, // Zoom initial
+                zoomControl: true,
+                attributionControl: false
+            });
+
+            // Ajout des données GeoJSON
+            const geoLayer = L.geoJSON(JSON.parse(geojsonData)).addTo(map);
+
+            // Ajuste la vue de la carte en fonction des données GeoJSON
+            map.fitBounds(geoLayer.getBounds());
+        });
+    </script>";
     }
+
+
+
 }
