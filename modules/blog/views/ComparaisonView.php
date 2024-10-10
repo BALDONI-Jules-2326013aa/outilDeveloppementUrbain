@@ -6,10 +6,14 @@ use http\Message\Body;
 
 class ComparaisonView extends AbstractView
 {
-    private $body = __DIR__ . '/Fragments/comparaison.html';
+    private string $body = __DIR__ . '/Fragments/comparaison.html';
     protected function body(): void
     {
-        include $this->body;
+        if (is_readable($this->body)) {
+            include $this->body;
+        } else {
+            echo $this->body;
+        }
     }
 
     function css(): string
@@ -24,13 +28,12 @@ class ComparaisonView extends AbstractView
 
     public function afficherAvecFichier($data): void
     {
-        $this->body = "<section id='shapefile-data'><h2>Shapefile Data</h2><pre>{$data}</pre></section></body>";;
+        $this->body = "<section id='shapefile-data'><h2>Shapefile Data</h2><pre>{$data}</pre></section></body>";
         parent::afficher();
     }
 
-    #[Override] public function afficher(): void
+    public function afficher(): void
     {
-        echo $this->body;
         parent::afficher();
     }
 }
