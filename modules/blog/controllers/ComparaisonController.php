@@ -17,7 +17,7 @@ class ComparaisonController
         session_start();
 
         // Appeler le modèle pour obtenir les données Shapefile
-        $data = ShapefileModel::litSHP($_POST['fichier']);
+        $data = ShapefileModel::litSHP($_POST['file1']);
 
         // Créer la vue et afficher les données
         $view = new ComparaisonView();
