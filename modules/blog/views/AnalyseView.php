@@ -13,7 +13,7 @@ class AnalyseView extends AbstractView
 
     public function css(): string
     {
-        return 'styles.css';
+        return 'analyse.css';
     }
 
     public function pageTitle(): string
