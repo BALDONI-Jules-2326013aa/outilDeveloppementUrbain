@@ -12,7 +12,7 @@ class AnalyseController
         session_start();
 
         // Appeler le modèle pour obtenir les données Shapefile
-        $data = ShapefileModel::litGeoJSON();
+        $data = ShapefileModel::litSHP();
 
         // Créer la vue et afficher les données
         $view = new AnalyseView($data);

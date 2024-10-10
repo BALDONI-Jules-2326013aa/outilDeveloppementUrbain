@@ -23,7 +23,7 @@ class ShapefileModel
         $geojson = file_get_contents($geojsonFile);
 
         header('Content-Type: application/json');
-        return $geojson;
+        return "test";
     }
 
 }
