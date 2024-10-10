@@ -26,12 +26,5 @@ switch ($request_uri) {
         $analyse = new AnalyseController();
         $analyse::affichePage();
         break;
-<<<<<<< HEAD
-    case 'Analyse':
-        $analyse = new \blog\controllers\AnalyseController();
-        $analyse::affichePage();
-        break;
+
 }
-=======
-}
->>>>>>> origin/Ronan
