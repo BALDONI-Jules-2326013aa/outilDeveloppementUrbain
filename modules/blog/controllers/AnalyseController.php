@@ -2,6 +2,7 @@
 
 namespace blog\controllers;
 
+use blog\models\GeoJSONModel;
 use blog\views\AnalyseView;
 use blog\models\ShapefileModel;
 
@@ -12,7 +13,7 @@ class AnalyseController
         session_start();
 
         // Appeler le modèle pour obtenir les données Shapefile
-        $data = ShapefileModel::litGeoJSON();
+        $data = GeoJSONModel::litGeoJSON();
 
         // Créer la vue et afficher les données
         $view = new AnalyseView($data);

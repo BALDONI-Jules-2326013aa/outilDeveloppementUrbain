@@ -17,14 +17,6 @@ class ShapefileModel
         return "Erreur : les données GeoJSON n'ont pas été trouvées.";
     }
 
-    public static function litGeoJSON(): string
-    {
-        $geojsonFile = '/home/jules/Téléchargements/valenicina/2019/Buildings2019_ABM.geojson';
-        $geojson = file_get_contents($geojsonFile);
-
-        return $geojson;
-    }
-
 }
 
 ?>
