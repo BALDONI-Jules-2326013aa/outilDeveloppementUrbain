@@ -7,9 +7,8 @@
 }
 body{
     background-color: dimgray;
-}
-nav{
-    background-color: #c1c1b0;
+}nav{
+    background-color: #8d8b80;
 }
 ul{
     display: flex;
@@ -35,11 +34,36 @@ a{
     text-decoration: none;
     padding: 8px;
     color: black;
+
+
 }
+nav a {
+    position: relative; /* Nécessaire pour positionner le pseudo-élément /
+    text-decoration: none; / Pas de soulignement par défaut */
+    color: black;
+    padding: 8px;
+}
+
+nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background-color: black;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+nav a:hover::after {
+    transform: scaleX(1);
+}
+
 a:hover{
     transition: 0.5s;
-    background-color: white;
-    color: black;
+ 
+
 }
 .imgH{
     height: 130px;
