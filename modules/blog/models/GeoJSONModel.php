@@ -4,13 +4,10 @@ namespace blog\models;
 
 class GeoJSONModel
 {
-    public static function litGeoJSON(): string
+    public static function litGeoJSON($file): string
     {
-        $geojsonFile = '/home/jules/Téléchargements/valenicina/2019/Buildings2019_ABM.geojson';
-        $geojson = file_get_contents($geojsonFile);
-
-
-        return $geojson;
+        echo file_get_contents($file);
+        return file_get_contents($file);
     }
 }
 

@@ -4,9 +4,10 @@ namespace blog\models;
 
 class ShapefileModel
 {
-    public static function litSHP($shapefilePath): string
+    public static function litSHP(): string
     {
-        // Exécuter la commande ogrinfo pour lire le fichier Shapefile
+        $shapefilePath = '/home/jules/Téléchargements/valenicina/2002/Building2002_ABM.shp';
+
         $output = shell_exec("ogrinfo -al -geom=geojson " . escapeshellarg($shapefilePath));
 
         if (preg_match('/\{(?:[^{}]|(?R))*\}/', $output, $matches)) {
