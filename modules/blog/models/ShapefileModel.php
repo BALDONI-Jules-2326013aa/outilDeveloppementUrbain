@@ -22,8 +22,7 @@ class ShapefileModel
         $geojsonFile = '/home/jules/Téléchargements/valenicina/2019/Buildings2019_ABM.geojson';
         $geojson = file_get_contents($geojsonFile);
 
-        header('Content-Type: application/json');
-        return "test";
+        return $geojson;
     }
 
 }
