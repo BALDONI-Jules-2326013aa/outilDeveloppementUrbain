@@ -7,9 +7,11 @@
 }
 body{
     background-color: dimgray;
+    margin-top: 15%;
+    margin-right: 5%
 }
 nav{
-    background-color: #c1c1b0;
+    background-color: #8d8b80;
 }
 ul{
     display: flex;
@@ -35,16 +37,99 @@ a{
     text-decoration: none;
     padding: 8px;
     color: black;
+
+
 }
+nav a {
+    position: relative; /* Nécessaire pour positionner le pseudo-élément /
+    text-decoration: none; / Pas de soulignement par défaut */
+    color: black;
+    padding: 8px;
+}
+
+nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background-color: black;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+nav a:hover::after {
+    transform: scaleX(1);
+}
+
 a:hover{
     transition: 0.5s;
-    background-color: white;
-    color: black;
+
+
 }
+
 .imgH{
     height: 130px;
     width: 130px;
 }
-.h{
-    margin: 10% 0 0 0 ;
+.Fichiers1, .Fichiers2{
+    margin: 5% 0 0 0;
+    background-color: #c1c1b0;
+    width: 40%;
+    height: 300px;
+    display: flex;
+    align-items: flex-start; /* Aligner les éléments en haut */
+    justify-content: center;
+    font-weight: bold;
+    border: 2px solid #454444;
+    padding-top: 10px;
+    flex-direction: column;
+
+}
+
+label {
+    text-align: center; /* Centrer le texte horizontalement */
+    width: 100%; /* Assurer que le label prend toute la largeur */
+    align-items: flex-start;
+    margin-top: -100px;
+}
+
+input[type="file"] {
+    border-radius: 20px;
+    background-color: #454444;
+    color: white;
+    padding: 15px 32px;
+    margin-left: 15%;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+h1 {
+    text-align: center;
+}
+
+
+
+.Fichiers {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    margin-left: 5%;
+}
+
+button[type="submit"] {
+    border-radius: 20px;
+    background-color: #454444;
+    color: white;
+    text-align: center;
+    padding-right: 10% ;
+    padding-left: 10%;
+    margin-top: 20%;
+    margin-bottom: 2%;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    max-height: 50%;
 }
