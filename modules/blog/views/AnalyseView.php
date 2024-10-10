@@ -25,30 +25,20 @@ class AnalyseView extends AbstractView
     {
         include __DIR__ . '/Fragments/analyse.html';
 
-        // Assure-toi que les données sont bien encodées en JSON
-        $geojsonData = json_encode(json_decode($this->data, true));
+        echo "<link rel='stylesheet' href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css' />";
+        echo "<script src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'></script>";
+
 
         echo "<script>
         document.addEventListener('DOMContentLoaded', function() {
-            const geojsonData = $geojsonData;
+            const data = JSON.parse('$this->data');
 
-            // Initialise la carte Leaflet sans couche de fond
-            const map = L.map('map', {
-                center: [0, 0], // Centre initial, ajuste selon tes besoins
-                zoom: 2, // Zoom initial
-                zoomControl: true,
-                attributionControl: false
-            });
+            // Initialiser la carte
+            const map = L.map('map');
 
-            // Ajout des données GeoJSON
-            const geoLayer = L.geoJSON(JSON.parse(geojsonData)).addTo(map);
-
-            // Ajuste la vue de la carte en fonction des données GeoJSON
-            map.fitBounds(geoLayer.getBounds());
+            L.geoJSON(data).addTo(map); 
         });
-    </script>";
+        
+        </script>";
     }
-
-
-
 }
