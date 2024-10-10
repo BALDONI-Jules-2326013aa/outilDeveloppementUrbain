@@ -8,9 +8,23 @@ class ShapefileModel
     {
         $shapefilePath = '/home/jules/Téléchargements/valenicina/2002/Building2002_ABM.shp';
 
-        // Exécuter la commande ogrinfo pour lire le fichier Shapefile
         $output = shell_exec("ogrinfo -al -geom=geojson " . escapeshellarg($shapefilePath));
 
-        return $output ?: "Aucune donnée trouvée ou erreur lors de la lecture du fichier Shapefile.";
+        if (preg_match('/\{(?:[^{}]|(?R))*\}/', $output, $matches)) {
+            return $matches[0];
+        }
+
+        return "Erreur : les données GeoJSON n'ont pas été trouvées.";
     }
+
+    public static function litGeoJSON(): string
+    {
+        $geojsonFile = '/home/jules/Téléchargements/valenicina/2019/Buildings2019_ABM.geojson';
+        $geojson = file_get_contents($geojsonFile);
+
+        return $geojson;
+    }
+
 }
+
+?>
