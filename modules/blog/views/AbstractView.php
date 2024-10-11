@@ -17,6 +17,9 @@ abstract class AbstractView
 
     public function afficher(): void
     {
+
+        $head = new HeadView($this->pageTitle(), $this->css());
+        $head->afficher();
         $this->header();
         $this->body();
     }
