@@ -34,9 +34,9 @@ class ComparaisonView extends AbstractView
 
         $script =
             "<link rel='stylesheet' href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css' />" .
-            "<script src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'></script>" .
+            "<script src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js' ></script>" .
             "<div id='map' style='height: 500px;'></div>" .
-            "<script>
+            "<script >
                 document.addEventListener('DOMContentLoaded', function() {
                     // Parse la chaîne GeoJSON dans un objet JavaScript
                     const testGeoJSON = JSON.parse($geojsonData);
