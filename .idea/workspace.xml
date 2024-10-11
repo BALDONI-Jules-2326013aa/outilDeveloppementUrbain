@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="17ab53c2-46a1-4973-9d1d-6c017a8a6761" name="Changes" comment="Suppression echo">
+    <list default="true" id="17ab53c2-46a1-4973-9d1d-6c017a8a6761" name="Changes" comment="Structure css/html changé">
       <change afterPath="$PROJECT_DIR$/modules/blog/views/HeadView.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/blog/views/AbstractView.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/blog/views/AbstractView.php" afterDir="false" />
@@ -94,7 +94,7 @@
       <workItem from="1728370366345" duration="2837000" />
       <workItem from="1728373611120" duration="5884000" />
       <workItem from="1728475228634" duration="19940000" />
-      <workItem from="1728572578351" duration="7852000" />
+      <workItem from="1728572578351" duration="8188000" />
     </task>
     <task id="LOCAL-00001" summary="Suite implémentation homePage">
       <option name="closed" value="true" />
@@ -128,7 +128,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728574620939</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Structure css/html changé">
+      <option name="closed" value="true" />
+      <created>1728640191450</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1728640191450</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -150,6 +158,7 @@
     <MESSAGE value="ajout .idea files" />
     <MESSAGE value="Amelioration autoLoad" />
     <MESSAGE value="Suppression echo" />
-    <option name="LAST_COMMIT_MESSAGE" value="Suppression echo" />
+    <MESSAGE value="Structure css/html changé" />
+    <option name="LAST_COMMIT_MESSAGE" value="Structure css/html changé" />
   </component>
 </project>
