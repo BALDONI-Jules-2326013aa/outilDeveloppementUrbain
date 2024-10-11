@@ -13,7 +13,6 @@ class ComparaisonView extends AbstractView
         if (is_readable($this->body)) {
             include $this->body;
         } else {
-            echo "<head><link rel='stylesheet' href='/assets/styles/comparaison.css'></head>";
             echo $this->body;
         }
     }
