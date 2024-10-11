@@ -4,15 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="17ab53c2-46a1-4973-9d1d-6c017a8a6761" name="Changes" comment="Structure css/html changé">
-      <change afterPath="$PROJECT_DIR$/modules/blog/views/HeadView.php" afterDir="false" />
+    <list default="true" id="17ab53c2-46a1-4973-9d1d-6c017a8a6761" name="Changes" comment="ajout .idea files">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/blog/views/AbstractView.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/blog/views/AbstractView.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/blog/controllers/AnalyseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/blog/controllers/AnalyseController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/blog/controllers/ComparaisonController.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/blog/controllers/ComparaisonController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/blog/models/GeoJSONModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/blog/models/GeoJSONModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/blog/views/AnalyseView.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/blog/views/AnalyseView.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/blog/views/ComparaisonView.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/blog/views/ComparaisonView.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/blog/views/Fragments/analyse.html" beforeDir="false" afterPath="$PROJECT_DIR$/modules/blog/views/Fragments/analyse.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/blog/views/Fragments/comparaison.html" beforeDir="false" afterPath="$PROJECT_DIR$/modules/blog/views/Fragments/comparaison.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/blog/views/Fragments/header.html" beforeDir="false" afterPath="$PROJECT_DIR$/modules/blog/views/Fragments/header.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/blog/views/Fragments/homePage.html" beforeDir="false" afterPath="$PROJECT_DIR$/modules/blog/views/Fragments/homePage.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,26 +25,20 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="CSS File" />
         <option value="HTML File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;GARRIGUES-Ronan-2326049rg&quot;
-  }
-}</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;git@github.com:BALDONI-Jules-2326013aa/outilDeveloppementUrbain.git&quot;,
-    &quot;accountId&quot;: &quot;1917ebc4-b5da-4d0f-9c8c-2a0d6204bacd&quot;
-  }
-}</component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="/bin/php" />
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
@@ -54,23 +48,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;JavaScript Debug.comparaison.html.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/ronan/Documents/But2/tenracProjet&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.stickyLines&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "multiplesGeoJSON",
+    "last_opened_file_path": "/home/ronan/Documents/But2/tenracProjet",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -92,9 +85,7 @@
       <workItem from="1728313235232" duration="1721000" />
       <workItem from="1728362913111" duration="246000" />
       <workItem from="1728370366345" duration="2837000" />
-      <workItem from="1728373611120" duration="5884000" />
-      <workItem from="1728475228634" duration="19940000" />
-      <workItem from="1728572578351" duration="8188000" />
+      <workItem from="1728639504479" duration="2871000" />
     </task>
     <task id="LOCAL-00001" summary="Suite implémentation homePage">
       <option name="closed" value="true" />
@@ -112,53 +103,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728372244654</updated>
     </task>
-    <task id="LOCAL-00003" summary="Amelioration autoLoad">
-      <option name="closed" value="true" />
-      <created>1728379004406</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1728379004406</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Suppression echo">
-      <option name="closed" value="true" />
-      <created>1728574620939</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1728574620939</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Structure css/html changé">
-      <option name="closed" value="true" />
-      <created>1728640191450</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1728640191450</updated>
-    </task>
-    <option name="localTasksCounter" value="6" />
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Suite implémentation homePage" />
     <MESSAGE value="ajout .idea files" />
-    <MESSAGE value="Amelioration autoLoad" />
-    <MESSAGE value="Suppression echo" />
-    <MESSAGE value="Structure css/html changé" />
-    <option name="LAST_COMMIT_MESSAGE" value="Structure css/html changé" />
+    <option name="LAST_COMMIT_MESSAGE" value="ajout .idea files" />
   </component>
 </project>

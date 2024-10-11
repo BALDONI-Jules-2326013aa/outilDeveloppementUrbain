@@ -4,9 +4,10 @@ namespace blog\models;
 
 class GeoJSONModel
 {
-    public static function litGeoJSON($file): string
+    public static function litGeoJSON($file): array
     {
-        return file_get_contents($file);
+        $jsonData = file_get_contents($file);
+        return json_decode($jsonData, true);
     }
 }
 

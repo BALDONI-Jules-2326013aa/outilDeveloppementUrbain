@@ -1,15 +1,12 @@
 <body>
-  <h1>
-    Comparaison entre deux fichier
-  </h1>
-  <form method="post" action="/comparaisonFichier" enctype="multipart/form-data">
-    <label for="file1">Fichier Simulation</label>
-    <input type="file" name="file1" id="file1" multiple>
+<h1>
+  Comparaison entre plusieurs fichiers GeoJSON
+</h1>
+<form method="post" action="/comparaisonFichier" enctype="multipart/form-data">
+  <label for="file1">Sélectionnez plusieurs fichiers GeoJSON</label>
+  <input type="file" name="files[]" id="file1" multiple>
 
-    <label for="file2">Fichier données réel</label>
-    <input type="file" name="file2" id="file2" multiple>
-
-    <button type="submit">Comparer</button>
-  </form>
+  <button type="submit">Comparer</button>
+</form>
 </body>
 </html>
