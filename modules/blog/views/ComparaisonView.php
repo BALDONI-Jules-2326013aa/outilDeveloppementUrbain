@@ -40,6 +40,8 @@ class ComparaisonView extends AbstractView
                     
                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         maxZoom: 18,
+                        // On permet à l'utilisateur de zoomer, dezommer et se déplacer
+                        zoomControl: true,
                         attribution: '&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors'
                     }).addTo(map);
 
@@ -50,9 +52,14 @@ class ComparaisonView extends AbstractView
                     geojsonDataArray.forEach(function(geojsonData) {
                         try {
                             if (geojsonData && geojsonData.type === 'FeatureCollection') {
-                                // On ajoute à la carte avec une couleur différente
-                                const geoJsonLayer = L.geoJSON(geojsonData).addTo(map);
-                                map.fitBounds(geoJsonLayer.getBounds()); 
+                                // On ajoute à la carte avec une couleur différente à chaque fois
+                                color = '#' + Math.floor(Math.random() * 16777215).toString(16);
+                                L.geoJSON(geojsonData, {
+                                    style: function(feature) {
+                                        return { color: color };
+                                    }
+                                }).addTo(map); 
+                                map.fitBounds(L.geoJSON(geojsonData).getBounds());
                             } else {
                                 console.warn('Fichier GeoJSON vide ou structure invalide');
                             }
