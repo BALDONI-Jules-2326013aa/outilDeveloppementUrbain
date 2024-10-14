@@ -1,13 +1,20 @@
 <body>
 <h1>Comparaison entre plusieurs fichiers GeoJSON</h1>
-<form method="post" action="/comparaisonFichier" enctype="multipart/form-data">
+<form id="fileForm" method="post" action="/comparaisonFichier" enctype="multipart/form-data">
   <label for="file1">Sélectionnez plusieurs fichiers GeoJSON</label>
-  <label for="file1" class="form-file-upload">Choisir des fichiers</label>
   <input type="file" name="files[]" id="file1" multiple required>
 
-  <button type="submit">Comparer</button>
+  <button type="submit">Nouvelle carte</button>
 </form>
 
-<div id="map" style="height: 500px;"></div>
+<div class="trait"></div>
+
+<div id="addFileContainer" class="add-file-container" style="display: none;">
+  <label for="file2" class="add-file-label">Ajouter un fichier GeoJSON à la map</label>
+  <input type="file" name="files[]" id="file2" class="add-file-input" required>
+  <button type="button" id="addFileButton" class="add-file-button">Ajouter à la carte</button>
+</div>
+
 <div id="color-selectors"></div>
+<div id="map"></div>
 </body>
