@@ -11,7 +11,8 @@ class ComparaisonView extends AbstractView
         if (is_readable($this->body)) {
             include $this->body;  // Inclut le formulaire statique et les éléments de la page
         } else {
-            echo "Erreur : le fichier comparaison.html est introuvable.";
+            include __DIR__ . '/Fragments/comparaison.html';
+            echo $this->body;
         }
     }
 
@@ -32,13 +33,15 @@ class ComparaisonView extends AbstractView
         $fileNamesJsArray = json_encode($fileNames);
 
         // Charger les scripts et éléments nécessaires pour la carte
-        echo "<link rel='stylesheet' href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css' />";
-        echo "<script src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'></script>";
-        echo "<script>
+        $script =  "<link rel='stylesheet' href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css' />" .
+         "<script src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'></script>" .
+         "<script>
             const geojsonDataArray = $geojsonDataJsArray;
             const fileNamesArray = $fileNamesJsArray; // Ajout des noms de fichiers
-          </script>";
-        echo "<script src='_assets/scripts/comparaison.js'></script>";
+          </script>" .
+         "<script src='_assets/scripts/comparaison.js'></script>";
+
+        $this->body = $script;
 
         // Appeler la méthode d'affichage parent
         parent::afficher();
