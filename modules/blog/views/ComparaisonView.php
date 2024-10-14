@@ -11,6 +11,7 @@ class ComparaisonView extends AbstractView
         if (is_readable($this->body)) {
             include $this->body;
         } else {
+            include __DIR__ . '/Fragments/comparaison.html';
             echo $this->body;
         }
     }
@@ -41,7 +42,7 @@ class ComparaisonView extends AbstractView
                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         maxZoom: 18,
                         // On permet à l'utilisateur de zoomer, dezommer et se déplacer
-                        zoomControl: true,
+                        // zoomControl: true,
                         attribution: '&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors'
                     }).addTo(map);
 
