@@ -12,20 +12,23 @@ class ComparaisonController
         session_start();
 
         $dataArray = [];
+        $fileNames = [];
         if (isset($_FILES['files']) && is_array($_FILES['files']['tmp_name'])) {
-            foreach ($_FILES['files']['tmp_name'] as $tmpName) {
+            foreach ($_FILES['files']['tmp_name'] as $key => $tmpName) {
                 if (is_uploaded_file($tmpName)) {
                     $data = GeoJSONModel::litGeoJSON($tmpName);
                     if (!empty($data)) {
                         $dataArray[] = $data;
+                        $fileNames[] = $_FILES['files']['name'][$key];
                     }
                 }
             }
         }
 
         $view = new ComparaisonView();
-        $view->afficherAvecFichiers($dataArray);
+        $view->afficherAvecFichiers($dataArray, $fileNames);
     }
+
 
     public static function affichePage(): void
     {

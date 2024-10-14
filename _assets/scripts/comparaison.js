@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             const label = document.createElement('label');
-            label.textContent = 'Couleur pour le fichier ' + (index + 1) + ': ';
+            label.textContent = 'Couleur pour ' + fileNamesArray[index] + ': '; // Utilise le nom du fichier
             label.appendChild(colorSelector);
             document.getElementById('color-selectors').appendChild(label);
         } else {
