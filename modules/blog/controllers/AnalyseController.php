@@ -11,9 +11,8 @@ class AnalyseController
     {
         session_start();
 
-        $data = GeoJSONModel::litGeoJSON();
 
-        $view = new AnalyseView($data);
+        $view = new AnalyseView();
         $view->afficher();
     }
 }
