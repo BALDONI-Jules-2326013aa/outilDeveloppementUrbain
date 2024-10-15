@@ -13,11 +13,11 @@
 body{
     display: flex;
     flex-direction: column;
-    background-color: #b4b1ac;
+    background-color: #957743;
 }
 
 nav{
-    background-color: #8d8b80;
+    background-color: #e2eba7;
 }
 ul{
     display: flex;
@@ -84,3 +84,9 @@ a:hover{
 }
 
 
+footer{
+    width: 99%;
+    margin: 5px;
+    background-color: #e2eba7;
+    text-align: center;
+}

@@ -13,6 +13,7 @@ class HomePageView extends AbstractView {
     }
 
 
+
     function pageTitle(): string
     {
         return 'Accueil';

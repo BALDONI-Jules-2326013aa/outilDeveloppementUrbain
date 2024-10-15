@@ -14,20 +14,18 @@
 }
 
 .leftbox{
-    width: 50%;
-    background-color: #888a88;
-}
-.rightbox{
     width: 49%;
-    background-color: #888a88;
+    background-color: #59481d;
+    margin: 5% auto auto auto;
 }
+
 .mainTitle{
     margin:auto;
     position: absolute;
     z-index: 100;
     color: #afdae1;
     top: 80vh;
-    left: 99vh;
+    left: 95vh;
 }
 
 h3{
@@ -42,7 +40,7 @@ h3{
     display: flex;
 }
 .gallery {
-    margin: 10% auto;
+    margin: 5% auto 5% auto;
     position: relative;
     perspective: 1500px;
     transform-style: preserve-3d;
