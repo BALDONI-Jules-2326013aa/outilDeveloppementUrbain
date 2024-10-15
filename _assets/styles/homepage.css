@@ -19,13 +19,14 @@
     margin: 5% auto auto auto;
 }
 
-.mainTitle{
-    margin:auto;
+.mainTitle {
+    margin: auto;
     position: absolute;
     z-index: 100;
-    color: #afdae1;
-    top: 80vh;
-    left: 95vh;
+    color: #65aac2;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 h3{

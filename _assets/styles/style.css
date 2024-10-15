@@ -51,8 +51,8 @@ a{
 
 }
 nav a {
-    position: relative; /* Nécessaire pour positionner le pseudo-élément */
-    text-decoration: none; /* Pas de soulignement par défaut */
+    position: relative;
+    text-decoration: none;
     color: black;
     padding: 8px;
 }
