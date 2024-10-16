@@ -1,4 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // On rend visible les classes addFileContainer, trait, map et color-selectors
+    document.getElementById('addFileContainer').style.display = 'flex';
+    document.getElementById('trait').style.display = 'flex';
+    document.getElementById('color-selectors').style.display = 'flex';
+    document.getElementById('map').style.display = 'block';
+
     const map = L.map('map').setView([0, 0], 2);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -41,8 +47,8 @@ document.addEventListener('DOMContentLoaded', function() {
         addGeoJSONLayer(geojsonData, fileNamesArray[index]);
     });
 
-    // Afficher le conteneur pour ajouter un fichier
-    document.getElementById('addFileContainer').style.display = 'flex';
+
+
 
     // Gérer l'ajout d'un nouveau fichier GeoJSON
     document.getElementById('addFileButton').addEventListener('click', function() {

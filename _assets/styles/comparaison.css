@@ -169,7 +169,7 @@ form button:hover {
     flex-direction: column;
 }
 
-.trait {
+#trait {
     background-color: #222222;
     height: 4px;
     width: 80%;
