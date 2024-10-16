@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // On rend visible les classes addFileContainer, trait, map et color-selectors
-    document.getElementById('addFileContainer').style.display = 'flex';
-    document.getElementById('trait').style.display = 'flex';
+    document.getElementById('downloadFiles').style.display = 'flex';
     document.getElementById('color-selectors').style.display = 'flex';
     document.getElementById('map').style.display = 'block';
 
     const map = L.map('map').setView([0, 0], 2);
+
+    console.log(geojsonDataArray);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 18,
@@ -48,26 +48,4 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 
-
-
-    // Gérer l'ajout d'un nouveau fichier GeoJSON
-    document.getElementById('addFileButton').addEventListener('click', function() {
-        const newFileInput = document.getElementById('file2').files[0];
-
-        if (newFileInput) {
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                try {
-                    const geojsonData = JSON.parse(event.target.result);
-                    addGeoJSONLayer(geojsonData, newFileInput.name);
-                    document.getElementById('file2').value = '';
-                } catch (e) {
-                    console.error('Erreur de parsing GeoJSON:', e);
-                }
-            };
-            reader.readAsText(newFileInput);
-        } else {
-            alert('Veuillez sélectionner un fichier GeoJSON.');
-        }
-    });
 });

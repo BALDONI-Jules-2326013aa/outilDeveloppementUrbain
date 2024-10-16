@@ -10,6 +10,21 @@ class GeoJSONModel
         return json_decode($jsonData, true);
     }
 
+    public static function getGeoJSONYear($file): string
+    {
+        $content = file_get_contents($file);
+
+        $data = json_decode($content, true);
+
+        if (isset($data['features'][0]['properties']['Year'])) {
+            // Retourner l'année de la première feature
+            return (string) $data['features'][0]['properties']['Year'];
+        }
+
+        return '';
+    }
+
+
     public static function recupereNombreBaptiment($fileArray): array
     {
         $listNbBatiments = [];
