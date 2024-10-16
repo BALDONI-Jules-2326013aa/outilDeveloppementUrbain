@@ -27,7 +27,7 @@ class ComparaisonView extends AbstractView
         return 'Comparaison';
     }
 
-    public function afficherAvecFichiers(array $dataArray, array $fileNames): void
+    public function afficherCartes(array $dataArray, array $fileNames): void
     {
         // Encode les données GeoJSON et les noms de fichiers pour les passer au script JavaScript
         $geojsonDataJsArray = json_encode($dataArray);
@@ -43,8 +43,6 @@ class ComparaisonView extends AbstractView
          "<script src='_assets/scripts/comparaison.js'></script>";
 
         $this->body = $script;
-
-        // Appeler la méthode d'affichage parent
 
 
     }

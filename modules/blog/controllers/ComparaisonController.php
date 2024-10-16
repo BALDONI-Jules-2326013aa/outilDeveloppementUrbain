@@ -39,7 +39,7 @@ class ComparaisonController
         }
 
         $view = new ComparaisonView();
-        $view->afficherAvecFichiers($dataArray, $fileNames); // Passe les noms de fichiers à la vue
+        $view->afficherCartes($dataArray, $fileNames); // Passe les noms de fichiers à la vue
         $view->afficherGraphiqueBatiments($dataArray, $fileNames); // Passe les noms de fichiers à la vue
         $view->afficher();
     }

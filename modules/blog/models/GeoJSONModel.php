@@ -28,43 +28,22 @@ class GeoJSONModel
         return $listNbBatiments;
     }
 
-
     public static function dessineGraphique($nbBatimentsArray, $fileNameArray): string
     {
         $nbBatimentsJson = json_encode($nbBatimentsArray);
         $fileNamesJson = json_encode($fileNameArray);
-        return "    
-
-        <canvas id='barBatiments'></canvas>
-        <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
-        <script> 
-        let ctx = document.getElementById('barBatiments').getContext('2d');
-        let data = {
-            labels: $fileNamesJson,
-            datasets: [{
-                label: 'Nombre de bâtiments',
-                data: $nbBatimentsJson,
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 1
-            }]
-        }
-        let barBatiments = new Chart(ctx,{
-            type: 'bar',
-            data: data,
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        })
-        
-        </script>
-        ";
+        return "
+    <div style='display: none;' id='nbBatimentsJson'>$nbBatimentsJson</div>
+    <div style='display: none;' id='fileNamesJson'>$fileNamesJson</div>
+    <canvas id='barBatiments'></canvas>
+    <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
+    <script src='/_assets/scripts/nombreBatiments.js'></script>
+    ";
     }
+
+
+
+
 }
 
 ?>
