@@ -16,37 +16,39 @@ form {
     margin: 0 auto;
     padding: 1.5rem;
     background-color: #f9f9f9;
-    border-radius: 8px;
-    max-width: 600px;
+    border-radius: 12px;
+    width: 30%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 label {
-    font-size: 1rem;
-    color: #4a4a4a;
+    font-size: 1.3rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
 }
 
 input[type="file"],
 button {
-    width: 100%;
-    max-width: 300px;
+    width: 80%;
     padding: 0.7rem;
     font-size: 1rem;
     margin-bottom: 1rem;
-    border: 1px solid #d1d1d1;
+    border: 1px solid #59481d;
     border-radius: 5px;
 }
 
 input[type="file"] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
     color: #4a4a4a;
+    width: 80%;
 }
 
 button {
-    background-color: #4a90e2;
-    color: #ffffff;
+    background-color: #557502;
+    color: #fff;
     font-weight: 600;
     border: none;
     cursor: pointer;
@@ -54,47 +56,11 @@ button {
 }
 
 button:hover {
-    background-color: #357ab8;
+    background-color: #474e23;
 }
 
-.add-file-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 1rem;
-}
 
-.add-file-label {
-    font-size: 1rem;
-    color: #4a4a4a;
-    font-weight: 600;
-}
 
-.add-file-input {
-    margin-top: 0.5rem;
-    margin-bottom: 1rem;
-    padding: 0.7rem;
-    width: 100%;
-    max-width: 300px;
-    border: 1px solid #d1d1d1;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.add-file-button {
-    background-color: #4caf50;
-    color: white;
-    font-size: 1rem;
-    padding: 0.8rem 1.2rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.add-file-button:hover {
-    background-color: #3e8e41;
-}
 
 #map {
     width: 100%;
@@ -160,7 +126,7 @@ button:hover {
 #trait {
     width: 100%;
     height: 2px;
-    background-color: #d1d1d1;
+    background-color: #59481d;
     margin: 1rem 0;
 }
 

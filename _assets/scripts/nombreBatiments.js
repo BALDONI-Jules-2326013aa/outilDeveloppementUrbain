@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
         datasets: [{
             label: 'Nombre de bâtiments',
             data: JSON.parse(document.getElementById('nbBatimentsJson').textContent),
-            backgroundColor: '#e2eba7',
+            backgroundColor: '#6b5eba',
             borderColor: '#557002',
             borderWidth: 1
         }]

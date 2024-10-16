@@ -2,8 +2,6 @@
     font-family: 'Poppins';
 }
 
-
-
 body {
     display: flex;
     flex-direction: column;
@@ -30,21 +28,20 @@ nav {
     width: 100%;
 }
 
-ul{
+ul {
     display: flex;
     width: 100%;
     justify-content: space-around;
     align-items: center;
     list-style-type: none;
-
+    padding: 0;
 }
 
 li{
-    width: 18%;
+    width: 20%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: red;
 }
 
 a{
