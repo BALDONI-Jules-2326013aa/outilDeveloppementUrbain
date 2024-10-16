@@ -1,10 +1,26 @@
 <?php
 
-class AnalyseView {
-    public function displayMap() {
-        echo '<div id="map" class="carte"></div>';
+namespace blog\views;
+
+class AnalyseView extends AbstractView
+{
+
+    public function __construct()
+    {
+    }
+
+    public function css(): string
+    {
+        return 'analyse.css';
+    }
+
+    public function pageTitle(): string
+    {
+        return 'Analyse Page';
+    }
+
+    protected function body()
+    {
+        include __DIR__ . '/Fragments/analyse.html';
     }
 }
-
-$view = new AnalyseView();
-$view->displayMap();
