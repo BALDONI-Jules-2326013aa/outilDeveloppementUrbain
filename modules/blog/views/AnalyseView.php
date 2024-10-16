@@ -19,18 +19,33 @@ class AnalyseView extends AbstractView
         return 'Simulation';
     }
 
-    protected function body()
+    protected function body(): void
     {
-        include __DIR__ . '/Fragments/analyse.html';
+        if (is_readable($this->body)) {
+            include $this->body;
+        } else {
+            include __DIR__ . '/Fragments/analyse.html';
+            echo $this->body;
+        }
     }
 
     public function afficherSimulation(array $fileYears, array $fileNames): void
     {
-        echo "<h1>Simulation</h1><br>";
+
+        $simulation = '<h1>Récupération des années :</h1></br>';
 
         foreach ($fileYears as $key => $fileYear) {
-            echo "<h2>Année pour le fichier $fileNames[$key] : $fileYear</h2><br>";
+            $simulation .= "<h2>Année pour le fichier $fileNames[$key] : $fileYear</h2><br>";
         }
 
+        $this->body = $simulation;
+
+    }
+
+
+
+    public function afficher(): void
+    {
+        parent::afficher();
     }
 }

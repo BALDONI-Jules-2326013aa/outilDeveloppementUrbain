@@ -43,8 +43,6 @@ class ComparaisonController
         $view->afficher();
     }
 
-
-
     public static function affichePage(): void
     {
         session_start();

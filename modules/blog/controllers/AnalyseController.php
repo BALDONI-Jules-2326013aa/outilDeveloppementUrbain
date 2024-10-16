@@ -29,7 +29,7 @@ class AnalyseController
                     $data = GeoJSONModel::getGeoJSONYear($tmpName);
                     if (!empty($data)) {
                         $filesYears[] = $data;
-                        $filesNames[] = $_FILES['files']['tmp_name'][$key];
+                        $filesNames[] = $_FILES['files']['name'][$key];
                     }
                 }
             }
