@@ -1,6 +1,7 @@
 <?php
 
 namespace blog\views;
+use blog\models\GeoJSONModel;
 
 class ComparaisonView extends AbstractView
 {
@@ -45,6 +46,13 @@ class ComparaisonView extends AbstractView
 
         // Appeler la méthode d'affichage parent
         parent::afficher();
+    }
+    public function afficherArea(array $shapefile_path, array $aire_min,array $aire_moyenne,array $aire_max): void {
+        $geoJsonModel = new GeoJSONModel();
+        $Area = $geoJsonModel->calculerAires($shapefile_path);
+        $script = $geoJsonModel->afficherSpiderDiagram($Area);
+
+        $this->body.= $script;
     }
 
 

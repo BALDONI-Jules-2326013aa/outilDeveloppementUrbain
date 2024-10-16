@@ -11,6 +11,10 @@ class ComparaisonController
     {
         session_start();
 
+        $shapefile_path=[];
+        $aire_min= [];
+        $aire_moyenne=[];
+        $aire_max =[];
         $dataArray = [];
         $fileNames = []; // Pour stocker les noms de fichiers
         if (isset($_FILES['files']) && is_array($_FILES['files']['tmp_name'])) {
@@ -40,6 +44,8 @@ class ComparaisonController
 
         $view = new ComparaisonView();
         $view->afficherAvecFichiers($dataArray, $fileNames); // Passe les noms de fichiers à la vue
+        $view-> afficherArea($shapefile_path, $aire_min,$aire_moyenne,$aire_max);
+        $view->afficher();
     }
 
 

@@ -21,6 +21,7 @@ switch ($request_uri) {
     case 'comparaisonFichier':
         $ficher = new ComparaisonController();
         $ficher::afficheFichier();
+        $ficher::affichePage();
         break;
     case 'Analyse':
         $analyse = new AnalyseController();
