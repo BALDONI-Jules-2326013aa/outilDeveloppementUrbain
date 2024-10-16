@@ -26,5 +26,9 @@ switch ($request_uri) {
         $analyse = new AnalyseController();
         $analyse::affichePage();
         break;
+    case 'simulationFichier':
+        $ficher = new AnalyseController();
+        $ficher::afficheSimulation();
+        break;
 
 }
