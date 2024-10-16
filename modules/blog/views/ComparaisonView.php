@@ -27,18 +27,18 @@ class ComparaisonView extends AbstractView
         return 'Comparaison';
     }
 
-    public function afficherCartes(array $dataArray, array $fileNames): void
+    public function afficherAvecFichiers(array $dataArray, array $fileNames): void
     {
         $geojsonDataJsArray = json_encode($dataArray);
         $fileNamesJsArray = json_encode($fileNames);
 
         $script =  "<link rel='stylesheet' href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css' />" .
-         "<script src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'></script>" .
-         "<script>
+            "<script src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'></script>" .
+            "<script>
             const geojsonDataArray = $geojsonDataJsArray;
             const fileNamesArray = $fileNamesJsArray;
           </script>" .
-         "<script src='_assets/scripts/comparaison.js'></script>";
+            "<script src='_assets/scripts/comparaison.js'></script>";
 
         $this->body = $script;
 
