@@ -4,6 +4,7 @@ include __DIR__ . '/AutoLoader.php';
 use blog\controllers\ComparaisonController;
 use blog\controllers\HomePageController;
 use blog\controllers\SimulationController;
+use blog\controllers\TelechargerController;
 
 
 $request_uri = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
@@ -33,6 +34,10 @@ switch ($request_uri) {
     case 'startSimulation':
         $ficher = new SimulationController();
         $ficher::startSimulation();
+        break;
+        case 'telecharger':
+            TelechargerController::affichePage();
+            break;
         break;
     default:
 

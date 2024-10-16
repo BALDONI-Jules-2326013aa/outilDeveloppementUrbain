@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Télécharger des fichiers</title>
+    <link rel="stylesheet" href="telecharger.css">
+</head>
+<body>
+    <h1>Télécharger des fichiers GeoJSON</h1>
+
+    <h2>Fichiers disponibles</h2>
+    <ul>
+        <?php foreach ($files as $file): ?>
+            <li>
+                <a href="<?php echo $file['filepath']; ?>" download><?php echo $file['filename']; ?></a>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+</body>
+</html>
