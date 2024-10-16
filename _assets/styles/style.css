@@ -18,40 +18,47 @@ body{
     align-items: center;
 }
 
-nav{
+nav {
     background-color: #8d8b80;
+    max-height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 }
+
 ul{
     display: flex;
-    justify-content: space-between;
-    padding: 0 1em 0.5em 0;
-    margin: 0;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
     list-style-type: none;
 
 }
+
 .nav-hidden {
     display: block;
 }
+
 li{
-    margin: auto;
-    width: 10%;
+    width: 20%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 a{
     display: inline-block;
     list-style-type: none;
     margin: 10px;
-
 }
+
 a{
     text-decoration: none;
     padding: 8px;
     color: black;
-
-
 }
+
 nav a {
     position: relative; /* Nécessaire pour positionner le pseudo-élément */
     text-decoration: none; /* Pas de soulignement par défaut */
@@ -81,8 +88,8 @@ a:hover{
 
 }
 .imgH{
-    height: 130px;
-    width: 130px;
+    height: 70px;
+    width: 70px;
 }
 
 
