@@ -1,0 +1,151 @@
+/* simulation.css */
+
+h1 {
+	font-size: 2rem;
+	color: #2a2a2a;
+	text-align: center;
+	margin-top: 1.5rem;
+	margin-bottom: 1rem;
+	font-weight: 700;
+}
+
+h2 {
+	font-size: 1.8rem;
+	color: #2a2a2a;
+	text-align: center;
+	margin-top: 1.2rem;
+	margin-bottom: 0.8rem;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 0 auto;
+	padding: 1.5rem;
+	background-color: #f9f9f9;
+	border-radius: 8px;
+	max-width: 600px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+label {
+	font-size: 1rem;
+	color: #4a4a4a;
+	font-weight: 600;
+	margin-bottom: 0.5rem;
+}
+
+input[type="file"],
+input[type="number"],
+button {
+	width: 100%;
+	max-width: 300px;
+	padding: 0.7rem;
+	font-size: 1rem;
+	margin-bottom: 1rem;
+	border: 1px solid #d1d1d1;
+	border-radius: 5px;
+}
+
+input[type="file"] {
+	cursor: pointer;
+	color: #4a4a4a;
+}
+
+input[type="number"] {
+	text-align: center;
+}
+
+button {
+	background-color: #4a90e2;
+	color: #ffffff;
+	font-weight: 600;
+	border: none;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+button:hover {
+	background-color: #357ab8;
+}
+
+#downloadFiles {
+	text-align: center;
+	margin-top: 1.5rem;
+}
+
+#downloadFilesButton {
+	background-color: #4caf50;
+	color: white;
+	font-size: 1rem;
+	padding: 0.8rem 1.2rem;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+#downloadFilesButton:hover {
+	background-color: #3e8e41;
+}
+
+#map {
+	width: 100%;
+	max-width: 1000px;
+	height: 500px;
+	margin: 2rem auto;
+	border-radius: 10px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+	border: 2px solid #4a90e2;
+	background-color: #f0f0f0;
+	overflow: hidden;
+	position: relative;
+}
+
+#map::before {
+	content: "Carte GeoJSON";
+	position: absolute;
+	top: 10px;
+	left: 15px;
+	background-color: rgba(74, 144, 226, 0.8);
+	color: #ffffff;
+	padding: 5px 10px;
+	border-radius: 5px;
+	font-size: 0.9rem;
+	font-weight: bold;
+}
+
+
+#color-selectors {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin: 2rem auto;
+	max-width: 600px;
+	padding: 15px;
+	border: 2px solid #4a90e2;
+	border-radius: 8px;
+	background-color: #f9f9f9;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.color-option {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	cursor: pointer;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+	border: 2px solid #ddd;
+}
+
+.color-option:hover {
+	transform: scale(1.1);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+	border-color: #4a90e2;
+}
+
+.color-option.selected {
+	box-shadow: 0 0 12px rgba(74, 144, 226, 0.4);
+	border-color: #4a90e2;
+}

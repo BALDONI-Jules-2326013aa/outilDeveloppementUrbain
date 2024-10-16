@@ -1,13 +1,13 @@
 <body>
 <h1>Simulation de développement urbain</h1>
-<form id="fileForm" method="post" action="/simulationFichier" enctype="multipart/form-data">
+<form id="fileForm" method="post" action="/afficheGetYears" enctype="multipart/form-data">
     <label for="filesSimul">Sélectionner des fichiers GeoJSON</label>
     <input type="file" name="files[]" id="filesSimul" multiple required>
 
     <label for="nbIncrements">Nombre d'itérations</label>
     <input type="number" name="nbIncrements" id="nbIncrements">
 
-    <button type="submit">Lancer la simulation</button>
+    <button type="submit">Continuer</button>
 </form>
 
 <div id="color-selectors" style="display: none;"></div>

@@ -1,193 +1,165 @@
-
-
-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: 'Poppins';
-    color: #333;
-    background-color: #f5f5f5;
-}
-
-
+/* comparaison.css */
 
 h1 {
     font-size: 2rem;
-    margin-top: 80px;
-    color: #444;
+    color: #2a2a2a;
     text-align: center;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #e2e2e2;
-    width: 80%;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
 }
 
 form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 5% 0;
-    padding: 30px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 80%;
-    max-width: 500px;
-    border: 1px solid #e0e0e0;
+    margin: 0 auto;
+    padding: 1.5rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    max-width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-form label {
-    font-weight: bold;
-    color: #555;
-    margin-bottom: 10px;
-}
-
-form label:hover {
-    background-color: #f5f5f5;
-    color: #333;
-}
-
-form input[type="file"] {
-    display: none;
-}
-
-.form-file-upload {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
+label {
     font-size: 1rem;
+    color: #4a4a4a;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+input[type="file"],
+button {
+    width: 100%;
+    max-width: 300px;
+    padding: 0.7rem;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #d1d1d1;
     border-radius: 5px;
+}
+
+input[type="file"] {
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-bottom: 20px;
+    color: #4a4a4a;
 }
 
-.form-file-upload:hover {
-    background-color: #45a049;
-}
-
-form button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
+button {
+    background-color: #4a90e2;
+    color: #ffffff;
+    font-weight: 600;
     border: none;
-    border-radius: 5px;
-    font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-form button:hover {
-    background-color: #45a049;
-}
-
-#map {
-    width: 80%;
-    height: 500px;
-    margin-top: 30px;
-    background-color: #eaeaea;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    position: relative;
-}
-
-#color-selectors {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 80%;
-    margin-top: 20px;
-    background-color: #fff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-#color-selectors label {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    font-weight: bold;
-    color: #333;
-}
-
-#color-selectors input[type="color"] {
-    margin-left: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    padding: 5px;
+button:hover {
+    background-color: #357ab8;
 }
 
 .add-file-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20px;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 80%;
-    max-width: 500px;
-    border: 1px solid #e0e0e0;
+    margin-top: 1rem;
 }
 
 .add-file-label {
-    font-weight: bold;
-    color: #555;
-    margin-bottom: 10px;
-}
-
-.add-file-label:hover {
-    background-color: #f5f5f5;
-    color: #333;
+    font-size: 1rem;
+    color: #4a4a4a;
+    font-weight: 600;
 }
 
 .add-file-input {
-    display: none;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    padding: 0.7rem;
+    width: 100%;
+    max-width: 300px;
+    border: 1px solid #d1d1d1;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 .add-file-button {
-    background-color: #4CAF50;
+    background-color: #4caf50;
     color: white;
-    padding: 10px 20px;
+    font-size: 1rem;
+    padding: 0.8rem 1.2rem;
     border: none;
     border-radius: 5px;
-    font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-top: 10px;
 }
 
 .add-file-button:hover {
-    background-color: #45a049;
+    background-color: #3e8e41;
 }
 
-.addFileContainer {
-    display: flex;
-    flex-direction: column;
+#map {
+    width: 100%;
+    max-width: 1000px;
+    height: 500px;
+    margin: 2rem auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border: 2px solid #4a90e2;
+    background-color: #f0f0f0;
+    overflow: hidden;
+    position: relative;
 }
+
+#map::before {
+    content: "Carte GeoJSON";
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    background-color: rgba(74, 144, 226, 0.8);
+    color: #ffffff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+
+#color-selectors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 2rem auto;
+    max-width: 600px;
+    padding: 15px;
+    border: 2px solid #4a90e2;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.color-option {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 2px solid #ddd;
+}
+
+.color-option:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    border-color: #4a90e2;
+}
+
+.color-option.selected {
+    box-shadow: 0 0 12px rgba(74, 144, 226, 0.4);
+    border-color: #4a90e2;
+}
+
 
 #trait {
-    background-color: #222222;
-    height: 4px;
-    width: 80%;
-    border-radius: 10px;
-    margin: 20px 0;
-}
-
-#barBatiments{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 80%;
-    max-width: 500px;
-    border: 1px solid #e0e0e0;
-    position: relative;
+    width: 100%;
+    height: 2px;
+    background-color: #d1d1d1;
+    margin: 1rem 0;
 }

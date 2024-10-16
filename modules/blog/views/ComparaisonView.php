@@ -32,7 +32,6 @@ class ComparaisonView extends AbstractView
         $geojsonDataJsArray = json_encode($dataArray);
         $fileNamesJsArray = json_encode($fileNames);
 
-        // Charger les scripts et éléments nécessaires pour la carte
         $script =  "<link rel='stylesheet' href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css' />" .
          "<script src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'></script>" .
          "<script>

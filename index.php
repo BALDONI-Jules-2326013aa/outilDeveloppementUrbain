@@ -3,7 +3,7 @@ include __DIR__ . '/AutoLoader.php';
 
 use blog\controllers\ComparaisonController;
 use blog\controllers\HomePageController;
-use blog\controllers\AnalyseController;
+use blog\controllers\SimulationController;
 
 
 $request_uri = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
@@ -22,13 +22,18 @@ switch ($request_uri) {
         $ficher = new ComparaisonController();
         $ficher::afficheFichier();
         break;
-    case 'Analyse':
-        $analyse = new AnalyseController();
-        $analyse::affichePage();
+    case 'Simulation':
+        $simulation = new SimulationController();
+        $simulation::affichePage();
         break;
-    case 'simulationFichier':
-        $ficher = new AnalyseController();
-        $ficher::afficheSimulation();
+    case 'afficheGetYears':
+        $ficher = new SimulationController();
+        $ficher::afficheGetYears();
         break;
+    case 'startSimulation':
+        $ficher = new SimulationController();
+        $ficher::startSimulation();
+        break;
+    default:
 
 }
