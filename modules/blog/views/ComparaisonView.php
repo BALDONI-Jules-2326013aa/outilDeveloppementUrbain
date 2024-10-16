@@ -1,6 +1,7 @@
 <?php
 
 namespace blog\views;
+use blog\models\GeoJSONModel;
 
 class ComparaisonView extends AbstractView
 {
@@ -44,8 +45,18 @@ class ComparaisonView extends AbstractView
         $this->body = $script;
 
         // Appeler la méthode d'affichage parent
-        parent::afficher();
+
+
     }
+
+    public function afficherGraphiqueBatiments(array $dataArray, array $fileNames): void {
+        $geoJsonModel = new GeoJSONModel();
+        $nbBatiments = $geoJsonModel->recupereNombreBaptiment($dataArray);
+        $script = $geoJsonModel->dessineGraphique($nbBatiments, $fileNames);
+
+        $this->body.= $script;
+    }
+
 
 
     public function afficher(): void
