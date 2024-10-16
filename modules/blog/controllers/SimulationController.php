@@ -59,4 +59,38 @@ class SimulationController
         $view->resultatSimulation($geoData, $filesNames);
         $view->afficher();
     }
+
+    public static function downloadSimulationFiles(): void
+    {
+        session_start();
+
+        // A CHANGER QUAND ON AURA LE LOGICIEL
+        $filePaths = [
+            "_assets/testSimul/Household_3-2019.geojson",
+            "_assets/testSimul/Road_3-2019.geojson",
+        ];
+
+        $zip = new \ZipArchive();
+        $zipFileName = '/tmp/fichiers_simules.zip';
+
+        if ($zip->open($zipFileName, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === true) {
+            foreach ($filePaths as $file) {
+                if (file_exists($file)) {
+                    $zip->addFile($file, basename($file));
+                }
+            }
+            $zip->close();
+
+            header('Content-Type: application/zip');
+            header('Content-Disposition: attachment; filename="fichiers_simules.zip"');
+            header('Content-Length: ' . filesize($zipFileName));
+            readfile($zipFileName);
+
+            unlink($zipFileName);
+            exit;
+        } else {
+            echo "Erreur lors de la création du fichier ZIP.";
+        }
+    }
+
 }
