@@ -29,32 +29,26 @@ class ComparaisonView extends AbstractView
 
     public function afficherAvecFichiers(array $dataArray, array $fileNames): void
     {
-        // Encode les données GeoJSON et les noms de fichiers pour les passer au script JavaScript
         $geojsonDataJsArray = json_encode($dataArray);
         $fileNamesJsArray = json_encode($fileNames);
 
-        // Charger les scripts et éléments nécessaires pour la carte
         $script =  "<link rel='stylesheet' href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css' />" .
-         "<script src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'></script>" .
-         "<script>
+            "<script src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'></script>" .
+            "<script>
             const geojsonDataArray = $geojsonDataJsArray;
-            const fileNamesArray = $fileNamesJsArray; // Ajout des noms de fichiers
+            const fileNamesArray = $fileNamesJsArray;
           </script>" .
-         "<script src='_assets/scripts/comparaison.js'></script>";
+            "<script src='_assets/scripts/comparaison.js'></script>";
 
         $this->body = $script;
 
-        // Appeler la méthode d'affichage parent
-        parent::afficher();
+
     }
-    public function afficherArea(array $shapefile_path, array $aire_min,array $aire_moyenne,array $aire_max): void {
+    public function afficherArea(array $dataArray, array $fileNames): void {
         $geoJsonModel = new GeoJSONModel();
-        $Area = $geoJsonModel->calculerAires($shapefile_path);
-        $script = $geoJsonModel->afficherSpiderDiagram($Area);
-
-        $this->body.= $script;
+        $script = $geoJsonModel->affichegraphe($dataArray, $fileNames);
+        $this->body .= $script;
     }
-
 
     public function afficher(): void
     {

@@ -11,45 +11,37 @@ class ComparaisonController
     {
         session_start();
 
-        $shapefile_path=[];
-        $aire_min= [];
-        $aire_moyenne=[];
-        $aire_max =[];
         $dataArray = [];
-        $fileNames = []; // Pour stocker les noms de fichiers
+        $fileNames = [];
         if (isset($_FILES['files']) && is_array($_FILES['files']['tmp_name'])) {
             foreach ($_FILES['files']['tmp_name'] as $key => $tmpName) {
                 if (is_uploaded_file($tmpName)) {
                     $data = GeoJSONModel::litGeoJSON($tmpName);
                     if (!empty($data)) {
                         $dataArray[] = $data;
-                        $fileNames[] = $_FILES['files']['name'][$key]; // Récupère le nom du fichier
+                        $fileNames[] = $_FILES['files']['name'][$key];
                     }
                 }
             }
         }
 
-        // Gérer les nouveaux fichiers
         if (isset($_FILES['newFiles']) && is_array($_FILES['newFiles']['tmp_name'])) {
             foreach ($_FILES['newFiles']['tmp_name'] as $key => $tmpName) {
                 if (is_uploaded_file($tmpName)) {
                     $data = GeoJSONModel::litGeoJSON($tmpName);
                     if (!empty($data)) {
                         $dataArray[] = $data;
-                        $fileNames[] = $_FILES['newFiles']['name'][$key]; // Récupère le nom du nouveau fichier
+                        $fileNames[] = $_FILES['newFiles']['name'][$key];
                     }
                 }
             }
         }
 
         $view = new ComparaisonView();
-        $view->afficherAvecFichiers($dataArray, $fileNames); // Passe les noms de fichiers à la vue
-        $view-> afficherArea($shapefile_path, $aire_min,$aire_moyenne,$aire_max);
+        $view->afficherAvecFichiers($dataArray, $fileNames);
+        $view->afficherArea($dataArray, $fileNames);
         $view->afficher();
     }
-
-
-
     public static function affichePage(): void
     {
         session_start();
