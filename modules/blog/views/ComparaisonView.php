@@ -41,12 +41,18 @@ class ComparaisonView extends AbstractView
             "<script src='_assets/scripts/comparaison.js'></script>";
 
         $this->body = $script;
-
-
     }
+
     public function afficherArea(array $dataArray, array $fileNames): void {
         $geoJsonModel = new GeoJSONModel();
-        $script = $geoJsonModel->affichegraphe($dataArray, $fileNames);
+
+        $areas = [];
+        foreach ($fileNames as $file) {
+            $minMaxMoy = GeoJSONModel::TrouverMinMaxMoy($file);
+            $areas[] = $minMaxMoy;
+        }
+
+        $script = $geoJsonModel->choreographer($areas, $fileNames);
         $this->body .= $script;
     }
 
@@ -55,3 +61,4 @@ class ComparaisonView extends AbstractView
         parent::afficher();
     }
 }
+?>

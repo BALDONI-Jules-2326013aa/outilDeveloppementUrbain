@@ -1,27 +1,50 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Ensure the function is defined and ready to be called
-});
+    let aireJsonElement = document.getElementById('aireJson');
+    if (!aireJsonElement) {
+        console.error("Element with id 'aireJson' not found.");
+        return;
+    }
 
-function traiterDonneesGeoJSON(data) {
-    let aires = data.features.map(feature => {
-        return turf.area(feature);  // Utilisation de Turf.js pour calculer l'aire
-    });
+    let aireJsonText = aireJsonElement.textContent;
+    if (!aireJsonText) {
+        console.error("Element with id 'aireJson' has no text content.");
+        return;
+    }
 
-    let aireMin = Math.min(...aires);
-    let aireMax = Math.max(...aires);
-    let aireMoyenne = aires.reduce((a, b) => a + b, 0) / aires.length;
+    let Aire;
+    try {
+        Aire = JSON.parse(aireJsonText);
+    } catch (e) {
+        console.error("Failed to parse JSON from 'aireJson':", e);
+        return;
+    }
 
-    // Appeler la fonction pour afficher le diagramme avec les aires calculées
-    afficherSpiderDiagram(aireMoyenne, aireMin, aireMax);
-}
+    let fileNamesJsonElement = document.getElementById('fileNamesJson');
+    if (!fileNamesJsonElement) {
+        console.error("Element with id 'fileNamesJson' not found.");
+        return;
+    }
 
-function afficherSpiderDiagram(aireMoyenne, aireMin, aireMax) {
+    let fileNamesJsonText = fileNamesJsonElement.textContent;
+    if (!fileNamesJsonText) {
+        console.error("Element with id 'fileNamesJson' has no text content.");
+        return;
+    }
+
+    let fileNames;
+    try {
+        fileNames = JSON.parse(fileNamesJsonText);
+    } catch (e) {
+        console.error("Failed to parse JSON from 'fileNamesJson':", e);
+        return;
+    }
+
     const ctx = document.getElementById('spiderDiagram').getContext('2d');
     const data = {
         labels: ['Aire Moyenne', 'Aire Min', 'Aire Max'],
-        datasets: [{
-            label: 'Aires des polygones',
-            data: [aireMoyenne, aireMin, aireMax],
+        datasets: Aire.map((aire, index) => ({
+            label: fileNames[index],
+            data: [aire.avg_area, aire.min_area, aire.max_area],
             fill: true,
             backgroundColor: 'rgba(54, 162, 235, 0.2)',
             borderColor: 'rgb(54, 162, 235)',
@@ -29,10 +52,10 @@ function afficherSpiderDiagram(aireMoyenne, aireMin, aireMax) {
             pointBorderColor: '#fff',
             pointHoverBackgroundColor: '#fff',
             pointHoverBorderColor: 'rgb(54, 162, 235)'
-        }]
+        }))
     };
 
-    const config = {
+    const option = {
         type: 'radar',
         data: data,
         options: {
@@ -44,5 +67,5 @@ function afficherSpiderDiagram(aireMoyenne, aireMin, aireMax) {
         }
     };
 
-    new Chart(ctx, config);
-}
+    new Chart(ctx, option);
+});
