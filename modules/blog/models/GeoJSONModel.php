@@ -5,40 +5,47 @@ define('EARTH_RADIUS', 6371000); // Rayon de la Terre en mètres
 
 class GeoJSONModel
 {
-    // Fonction pour lire un fichier GeoJSON et le décoder en tableau
-    public static function litGeoJSON($file): array
-    {
-        if (is_array($file)) {
-            $file = $file[0];
-        }
-
-        if (!file_exists($file)) {
-            error_log("Le fichier $file n'existe pas.");
-            return [];
-        }
-
-        $jsonData = file_get_contents($file);
-        if ($jsonData === false) {
-            error_log("Impossible de lire le contenu du fichier $file.");
-            return [];
-        }
-
-        $data = json_decode($jsonData, true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            error_log("Erreur de décodage JSON: " . json_last_error_msg());
-            return [];
-        }
-
-        return $data;
-    }
-
     // Convertir des degrés en radians
     public static function toRadians($degree)
     {
         return $degree * M_PI / 180;
     }
 
-    // Calcul de l'aire d'un polygone sphérique basé sur les coordonnées
+    // Fonction pour lire un fichier GeoJSON et le décoder en tableau
+    public static function litGeoJSON($file): array
+    {
+
+       // var_dump($file);
+       // exit;
+        if (file_exists($file)) {
+            $jsonData = file_get_contents($file);
+            $decodedData = json_decode($jsonData, true);
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                error_log('Error decoding JSON: ' . json_last_error_msg());
+                echo'Error decoding JSON: ' . json_last_error_msg();
+                exit();
+                //return [];
+            }
+
+        }else{
+            error_log("File not found: " . $file);
+            echo "File not found: " . $file;
+            // exit();
+
+
+        }
+
+
+
+
+       // return [ "toto" => "tata" ];
+  // print_r($decodedData);
+       return $decodedData ?? [];
+
+    }
+
+
+    // Calcul de l'aire d'un polygone
     public static function calculAires(array $coordinates): float
     {
         $totalArea = 0.0;
@@ -66,30 +73,30 @@ class GeoJSONModel
                 $lat2 = self::toRadians($point2[1]);
 
                 $totalArea += ($lon2 - $lon1) * (2 + sin($lat1) + sin($lat2));
+
             }
         }
 
         $totalArea = abs($totalArea * EARTH_RADIUS * EARTH_RADIUS / 2);
 
         return $totalArea;
+
+    }
+
+    public static function Test($file): array
+    {
+        return [ "toto" => "tata" ];
     }
 
     public static function TrouverMinMaxMoy(string $file): array
     {
+        //print_r(self::Test($file));
+        print_r(self::litGeoJSON($file));
+
         $data = self::litGeoJSON($file);
 
         if (empty($data)) {
             error_log("Le fichier GeoJSON est vide ou n'a pas pu être lu.");
-            return [
-                'min_area' => 0,
-                'max_area' => 0,
-                'avg_area' => 0,
-                'all_areas' => []
-            ];
-        }
-
-        if (!isset($data['features'])) {
-            error_log("Le fichier GeoJSON ne contient pas de 'features'.");
             return [
                 'min_area' => 0,
                 'max_area' => 0,
