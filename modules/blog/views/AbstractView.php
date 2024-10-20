@@ -13,7 +13,8 @@ abstract class AbstractView
         include __DIR__ . '/Fragments/header.html';
     }
 
-    private function footer():void{
+    private function footer():void
+    {
         include __DIR__ . '/Fragments/footer.html';
     }
     abstract protected function body();
