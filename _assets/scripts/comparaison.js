@@ -1,5 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
-    initializeDisplay();
+
+    document.getElementById('mapSettingsButton').addEventListener('click', () => displayPopup('settingsPopup'));
+    document.getElementById('mapSettingsButton').addEventListener('click', () => animationMapSettingsButton());
+
+    setElementDisplay('mainDisplay', 'flex');
+    setElementDisplay('trait', 'flex');
+
     const map = initializeMap();
     const layers = [];
 
@@ -11,16 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
         handleFileUpload(map, layers);
     });
 });
-
-function initializeDisplay() {
-    setElementDisplay('mainDisplay', 'flex');
-    setElementDisplay('leftPart', 'flex');
-    setElementDisplay('addFileContainer', 'flex');
-    setElementDisplay('trait', 'flex');
-    setElementDisplay('color-selectors', 'flex');
-    setElementDisplay('map', 'block');
-}
-
 function setElementDisplay(elementId, displayStyle) {
     document.getElementById(elementId).style.display = displayStyle;
 }
@@ -112,3 +108,21 @@ function handleFileUpload(map, layers) {
         alert('Veuillez sélectionner un fichier GeoJSON.');
     }
 }
+
+function displayPopup(elementId) {
+    if (document.getElementById(elementId).style.display === 'flex') {
+        document.getElementById(elementId).style.display = 'none';
+    } else {
+        document.getElementById(elementId).style.display = 'flex';
+    }
+}
+
+
+function animationMapSettingsButton() {
+    if(document.getElementById('mapSettingsButton').style.right === '25vw') {
+        document.getElementById('mapSettingsButton').style.right = '4vw';
+    } else {
+        document.getElementById('mapSettingsButton').style.right = '25vw';
+    }
+}
+

@@ -1,19 +1,15 @@
-
-
 h1 {
     font-size: 2rem;
     color: #2a2a2a;
     text-align: center;
-    margin-top: 1.5rem;
-    margin-bottom: 1rem;
+    margin: 1.5rem 0 1rem;
     font-weight: 700;
 }
 
-form {
+#fileForm {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0 auto;
     padding: 1.5rem;
     background-color: #f9f9f9;
     border-radius: 12px;
@@ -24,7 +20,7 @@ form {
 label {
     font-size: 1.3rem;
     font-weight: 600;
-    margin-bottom: 0.5rem;
+    text-align: center;
 }
 
 input[type="file"],
@@ -32,18 +28,13 @@ button {
     width: 80%;
     padding: 0.7rem;
     font-size: 1rem;
-    margin-bottom: 1rem;
     border: 1px solid #59481d;
     border-radius: 5px;
 }
 
 input[type="file"] {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     cursor: pointer;
     color: #4a4a4a;
-    width: 80%;
 }
 
 button {
@@ -59,10 +50,23 @@ button:hover {
     background-color: #474e23;
 }
 
+#trait {
+    width: 100%;
+    height: 2px;
+    background-color: #59481d;
+    margin: 5vh 0 8vh;
+}
 
-
+#mainDisplay {
+    display: flex;
+    width: 95%;
+    height: 55vh;
+    justify-content: space-around;
+    border-radius: 10px;
+}
 
 #map {
+    display: block;
     width: 100%;
     max-width: 100%;
     height: 55vh;
@@ -72,6 +76,7 @@ button:hover {
     background-color: #f0f0f0;
     overflow: hidden;
     position: relative;
+    z-index: 50;
 }
 
 #map::before {
@@ -87,19 +92,88 @@ button:hover {
     font-weight: bold;
 }
 
+#mapSettingsButton {
+    position: absolute;
+    top: 54vh;
+    right: 4vw;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #4a90e2;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+}
+
+#mapSettingsButton:hover {
+    background-color: #3a7ac2;
+}
+
+#settingsPopup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 20%;
+    height: 51vh;
+    border-radius: 15px 15px 0 0;
+    position: absolute;
+    top: 54vh;
+    right: 4vw;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    background-color: rgba(255, 255, 255, 0.1);
+    z-index: 100;
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+#addFileContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 50vh;
+    margin-bottom: 2vh;
+    border-bottom: 2px solid #59481d;
+}
+
+#addFileContainer label {
+    text-align: center;
+}
+
+input[type="file"] {
+    width: 80%;
+}
 
 #color-selectors {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
-    height: 100%;
-    width: 100%;
+    padding: 1rem;
     background-color: #f9f9f9;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    border-radius: 0 0 0 15px;
-    max-height: 100%;
-    overflow-y: auto;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 500px;
+}
+
+#color-selectors label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    background-color: #fff;
+    border-radius: 8px;
+    margin: 0.5rem 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .color-option {
@@ -109,6 +183,7 @@ button:hover {
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     border: 2px solid #ddd;
+    margin-right: 10px;
 }
 
 .color-option:hover {
@@ -122,15 +197,29 @@ button:hover {
     border-color: #4a90e2;
 }
 
-
-#trait {
-    width: 100%;
-    height: 2px;
-    background-color: #59481d;
-    margin: 5vh 0 8vh;
+input[type="color"] {
+    cursor: pointer;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-right: 10px;
 }
 
-#barBatiments{
+input[type="color"]:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    border-color: #4a90e2;
+}
+
+input[type="checkbox"] {
+    margin-left: 10px;
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+#barBatiments {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -142,32 +231,4 @@ button:hover {
     width: 80%;
     max-width: 500px;
     border: 1px solid #e0e0e0;
-    position: relative;
 }
-
-#mainDisplay{
-    display: flex;
-    width: 95%;
-    height: 55vh;
-    justify-content: space-around;
-    border-radius: 10px;
-}
-
-#addFileContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    border-radius: 15px 0 0 0;
-    border-bottom: 1px solid #59481d;
-}
-
-#leftPart {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 50%;
-}
-
-
