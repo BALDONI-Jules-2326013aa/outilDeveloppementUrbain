@@ -1,5 +1,4 @@
 .middleBox {
-    margin: 5% auto 0 auto;
     width: 100%;
     min-height: 50vh;
     position: relative;
@@ -7,40 +6,66 @@
 
 .box{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     width: 99%;
-    padding: 0.5em;
-    margin: auto;
 }
 
-.leftbox{
-    width: 50%;
-    background-color: #888a88;
+.littleBox{
+    width: 45%;
+    background-color: #274852;
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #000;
+    padding: 1em;
 }
-.rightbox{
-    width: 49%;
-    background-color: #888a88;
+
+.littleBox h3 {
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
 }
+
+.littleBox p{
+    padding: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    width: 60%;
+    background: #fff;
+    color: #274852;
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
 .mainTitle{
     margin:auto;
     position: absolute;
     z-index: 100;
-    color: #afdae1;
-    top: 80vh;
-    left: 99vh;
+    color: #fff;
+    top: 53%;
+    left: 47%;
+    text-align: center;
 }
 
 h3{
     text-align: center;
 }
+
 .consiste{
     width: 250px;
     height: 250px;
     margin: 10px;
+    border-radius: 20px;
 }
+
 .texte{
     display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
+
 .gallery {
     margin: 10% auto;
     position: relative;
