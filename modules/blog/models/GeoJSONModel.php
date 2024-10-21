@@ -50,7 +50,7 @@ class GeoJSONModel
         return "
     <div style='display: none;' id='nbBatimentsJson'>$nbBatimentsJson</div>
     <div style='display: none;' id='fileNamesJson'>$fileNamesJson</div>
-    <canvas id='barBatiments'></canvas>
+    <canvas id='barBatiments' style='display: none;'></canvas>
     <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
     <script src='/_assets/scripts/nombreBatiments.js'></script>
     ";
