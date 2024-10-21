@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('mapSettingsButton').addEventListener('click', () => displayPopup('settingsPopup'));
     document.getElementById('mapSettingsButton').addEventListener('click', () => animationMapSettingsButton());
 
+    document.getElementById('graph1').addEventListener('click', () => displayPopup('barBatiments'));
+
     setElementDisplay('mainDisplay', 'flex');
     setElementDisplay('trait', 'flex');
 
