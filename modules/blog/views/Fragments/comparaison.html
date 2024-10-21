@@ -8,13 +8,18 @@
 </form>
 
 <div id="trait" style="display: none;"></div>
+<div id="mainDisplay" style="display: none;">
+  <div id="leftPart" style="display: none;">
+    <form id="addFileContainer" class="add-file-container" style="display: none;">
+      <label for="file2" class="add-file-label">Ajouter un fichier GeoJSON à la map</label>
+      <input type="file" name="files[]" id="file2" class="add-file-input" required multiple>
+      <button type="button" id="addFileButton" class="add-file-button">Ajouter à la carte</button>
+    </form>
+    <div id="color-selectors" style="display: none;"></div>
+  </div>
+  <div id="map" style="display: none;"></div>
+</div>
 
-<form id="addFileContainer" class="add-file-container" style="display: none;">
-  <label for="file2" class="add-file-label">Ajouter un fichier GeoJSON à la map</label>
-  <input type="file" name="files[]" id="file2" class="add-file-input" required>
-  <button type="button" id="addFileButton" class="add-file-button">Ajouter à la carte</button>
-</form>
 
-<div id="color-selectors" style="display: none;"></div>
-<div id="map" style="display: none;"></div>
+
 </body>
