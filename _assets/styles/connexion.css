@@ -1,13 +1,13 @@
-
-
 form {
+    margin-top: 6%;
+    margin-left: 2%;
     background-color: #fff;
-    padding: 20px;
+    padding: 40px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.75);
     display: flex;
     flex-direction: column;
-    align-items: center;
+
 }
 
 label {
@@ -18,7 +18,7 @@ label {
 
 input[type="text"],
 input[type="password"] {
-    width: 100%;
+    width: 92%;
     padding: 10px;
     margin-bottom: 16px;
     border: 1px solid #ccc;
@@ -27,16 +27,23 @@ input[type="password"] {
 }
 
 button {
-    background-color: #557002;
+    background-color: #4a90e2;
     color: #fff;
     padding: 10px 20px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
+    
 }
 
 button:hover {
-    background-color: #445601;
+    background-color: #357ab8;
     transition: background-color 0.3s ease;
-}z
+}
+footer{
+    position: fixed;
+}
+.btnInscription {
+    margin-top: 5px;
+}

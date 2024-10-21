@@ -2,24 +2,25 @@
     font-family: 'Poppins';
 }
 
-.header{
-    width: 100%;
-    top:0;
-    left: 0;
-    z-index: 100;
-    font-size: 24px;
-}
-
-body{
+body {
     display: flex;
     flex-direction: column;
-    background-color: #b4b1ac;
+    background-color: #e7e5d7;
+    justify-content: center;
+    align-items: center;
+}
+
+.header{
+    width: 98%;
+    z-index: 100;
+    font-size: 24px;
+    display: flex;
     justify-content: center;
     align-items: center;
 }
 
 nav {
-    background-color: #8d8b80;
+    background-color: #9bc6ca;
     max-height: 10vh;
     display: flex;
     align-items: center;
@@ -27,17 +28,13 @@ nav {
     width: 100%;
 }
 
-ul{
+ul {
     display: flex;
     width: 100%;
     justify-content: space-around;
     align-items: center;
     list-style-type: none;
-
-}
-
-.nav-hidden {
-    display: block;
+    padding: 0;
 }
 
 li{
@@ -50,7 +47,6 @@ li{
 a{
     display: inline-block;
     list-style-type: none;
-    margin: 10px;
 }
 
 a{
@@ -60,8 +56,8 @@ a{
 }
 
 nav a {
-    position: relative; /* Nécessaire pour positionner le pseudo-élément */
-    text-decoration: none; /* Pas de soulignement par défaut */
+    position: relative;
+    text-decoration: none;
     color: black;
     padding: 8px;
 }
@@ -84,9 +80,8 @@ nav a:hover::after {
 
 a:hover{
     transition: 0.5s;
-
-
 }
+
 .imgH{
     height: 70px;
     width: 70px;
@@ -96,11 +91,9 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #8d8b80;
-   margin: 5px;
+    background-color: #9bc6ca;
+    margin: 5px;
     bottom: 0;
     left: 0;
-
     padding: 5px;
-
 }

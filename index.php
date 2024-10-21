@@ -44,7 +44,8 @@ switch ($request_uri) {
         $verification = new ConnexionModel();
         $verification::verifConnexion();
         break;
-    default:
-        echo 'Page not found';
-
+    case 'inscription':
+        $connexion = new \blog\controllers\inscriptionController();
+        $connexion::affichePage();
+        break;
 }
