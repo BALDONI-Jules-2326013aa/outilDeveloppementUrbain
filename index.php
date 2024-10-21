@@ -2,8 +2,10 @@
 include __DIR__ . '/AutoLoader.php';
 
 use blog\controllers\ComparaisonController;
+use blog\controllers\ConnexionController;
 use blog\controllers\HomePageController;
 use blog\controllers\SimulationController;
+use blog\models\ConnexionModel;
 
 
 $request_uri = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
@@ -34,6 +36,15 @@ switch ($request_uri) {
         $ficher = new SimulationController();
         $ficher::startSimulation();
         break;
+    case 'connexion':
+        $connexion = new ConnexionController();
+        $connexion::affichePage();
+        break;
+    case 'verifConnexion':
+        $verification = new ConnexionModel();
+        $verification::verifConnexion();
+        break;
     default:
+        echo 'Page not found';
 
 }
