@@ -60,9 +60,9 @@ function createLayerControls(layer, color, fileName, map) {
     const visibilityCheckbox = createVisibilityCheckbox(layer, map);
 
     const label = document.createElement('label');
-    label.textContent = 'Affichage pour ' + fileName + ': ';
-    label.appendChild(colorSelector);
+    label.textContent = 'Affichage pour \n' + fileName + ': ';
     label.appendChild(visibilityCheckbox);
+    label.appendChild(colorSelector);
 
     document.getElementById('color-selectors').appendChild(label);
 }
@@ -90,24 +90,27 @@ function createVisibilityCheckbox(layer, map) {
 }
 
 function handleFileUpload(map, layers) {
-    const fileInput = document.getElementById('file2').files[0];
+    const files = document.getElementById('file2').files;
 
-    if (fileInput) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            try {
-                const geojsonData = JSON.parse(event.target.result);
-                addGeoJSONLayer(map, layers, geojsonData, fileInput.name);
-                document.getElementById('file2').value = '';
-            } catch (error) {
-                console.error('Erreur de parsing GeoJSON:', error);
-            }
-        };
-        reader.readAsText(fileInput);
+    if (files.length > 0) {
+        Array.from(files).forEach(fileInput => {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    const geojsonData = JSON.parse(event.target.result);
+                    addGeoJSONLayer(map, layers, geojsonData, fileInput.name);
+                } catch (error) {
+                    console.error('Erreur de parsing GeoJSON:', error);
+                }
+            };
+            reader.readAsText(fileInput);
+        });
+        document.getElementById('file2').value = '';
     } else {
         alert('Veuillez sélectionner un fichier GeoJSON.');
     }
 }
+
 
 function displayPopup(elementId) {
     if (document.getElementById(elementId).style.display === 'flex') {

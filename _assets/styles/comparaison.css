@@ -127,9 +127,10 @@ button:hover {
     backdrop-filter: blur(5px);
     background-color: rgba(255, 255, 255, 0.1);
     z-index: 100;
-    max-height: 50vh;
     overflow-y: auto;
+    overflow-x: hidden;
 }
+
 
 #addFileContainer {
     display: flex;
@@ -137,7 +138,7 @@ button:hover {
     justify-content: space-around;
     align-items: center;
     width: 100%;
-    height: 50vh;
+    min-height: 20vh;
     margin-bottom: 2vh;
     border-bottom: 2px solid #59481d;
 }
@@ -155,12 +156,9 @@ input[type="file"] {
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
-    padding: 1rem;
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
     width: 100%;
-    max-width: 500px;
+    border-bottom: 2px solid #59481d;
 }
 
 #color-selectors label {
@@ -170,7 +168,6 @@ input[type="file"] {
     width: 100%;
     padding: 0.5rem;
     font-size: 1rem;
-    background-color: #fff;
     border-radius: 8px;
     margin: 0.5rem 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -186,37 +183,32 @@ input[type="file"] {
     margin-right: 10px;
 }
 
-.color-option:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-    border-color: #4a90e2;
-}
-
-.color-option.selected {
-    box-shadow: 0 0 12px rgba(74, 144, 226, 0.4);
-    border-color: #4a90e2;
-}
 
 input[type="color"] {
     cursor: pointer;
     border: none;
-    width: 40px;
-    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    max-width: 40px;
+    max-height: 40px;
     border-radius: 50%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-right: 10px;
 }
 
 input[type="color"]:hover {
-    transform: scale(1.1);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
     border-color: #4a90e2;
 }
 
 input[type="checkbox"] {
-    margin-left: 10px;
-    transform: scale(1.2);
     cursor: pointer;
+}
+
+#graphs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
 
 #barBatiments {
