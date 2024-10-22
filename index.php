@@ -48,4 +48,9 @@ switch ($request_uri) {
         $connexion = new \blog\controllers\inscriptionController();
         $connexion::affichePage();
         break;
+    case 'Inscription':
+
+        $inscription = new \blog\controllers\inscriptionController();
+        $inscription ->Inscription();
+        break;
 }
