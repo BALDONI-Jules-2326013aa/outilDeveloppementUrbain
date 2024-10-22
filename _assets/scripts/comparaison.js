@@ -107,7 +107,6 @@ function handleFileUpload(map, layers) {
             };
             reader.readAsText(fileInput);
         });
-        document.getElementById('file2').value = '';
     } else {
         alert('Veuillez sélectionner un fichier GeoJSON.');
     }

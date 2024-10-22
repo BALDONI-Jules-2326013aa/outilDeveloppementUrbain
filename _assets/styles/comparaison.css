@@ -69,7 +69,7 @@ button:hover {
     display: block;
     width: 100%;
     max-width: 100%;
-    height: 55vh;
+    height: 65vh;
     border-radius: 15px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     border: 2px solid #4a90e2;
@@ -118,7 +118,7 @@ button:hover {
     flex-direction: column;
     align-items: center;
     width: 20%;
-    height: 51vh;
+    height: 61vh;
     border-radius: 15px 15px 0 0;
     position: absolute;
     top: 54vh;
@@ -149,6 +149,7 @@ button:hover {
     min-height: 20vh;
     margin-bottom: 2vh;
     border-bottom: 2px solid #59481d;
+    border-radius: 10px 10px 0 0;
 }
 
 #addFileContainer label {
@@ -216,6 +217,8 @@ input[type="checkbox"] {
     flex-direction: column;
     align-items: center;
     width: 100%;
+    padding: 2vh 0 2vh;
+    border-radius: 0 0 10px 10px;
 }
 
 .graph-button {
