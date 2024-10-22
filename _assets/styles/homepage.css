@@ -96,7 +96,7 @@ h3{
     --rotate: rotate(-45deg);
     transform: var(--rotate);
     transition: .3s ease;
-    height: 600px;
+    height: 800px;
     filter: brightness(50%);
 }
 .gallery .img:nth-of-type(odd) {
@@ -136,5 +136,43 @@ h3{
     }
     to {
         transform: translate(0px, 0px) translateZ(0px);
+    }
+}
+@media (max-width: 800px) {
+    .box{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        margin: 1%;
+    }
+    .littleBox{
+        width: 95%;
+        background-color: #274852;
+        color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px #000;
+        padding: 1em;
+        margin:1%;
+
+    }
+    .gallery {
+        margin: 10% auto;
+        position: relative;
+        perspective: 1500px;
+        transform-style: preserve-3d;
+        width: 45%;
+        aspect-ratio: 1;
+        background: silver;
+        transform: rotate(45deg);
+    }
+    .mainTitle{
+        margin:auto;
+        position: absolute;
+        z-index: 100;
+        color: #fff;
+        top: 50%;
+        left: 42%;
+        text-align: center;
     }
 }

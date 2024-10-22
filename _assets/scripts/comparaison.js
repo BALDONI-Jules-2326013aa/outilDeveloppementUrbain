@@ -124,10 +124,10 @@ function displayPopup(elementId) {
 
 
 function animationMapSettingsButton() {
-    if(document.getElementById('mapSettingsButton').style.right === '25vw') {
+    if(document.getElementById('mapSettingsButton').style.right === '35vw') {
         document.getElementById('mapSettingsButton').style.right = '4vw';
     } else {
-        document.getElementById('mapSettingsButton').style.right = '25vw';
+        document.getElementById('mapSettingsButton').style.right = '35vw';
     }
 }
 

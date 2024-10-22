@@ -97,3 +97,8 @@ footer {
     left: 0;
     padding: 5px;
 }
+@media (max-width: 800px){
+    .pFooter{
+        text-align: center;
+    }
+}
