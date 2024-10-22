@@ -3,7 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('mapSettingsButton').addEventListener('click', () => displayPopup('settingsPopup'));
     document.getElementById('mapSettingsButton').addEventListener('click', () => animationMapSettingsButton());
 
-    document.getElementById('graph1').addEventListener('click', () => displayPopup('barBatiments'));
+    document.getElementById('graph1').addEventListener('click', () => displayGraphique('barBatiments'));
+    document.getElementById('graph2').addEventListener('click', () => displayGraphique('radarAireBatiments'));
 
     setElementDisplay('mainDisplay', 'flex');
     setElementDisplay('trait', 'flex');
@@ -130,3 +131,17 @@ function animationMapSettingsButton() {
     }
 }
 
+function displayGraphique(elementId) {
+    const listeGraphiques = ['barBatiments', 'radarAireBatiments'];
+    listeGraphiques.forEach(graphique => {
+        if (graphique === elementId) {
+            if (document.getElementById(graphique).style.display === 'none') {
+                document.getElementById(graphique).style.display = 'block';
+            } else {
+                document.getElementById(graphique).style.display = 'none';
+            }
+        } else {
+            document.getElementById(graphique).style.display = 'none';
+        }
+    });
+}

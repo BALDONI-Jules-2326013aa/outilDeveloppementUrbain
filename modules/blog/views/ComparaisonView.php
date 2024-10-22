@@ -47,13 +47,19 @@ class ComparaisonView extends AbstractView
 
     public function afficherGraphiqueBatiments(array $dataArray, array $fileNames): void {
         $geoJsonModel = new GeoJSONModel();
-        $nbBatiments = $geoJsonModel->recupereNombreBaptiment($dataArray);
-        $script = $geoJsonModel->dessineGraphique($nbBatiments, $fileNames);
+        $nbBatiments = $geoJsonModel->recupereNombreBatiment($dataArray);
+        $script = $geoJsonModel->dessineGraphiqueNombreBatiments($nbBatiments, $fileNames);
 
         $this->body.= $script;
     }
 
+    public function afficherGraphiqueAireBatiments(array $dataArray, array $fileNames): void {
+        $geoJsonModel = new GeoJSONModel();
+        $aireBatiments = $geoJsonModel->recupereSurfaceTotale($dataArray);
+        $script = $geoJsonModel->dessineGraphiqueAireBatiments($aireBatiments, $fileNames);
 
+        $this->body.= $script;
+    }
 
     public function afficher(): void
     {
