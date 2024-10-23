@@ -6,7 +6,6 @@ if (aireMoyenneJson && fileNamesRadarJson) {
     const fileNamesRadar = JSON.parse(fileNamesRadarJson);
     const radarAireMoyenne = document.getElementById('radarAireMoyenne').getContext('2d');
 
-    document.getElementById('radarAireMoyenne').style.display = 'block';
 
     new Chart(radarAireMoyenne, {
         type: 'radar',
