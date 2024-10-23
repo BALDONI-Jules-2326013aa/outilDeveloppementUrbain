@@ -40,7 +40,7 @@ class ComparaisonController
         $view = new ComparaisonView();
         $view->afficherAvecFichiers($dataArray, $fileNames);
         $view->afficherGraphiqueBatiments($dataArray, $fileNames);
-        $view->afficherGraphiqueAireBatiments($dataArray, $fileNames);
+        $view->afficherGraphiqueRadarAireMoyenne($dataArray, $fileNames);
         $view->afficher();
     }
 

@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('mapSettingsButton').addEventListener('click', () => animationMapSettingsButton());
 
     document.getElementById('graph1').addEventListener('click', () => displayGraphique('barBatiments'));
-    document.getElementById('graph2').addEventListener('click', () => displayGraphique('radarAireBatiments'));
+    document.getElementById('graph2').addEventListener('click', () => displayGraphique('radarAireMoyenne'));
 
     setElementDisplay('mainDisplay', 'flex');
     setElementDisplay('trait', 'flex');
@@ -132,7 +132,7 @@ function animationMapSettingsButton() {
 }
 
 function displayGraphique(elementId) {
-    const listeGraphiques = ['barBatiments', 'radarAireBatiments'];
+    const listeGraphiques = ['barBatiments', 'radarAireMoyenne'];
     listeGraphiques.forEach(graphique => {
         if (graphique === elementId) {
             if (document.getElementById(graphique).style.display === 'none') {

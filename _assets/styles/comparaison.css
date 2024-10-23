@@ -216,6 +216,8 @@ input[type="checkbox"] {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
+    min-height: 22vh;
     width: 100%;
     padding: 2vh 0 2vh;
     border-radius: 0 0 10px 10px;
@@ -231,7 +233,7 @@ input[type="checkbox"] {
     transition: background-color 0.3s ease;
 }
 
-#barBatiments, #radarAireBatiments {
+#barBatiments, #radarAireMoyenne {
     position: absolute;
     top:55vh;
     left: 4vw;
