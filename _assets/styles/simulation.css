@@ -35,7 +35,9 @@ label {
 	font-weight: 600;
 	margin-bottom: 0.5rem;
 }
-
+.espace {
+	height: 34.5vh;
+}
 input[type="file"],
 input[type="number"],
 button {

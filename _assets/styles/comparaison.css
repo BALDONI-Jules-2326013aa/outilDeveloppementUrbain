@@ -44,6 +44,7 @@ button {
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin: 1%;
 }
 
 button:hover {
@@ -247,8 +248,9 @@ input[type="checkbox"] {
 }
 
 .espace {
-    height: 80vh;
+    height: 49vh;
 }
+
 @media (max-width: 800px) {
     #fileForm {
         display: flex;
