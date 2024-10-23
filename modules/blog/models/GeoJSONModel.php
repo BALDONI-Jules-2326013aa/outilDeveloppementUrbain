@@ -94,7 +94,7 @@ class GeoJSONModel
                 }
             }
             $moyenne = $buildingCount > 0 ? $totalArea / $buildingCount : 0;
-            $listAireMoyenne[] = $moyenne;
+            $listAireMoyenne[] = $moyenne * 1000000000; // Multiplication pour avoir des valeurs lisibles
         }
 
         return $listAireMoyenne;

@@ -234,6 +234,7 @@ input[type="checkbox"] {
 }
 
 #barBatiments, #radarAireMoyenne {
+    display: none;
     position: absolute;
     top:55vh;
     left: 4vw;

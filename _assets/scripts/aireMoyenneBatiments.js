@@ -13,8 +13,8 @@ if (aireMoyenneJson && fileNamesRadarJson) {
         data: {
             labels: fileNamesRadar,
             datasets: [{
-                label: 'Aire moyenne des bâtiments (en m² x 10^6)',
-                data: aireMoyenne, // Les valeurs multipliées s'afficheront ici
+                label: 'Aire moyenne des bâtiments (en m²)',
+                data: aireMoyenne,
                 backgroundColor: 'rgba(0, 99, 132, 0.2)',
                 borderColor: 'rgba(0, 99, 132, 1)',
                 borderWidth: 1
