@@ -1,21 +1,22 @@
-<?php
+    <?php
+    include __DIR__ . '/AutoLoader.php';
 
-include __DIR__ . '/AutoLoader.php';
+    use blog\controllers\ComparaisonController;
+    use blog\controllers\ConnexionController;
+    use blog\controllers\HomePageController;
+    use blog\controllers\SimulationController;
+    use blog\controllers\inscriptionController;
+    use blog\models\InscriptionModel;
+    use blog\models\ConnexionModel;
 
-use blog\controllers\ComparaisonController;
-use blog\controllers\ConnexionController;
-use blog\controllers\HomePageController;
-use blog\controllers\SimulationController;
-use blog\models\ConnexionModel;
 
+    $request_uri = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
+    if ($request_uri == '' || $request_uri == 'index.php') {
 
-$request_uri = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
-if ($request_uri == '' || $request_uri == 'index.php') {
+        $homePage = new HomePageController();
+        $homePage::affichePage();
+    }
 
-    $homePage = new HomePageController();
-    $homePage::affichePage();
-
-}else{
     switch ($request_uri) {
         case 'comparaison':
             $comparaison = new ComparaisonController();
@@ -45,20 +46,14 @@ if ($request_uri == '' || $request_uri == 'index.php') {
             $verification = new ConnexionModel();
             $verification::verifConnexion();
             break;
-        case 'verifInscription':
-            $verification = new \blog\models\InscriptionModel();
-            $verification::verifInscription();
-            break;
-        case 'inscription':
-            $connexion = new \blog\controllers\inscriptionController();
-            $connexion::affichePage();
-            break;
-        case 'Inscription':
 
-            $inscription = new \blog\controllers\inscriptionController();
-            $inscription ->Inscription();
+        case 'inscription':
+            $inscription = new inscriptionController();
+            $inscription::affichePage();
+            break;
+
+        case 'verifInscription':
+            $inscriptionModel = new InscriptionModel();
+            $inscriptionModel-> verifInscription($username, $password,$id);
             break;
     }
-}
-
-
