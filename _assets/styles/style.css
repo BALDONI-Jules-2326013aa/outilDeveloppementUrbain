@@ -106,14 +106,21 @@ footer {
 .dropdown-content {
     display: none;
     position: absolute;
-    top: 10%;
+    top: 9.10%;
     background-color: #9bc6ca;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
     overflow: hidden;
     max-height: 0;
+
     transition: max-height 0.5s ease-out;
+}
+
+.dropdown:hover .dropdown-content {
+    display: flex;
+    flex-direction: column;
+    max-height: 500px;
 }
 
 .dropdown-content a {

@@ -4,12 +4,13 @@ namespace blog\views;
 
 class HeadView
 {
-    public function __construct(private String $titre, private String $css){}
+    public function __construct(private string $titre, private string $css){}
 
     function afficher(): void
     {
-        $fd = fopen(__DIR__ . '/Fragments/head.html', 'r');
-        $headpage = fread($fd, filesize(__DIR__ . '/Fragments/head.html'));
+        $filePath = __DIR__ . '/Fragments/head.html';
+        $fd = fopen($filePath, 'r');
+        $headpage = fread($fd, filesize($filePath));
         fclose($fd);
 
         $headpage = str_replace('{{Title}}', $this->titre, $headpage);
@@ -17,5 +18,4 @@ class HeadView
 
         echo $headpage;
     }
-
 }

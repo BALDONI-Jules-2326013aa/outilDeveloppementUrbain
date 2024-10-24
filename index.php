@@ -4,6 +4,8 @@
     use blog\controllers\ComparaisonController;
     use blog\controllers\ConnexionController;
     use blog\controllers\HomePageController;
+    use blog\controllers\HistoriqueCController;
+    use blog\controllers\HistoriqueSController;
     use blog\controllers\SimulationController;
     use blog\controllers\inscriptionController;
     use blog\models\InscriptionModel;
@@ -46,12 +48,18 @@
             $verification = new ConnexionModel();
             $verification::verifConnexion();
             break;
-
+        case 'historiqueC':
+            $historiqueC = new HistoriqueCController();
+            $historiqueC::affichePage();
+            break;
+            case 'historiqueS':
+            $historiqueS = new HistoriqueSController();
+            $historiqueS::affichePage();
+            break;
         case 'inscription':
             $inscription = new inscriptionController();
             $inscription::affichePage();
             break;
-
         case 'verifInscription':
             $inscriptionModel = new InscriptionModel();
             $inscriptionModel-> verifInscription($username, $password,$id);
