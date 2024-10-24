@@ -13,11 +13,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $result = $inscriptionModel->registerUser($username, $hashedPassword);
 
         if ($result) {
-            echo "Registration successful!";
+            // Inscription réussie, redirige vers la page d'accueil
+            header('Location: /');
+            exit();
         } else {
-            echo "Registration failed. Please try again.";
+            echo "L'inscription a échoué. Veuillez réessayer.";
         }
     } else {
-        echo "Please fill in all fields.";
+        echo "Veuillez remplir tous les champs.";
     }
 }

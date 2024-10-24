@@ -12,7 +12,7 @@ class InscriptionModel
         $this->db = $dbConnect->connect();
     }
 
-    public function registerUser($username, $password,$id)
+    public function verifInscription($username, $password,$id)
     {
         $sql = "INSERT INTO utilisateurs (username, password,id) VALUES (:username, :password,:id)";
         $stmt = $this->db->prepare($sql);

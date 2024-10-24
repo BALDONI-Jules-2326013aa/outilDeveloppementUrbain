@@ -8,12 +8,13 @@ use blog\views\inscriptionView;
 
 class inscriptionController
 {
-    public static function affichePage():void
+    public static function affichePage(): void
     {
         session_start();
         $view = new inscriptionView();
         $view->afficher();
     }
+
     public function Inscription(): void
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -22,21 +23,18 @@ class inscriptionController
                 'email' => $_POST['email'],
                 'username' => $_POST['username'],
                 'password' => $_POST['password'],
-
             ];
 
             $tenracModel = new GestionTenracModel(new DbConnect());
             $tenracModel->Inscription(
-                $newuser['Courriel'],
-                $newuser['Code_personnel'],
-                $newuser['Nom'],
-                $newuser['password'],
-
+                $newuser['id'],
+                $newuser['email'],
+                $newuser['username'],
+                $newuser['password']
             );
-            mail($newuser['Courriel'], 'Bienvenue', 'Votre inscription a bien été prise en compte');
-            header('Location: /index.php');
+            mail($newuser['email'], 'Bienvenue', 'Votre inscription a bien été prise en compte');
+            header('Location: /'); // Redirect to homepage
             exit();
         }
-
     }
 }

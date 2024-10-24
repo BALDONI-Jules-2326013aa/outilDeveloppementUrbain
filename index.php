@@ -1,4 +1,5 @@
 <?php
+
 include __DIR__ . '/AutoLoader.php';
 
 use blog\controllers\ComparaisonController;
@@ -13,44 +14,51 @@ if ($request_uri == '' || $request_uri == 'index.php') {
 
     $homePage = new HomePageController();
     $homePage::affichePage();
+
+}else{
+    switch ($request_uri) {
+        case 'comparaison':
+            $comparaison = new ComparaisonController();
+            $comparaison::affichePage();
+            break;
+        case 'comparaisonFichier':
+            $ficher = new ComparaisonController();
+            $ficher::afficheFichier();
+            break;
+        case 'Simulation':
+            $simulation = new SimulationController();
+            $simulation::affichePage();
+            break;
+        case 'afficheGetYears':
+            $ficher = new SimulationController();
+            $ficher::afficheGetYears();
+            break;
+        case 'startSimulation':
+            $ficher = new SimulationController();
+            $ficher::startSimulation();
+            break;
+        case 'connexion':
+            $connexion = new ConnexionController();
+            $connexion::affichePage();
+            break;
+        case 'verifConnexion':
+            $verification = new ConnexionModel();
+            $verification::verifConnexion();
+            break;
+        case 'verifInscription':
+            $verification = new \blog\models\InscriptionModel();
+            $verification::verifInscription();
+            break;
+        case 'inscription':
+            $connexion = new \blog\controllers\inscriptionController();
+            $connexion::affichePage();
+            break;
+        case 'Inscription':
+
+            $inscription = new \blog\controllers\inscriptionController();
+            $inscription ->Inscription();
+            break;
     }
-
-switch ($request_uri) {
-    case 'comparaison':
-        $comparaison = new ComparaisonController();
-        $comparaison::affichePage();
-        break;
-    case 'comparaisonFichier':
-        $ficher = new ComparaisonController();
-        $ficher::afficheFichier();
-        break;
-    case 'Simulation':
-        $simulation = new SimulationController();
-        $simulation::affichePage();
-        break;
-    case 'afficheGetYears':
-        $ficher = new SimulationController();
-        $ficher::afficheGetYears();
-        break;
-    case 'startSimulation':
-        $ficher = new SimulationController();
-        $ficher::startSimulation();
-        break;
-    case 'connexion':
-        $connexion = new ConnexionController();
-        $connexion::affichePage();
-        break;
-    case 'verifConnexion':
-        $verification = new ConnexionModel();
-        $verification::verifConnexion();
-        break;
-    case 'inscription':
-        $connexion = new \blog\controllers\inscriptionController();
-        $connexion::affichePage();
-        break;
-    case 'Inscription':
-
-        $inscription = new \blog\controllers\inscriptionController();
-        $inscription ->Inscription();
-        break;
 }
+
+
