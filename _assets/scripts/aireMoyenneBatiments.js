@@ -45,7 +45,6 @@ function addGeoJsonToChart(geojsonData, fileName) {
         console.warn(`Le fichier ${fileName} ne contient aucun bâtiment valide.`);
     }
 }
-S
 addFileButton.addEventListener('click', function() {
     const files = fileInputElement.files;
 
