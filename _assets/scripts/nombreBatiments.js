@@ -1,67 +1,73 @@
 document.addEventListener('DOMContentLoaded', function() {
-    let ctx = document.getElementById('barBatiments').getContext('2d');
+    const ctx = document.getElementById('barBatiments').getContext('2d');
+    const fileInputElement = document.getElementById('file2');
+    const addFileButton = document.getElementById('addFileButton');
 
-    // Initialisation des labels et des datasets
+    const COLORS = {
+        backgroundColor: '#6b5eba',
+        borderColor: '#557002'
+    };
+
     let labels = JSON.parse(document.getElementById('fileNamesJson').textContent);
     let nbBatimentsData = JSON.parse(document.getElementById('nbBatimentsJson').textContent);
 
-    // Création initiale du graphique
-    let barBatiments = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Nombre de bâtiments',
-                data: nbBatimentsData,
-                backgroundColor: '#e2eba7',
-                borderColor: '#557002',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true
+    // Initialisation du graphique
+    let barBatiments = createBarChart(ctx, labels, nbBatimentsData);
+
+    // Fonction pour créer un graphique à barres
+    function createBarChart(ctx, labels, data) {
+        return new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Nombre de bâtiments',
+                    data: data,
+                    backgroundColor: COLORS.backgroundColor,
+                    borderColor: COLORS.borderColor,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
                 }
             }
-        }
-    });
-
-    // Fonction pour ajouter des données GeoJSON et mettre à jour le graphique
-    function addGeoJson(geojsonData, fileName) {
-        // Simuler l'extraction du nombre de bâtiments (par exemple, nombre de "features")
-        const nbBatiments = geojsonData.features ? geojsonData.features.length : 0;
-
-        // Ajouter le nouveau fichier et son nombre de bâtiments aux labels et datasets
-        barBatiments.data.labels.push(fileName);
-        barBatiments.data.datasets[0].data.push(nbBatiments);
-
-        // Mettre à jour le graphique avec les nouvelles données
-        barBatiments.update();
+        });
     }
 
-    // Gestionnaire pour l'ajout d'un fichier GeoJSON
-    document.getElementById('addFileButton').addEventListener('click', function() {
-        const newFileInput = document.getElementById('file2').files[0];
-
-        if (newFileInput) {
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                try {
-                    const geojsonData = JSON.parse(event.target.result);
-                    // Ajouter les données du nouveau fichier au graphique
-                    addGeoJson(geojsonData, newFileInput.name);
-
-                    // Réinitialiser le champ de fichier après l'ajout
-                    document.getElementById('file2').value = '';
-                } catch (e) {
-                    console.error('Erreur de parsing GeoJSON:', e);
-                }
-            };
-            reader.readAsText(newFileInput);
+    // Fonction pour ajouter un GeoJSON et mettre à jour le graphique
+    function addGeoJsonToChart(geojsonData, fileName) {
+        if (geojsonData.features && geojsonData.features.length > 0) {
+            const nbBatiments = geojsonData.features.length;
+            labels.push(fileName);
+            nbBatimentsData.push(nbBatiments);
+            barBatiments.update(); // Mise à jour du graphique
         } else {
-            alert('Veuillez sélectionner un fichier GeoJSON.');
+            console.warn(`Le fichier ${fileName} ne contient aucun bâtiment valide.`);
+        }
+    }
+
+    // Gestion de l'ajout de fichier via le bouton
+    addFileButton.addEventListener('click', function() {
+        const files = fileInputElement.files;
+
+        if (files.length > 0) {
+            Array.from(files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = event => {
+                    try {
+                        const geojsonData = JSON.parse(event.target.result);
+                        addGeoJsonToChart(geojsonData, file.name);
+                    } catch (error) {
+                        console.error('Erreur de parsing GeoJSON:', error);
+                    }
+                };
+                reader.readAsText(file);
+            });
         }
     });
 });

@@ -41,19 +41,21 @@ class ComparaisonView extends AbstractView
             "<script src='_assets/scripts/comparaison.js'></script>";
 
         $this->body = $script;
-
-
     }
 
     public function afficherGraphiqueBatiments(array $dataArray, array $fileNames): void {
         $geoJsonModel = new GeoJSONModel();
-        $nbBatiments = $geoJsonModel->recupereNombreBaptiment($dataArray);
-        $script = $geoJsonModel->dessineGraphique($nbBatiments, $fileNames);
-
+        $nbBatiments = $geoJsonModel->recupereNombreBatiment($dataArray);
+        $script = $geoJsonModel->dessineGraphiqueNombreBatiments($nbBatiments, $fileNames);
         $this->body.= $script;
     }
 
-
+    public function afficherGraphiqueRadarAireMoyenne(array $dataArray, array $fileNames): void {
+        $geoJsonModel = new GeoJSONModel();
+        $surfaceMoyenne = $geoJsonModel->recupereSurfaceMoyenneBatiments($dataArray);
+        $script = $geoJsonModel->dessineGraphiqueRadarAireMoyenne($surfaceMoyenne, $fileNames);
+        $this->body.= $script;
+    }
 
     public function afficher(): void
     {

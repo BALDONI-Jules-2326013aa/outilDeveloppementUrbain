@@ -10,10 +10,18 @@
     <button type="submit">Continuer</button>
 </form>
 
-<div id="color-selectors" style="display: none;"></div>
-<div id="map" style="display: none;"></div>
+<div id="trait" style="display: none;"></div>
+<div id="mainDisplay" style="display: none;">
+    <button id="mapSettingsButton" class="map-settings-button"><ion-icon name="arrow-forward"></ion-icon></button>
+    <div id="settingsPopup" style="display: none;">
+        <div id="color-selectors"></div>
+        <div id="graphs">
+            <button class="graph-button" id="graph1">Nombre de batiments (barres)</button>
+        </div>
+    </div>
+    <div id="map"></div>
+</div>
 <div id="downloadFiles" style="display: none;">
     <button id="downloadFilesButton">Télécharger les fichiers GeoJSON</button>
 </div>
 
-</body>
