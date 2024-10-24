@@ -2,6 +2,7 @@
 
 namespace blog\views;
 use blog\models\GeoJSONModel;
+use blog\models\TifModel;
 
 class ComparaisonView extends AbstractView
 {
@@ -59,6 +60,20 @@ class ComparaisonView extends AbstractView
         $script = $geoJsonModel->dessineGraphiqueRadarAireMoyenne($surfaceMoyenne, $fileNames);
         $this->body .= $script;
     }
+
+    public function afficheImageTifSurCarte(array $dataArray): void {
+        $tifModel = new TifModel();
+        $htmlOutput = $tifModel->visualisationHillShade($dataArray[0]);
+        $htmlOutput .= $tifModel->visualisationSlope($dataArray[0]);
+        $htmlOutput .= $tifModel->visualisationAspect($dataArray[0]);
+        $htmlOutput .= $tifModel->visualisationColorRelief($dataArray[0], __DIR__ . '/Fragments/color_relief.txt');
+        $htmlOutput .= $tifModel->visualisationTRI($dataArray[0]);
+        $htmlOutput .= $tifModel->visualisationTPI($dataArray[0]);
+        $htmlOutput .= $tifModel->visualisationRoughness($dataArray[0]);
+        $this->body .= $htmlOutput; // Ajoute la sortie HTML à la vue
+
+    }
+
 
     public function afficher(): void
     {
