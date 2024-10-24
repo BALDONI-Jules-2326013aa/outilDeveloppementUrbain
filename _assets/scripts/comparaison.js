@@ -16,9 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
         addGeoJSONLayer(map, layers, geojsonData, fileNamesArray[index]);
     });
 
-    document.getElementById('addFileButton').addEventListener('click', () => {
-        handleFileUpload(map, layers);
-    });
 });
 function setElementDisplay(elementId, displayStyle) {
     document.getElementById(elementId).style.display = displayStyle;
@@ -92,26 +89,7 @@ function createVisibilityCheckbox(layer, map) {
     return visibilityCheckbox;
 }
 
-function handleFileUpload(map, layers) {
-    const files = document.getElementById('file2').files;
 
-    if (files.length > 0) {
-        Array.from(files).forEach(fileInput => {
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                try {
-                    const geojsonData = JSON.parse(event.target.result);
-                    addGeoJSONLayer(map, layers, geojsonData, fileInput.name);
-                } catch (error) {
-                    console.error('Erreur de parsing GeoJSON:', error);
-                }
-            };
-            reader.readAsText(fileInput);
-        });
-    } else {
-        alert('Veuillez sélectionner un fichier GeoJSON.');
-    }
-}
 
 
 function displayPopup(elementId) {
@@ -145,3 +123,4 @@ function displayGraphique(elementId) {
         }
     });
 }
+

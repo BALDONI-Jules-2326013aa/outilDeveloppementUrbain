@@ -1,6 +1,6 @@
 <body>
 <h1>Comparaison entre plusieurs fichiers GeoJSON</h1>
-<form id="fileForm" method="post" action="/comparaisonFichier" enctype="multipart/form-data">
+<form id="fileForm" method="post" action="/newMap" enctype="multipart/form-data">
   <label for="file1">Sélectionnez plusieurs fichiers GeoJSON</label>
   <input type="file" name="files[]" id="file1" multiple required>
 
@@ -11,11 +11,12 @@
 <div id="mainDisplay" style="display: none;">
   <button id="mapSettingsButton" class="map-settings-button"><ion-icon name="arrow-forward"></ion-icon></button>
   <div id="settingsPopup" style="display: none;">
-      <form id="addFileContainer" class="add-file-container">
-        <label for="file2" class="add-file-label">Ajouter un fichier GeoJSON</label>
-        <input type="file" name="files[]" id="file2" class="add-file-input" required multiple>
-        <button type="button" id="addFileButton" class="add-file-button">Ajouter à la carte</button>
+      <form id="addFileContainer" method="post" action="/comparaisonFichier" enctype="multipart/form-data" class="add-file-container">
+          <label for="file2" class="add-file-label">Ajouter un fichier GeoJSON</label>
+          <input type="file" name="filesToAdd[]" id="file2" class="add-file-input" required multiple>
+          <button type="submit" id="addFileButton" class="add-file-button">Ajouter à la carte</button>
       </form>
+
       <div id="color-selectors"></div>
       <div id="graphs">
           <h2>Graphiques</h2>
@@ -31,4 +32,3 @@
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
-</body>
