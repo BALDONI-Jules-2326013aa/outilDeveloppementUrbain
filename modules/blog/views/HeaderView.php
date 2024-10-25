@@ -3,13 +3,13 @@ namespace blog\views;
 
 class HeaderView
 {
-    public function __construct(private bool $loggedin)
+    public function __construct(private bool $logged)
     {
     }
 
     public function afficher(): string
     {
-        if($this->loggedin) {
+        if($this->logged) {
             return $this->menuLogged();
         }
         else {

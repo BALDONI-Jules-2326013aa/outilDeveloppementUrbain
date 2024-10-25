@@ -1,29 +1,23 @@
 <?php
-namespace blog\views;
 
+namespace blog\views;
+use blog\views\HeadView;
 abstract class AbstractView
 {
     abstract function css(): string;
 
     abstract function pageTitle(): string;
 
-    private function header(): void
+    private function header():void
     {
 
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
-
-        if (isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true) {
-            include __DIR__ . '/Fragments/header-logged.html'; // Inclure le header pour les utilisateurs connectés
-        } else {
-            include __DIR__ . '/Fragments/header.html'; // Inclure le header par défaut
-        }
+        $logged = isset($_SESSION['logged']) && $_SESSION['logged'] === true;
+        $headerview = new HeadView($this->pageTitle(), $this->css(),$logged);
+        $headerview->afficher();
     }
-
-    private function footer(): void
+    private function footer():void
     {
+
         include __DIR__ . '/Fragments/footer.html';
     }
 
@@ -31,10 +25,10 @@ abstract class AbstractView
 
     public function afficher(): void
     {
-        $head = new HeadView($this->pageTitle(), $this->css());
-        $head->afficher();
         $this->header();
         $this->body();
         $this->footer();
     }
+
+
 }
