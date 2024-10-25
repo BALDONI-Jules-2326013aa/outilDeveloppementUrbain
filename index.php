@@ -59,28 +59,15 @@ switch ($request_uri) {
         $controller = new HistoriqueSController();
         $controller->affichePage();
         break;
-    case 'connexion':
-        $controller = new ConnexionController();
-        $controller->affichePage();
-        break;
-    case 'verifConnexion':
-        if (isset($_POST['username'], $_POST['password'])) {
-            $username = $_POST['username'];
-            $password = $_POST['password'];
-
-            $connexionModel = new ConnexionModel();
-            $success = $connexionModel->verifConnexion($username, $password);
-
-            if ($success) {
-                echo "Connexion réussie !";
-                // Redirection ou autre action après connexion réussie
-            } else {
-                echo "Nom d'utilisateur ou mot de passe incorrect.";
-            }
-        } else {
-            echo "Données de connexion manquantes.";
-        }
-        break;
+        case 'connexion':
+            $controller = new ConnexionController();
+            $controller->afficherFormulaireConnexion();
+            break;
+        
+        case 'verifConnexion':
+            $controller = new ConnexionController();
+            $controller->verifierConnexion();
+            break;
         
     case 'inscription':
         $controller = new InscriptionController();
