@@ -1,7 +1,6 @@
 <?php
 
 namespace blog\views;
-use blog\views\HeadView;
 
 abstract class AbstractView
 {
@@ -11,12 +10,12 @@ abstract class AbstractView
 
     private function header(): void
     {
+        session_start();
         $logged = isset($_SESSION['logged']) && $_SESSION['logged'] === true;
-        $headerview = new HeadView($this->pageTitle(), $this->css(), $logged);
         if ($logged) {
             include __DIR__ . '/Fragments/header-logged.html';
         } else {
-            $headerview->afficher();
+            include __DIR__ . '/Fragments/header.html';
         }
     }
 
@@ -29,6 +28,8 @@ abstract class AbstractView
 
     public function afficher(): void
     {
+        $head = new HeadView($this->pageTitle(), $this->css());
+        $head->afficher();
         $this->header();
         $this->body();
         $this->footer();
