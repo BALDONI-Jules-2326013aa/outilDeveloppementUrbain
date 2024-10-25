@@ -19,7 +19,6 @@ class inscriptionController
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $newuser = [
-                'id' => $_POST['id'],
                 'email' => $_POST['email'],
                 'username' => $_POST['username'],
                 'password' => $_POST['password'],
@@ -27,7 +26,6 @@ class inscriptionController
 
             $tenracModel = new GestionTenracModel(new DbConnect());
             $tenracModel->Inscription(
-                $newuser['id'],
                 $newuser['email'],
                 $newuser['username'],
                 $newuser['password']
