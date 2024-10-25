@@ -12,7 +12,6 @@ class ComparaisonController
     public static function recupereFichier(): array
     {
         session_start();
-        // Récupère les fichiers déjà stockés dans la session ou initialise des tableaux vides
         $dataGeoJson = $_SESSION['dataGeoJson'] ?? [];
         $fileNamesGeojson = $_SESSION['fileNamesGeojson'] ?? [];
         $dataTif = $_SESSION['dataTif'] ?? [];
@@ -118,8 +117,8 @@ class ComparaisonController
         $_SESSION['dataTif'] = $dataTif;
         $_SESSION['fileNamesTif'] = $fileNamesTif;
 
-        // Réafficher la carte avec les nouveaux fichiers ajoutés
-        self::afficheFichier();
+        header("Location: /comparaison");
+        exit();
     }
 
     public static function resetSession(): void
