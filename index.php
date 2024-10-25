@@ -57,7 +57,7 @@
             $historiqueS::affichePage();
             break;
         case 'inscription':
-            $inscription = new inscriptionController();
+            $inscription = new InscriptionController();
             $inscription::affichePage();
             break;
         case 'verifInscription':

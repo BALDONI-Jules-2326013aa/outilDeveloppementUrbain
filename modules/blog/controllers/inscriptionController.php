@@ -11,16 +11,17 @@ class inscriptionController
     {
         session_start();
         $view = new inscriptionView();
+
         $view->afficher();
     }
 
     public function Inscription(): void
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            // Vérifiez que les champs ne sont pas vides
+
             if (empty($_POST['email']) || empty($_POST['username']) || empty($_POST['password'])) {
                 echo "Tous les champs sont requis.";
-                return; // Stoppe l'exécution si des champs sont vides
+                return;
             }
 
             $newuser = [
