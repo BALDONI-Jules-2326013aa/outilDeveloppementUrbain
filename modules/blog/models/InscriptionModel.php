@@ -12,13 +12,20 @@ class InscriptionModel
         $this->db = $dbConnect->connect();
     }
 
-    public function verifInscription($username, $password,$id): bool
+    public function verifInscription($username, $password, $email, $id): bool
     {
-        $sql = "INSERT INTO utilisateurs (username, password,id) VALUES (:username, :password,:id)";
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+        $sql = "INSERT INTO utilisateurs (username, password, email, id) VALUES (:username, :password, :email, :id)";
         $stmt = $this->db->prepare($sql);
+
         $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':password', $password);
+        $stmt->bindParam(':password', $hashedPassword);
+        $stmt->bindParam(':email', $email);
         $stmt->bindParam(':id', $id);
+
         return $stmt->execute();
     }
+
+
 }

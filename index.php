@@ -61,7 +61,26 @@
             $inscription::affichePage();
             break;
         case 'verifInscription':
-            $inscriptionModel = new InscriptionModel();
-            $inscriptionModel-> verifInscription($username, $password,$id);
+            if (isset($_POST['username'], $_POST['password'], $_POST['email'], $_POST['id'])) {
+                $username = $_POST['username'];
+                $password = $_POST['password'];
+                $email = $_POST['email'];
+                $id = $_POST['id'];
+
+                $inscriptionModel = new InscriptionModel();
+                $success = $inscriptionModel->verifInscription($username, $password, $email, $id);
+
+                if ($success) {
+                    echo "Inscription réussie !";
+                    // Redirection ou autre action après inscription réussie
+                } else {
+                    echo "Erreur lors de l'inscription.";
+                    // Gérer les erreurs ici
+                }
+            } else {
+                echo "Données d'inscription manquantes.";
+            }
             break;
+
+
     }

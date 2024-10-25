@@ -4,29 +4,9 @@
         <ul class="listeNavBar">
             <li><a href="/">Accueil</a></li>
             <li><a href="/comparaison">Comparaison</a></li>
-            <li><img class="imgH" src="/../../../../_assets/images/logoDevUrbain.png"></li>
+            <li><a href="/"><img class="imgH" src="/../../../../_assets/images/logoDevUrbain.png"></a></li>
             <li><a href="/Simulation">Simulation</a></li>
-            <li class="dropdown">
-                <a href="#compte" class="dropbtn" id="compteButton">Compte</a>
-                <div class="dropdown-content" id="dropdownContent">
-                        <a href="/historiqueC">Historique Comparaison</a>
-                        <a href="/historiqueS">Historique Simulation</a>
-                        <a href="/deconnexion">Déconnexion</a>
-                </div>
-            </li>
+            <li><a href="/connexion">Connexion</a></li>
         </ul>
     </nav>
 </header>
-<script>
-    document.getElementById('compteButton').addEventListener('click', function(event) {
-        event.preventDefault();
-        var dropdownContent = document.getElementById('dropdownContent');
-        if (dropdownContent.style.display === 'block') {
-            dropdownContent.style.display = 'none';
-            dropdownContent.style.maxHeight = '0';
-        } else {
-            dropdownContent.style.display = 'block';
-            dropdownContent.style.maxHeight = dropdownContent.scrollHeight + 'px';
-        }
-    });
-</script>
