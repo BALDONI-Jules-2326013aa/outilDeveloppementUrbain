@@ -71,7 +71,7 @@
 
                 if ($success) {
 
-                    header("Location: /accueil");
+                    header("Location: /");
                     break;
                 }
             }
