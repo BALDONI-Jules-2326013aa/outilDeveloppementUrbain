@@ -44,10 +44,6 @@
             $connexion = new ConnexionController();
             $connexion::affichePage();
             break;
-        case 'verifConnexion':
-            $verification = new ConnexionModel();
-            $verification::verifConnexion();
-            break;
         case 'historiqueC':
             $historiqueC = new HistoriqueCController();
             $historiqueC::affichePage();
