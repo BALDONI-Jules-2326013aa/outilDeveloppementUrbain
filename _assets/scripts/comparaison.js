@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 });
+
 function setElementDisplay(elementId, displayStyle) {
     document.getElementById(elementId).style.display = displayStyle;
 }
@@ -31,9 +32,14 @@ function initializeMap() {
     return map;
 }
 
+const predefinedColors = [
+    '#FF5733', '#33FF57', '#3357FF', '#FF33A8', '#A833FF',
+    '#33FFF0', '#FFC733', '#FF8F33', '#8F33FF', '#33FF8F'
+];
+
 function addGeoJSONLayer(map, layers, geojsonData, fileName) {
     if (isValidGeoJSON(geojsonData)) {
-        const color = generateRandomColor();
+        const color = generateRandomColor(layers.length);
         const layer = createLayer(map, geojsonData, color);
         layers.push(layer);
         map.fitBounds(layer.getBounds());
@@ -47,7 +53,10 @@ function isValidGeoJSON(geojsonData) {
     return geojsonData && geojsonData.type === 'FeatureCollection';
 }
 
-function generateRandomColor() {
+function generateRandomColor(layerIndex) {
+    if (layerIndex < predefinedColors.length) {
+        return predefinedColors[layerIndex];
+    }
     return '#' + Math.floor(Math.random() * 16777215).toString(16);
 }
 
@@ -89,9 +98,6 @@ function createVisibilityCheckbox(layer, map) {
     return visibilityCheckbox;
 }
 
-
-
-
 function displayPopup(elementId) {
     if (document.getElementById(elementId).style.display === 'flex') {
         document.getElementById(elementId).style.display = 'none';
@@ -99,7 +105,6 @@ function displayPopup(elementId) {
         document.getElementById(elementId).style.display = 'flex';
     }
 }
-
 
 function animationMapSettingsButton() {
     if(document.getElementById('mapSettingsButton').style.right === '25vw') {
@@ -123,4 +128,3 @@ function displayGraphique(elementId) {
         }
     });
 }
-
