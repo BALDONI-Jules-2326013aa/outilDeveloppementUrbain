@@ -11,7 +11,7 @@ class ComparaisonController
 
     public static function recupereFichier(): array
     {
-        session_start();
+            session_start();
         $dataGeoJson = $_SESSION['dataGeoJson'] ?? [];
         $fileNamesGeojson = $_SESSION['fileNamesGeojson'] ?? [];
         $dataTif = $_SESSION['dataTif'] ?? [];

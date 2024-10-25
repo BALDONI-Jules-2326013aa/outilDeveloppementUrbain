@@ -67,12 +67,6 @@ class ComparaisonView extends AbstractView
 
         foreach ($dataArray as $tifFile) {
             $htmlOutput .= $tifModel->visualisationHillShade($tifFile);
-            $htmlOutput .= $tifModel->visualisationSlope($tifFile);
-            $htmlOutput .= $tifModel->visualisationAspect($tifFile);
-            $htmlOutput .= $tifModel->visualisationColorRelief($tifFile, __DIR__ . '/Fragments/color_relief.txt');
-            $htmlOutput .= $tifModel->visualisationTRI($tifFile);
-            $htmlOutput .= $tifModel->visualisationTPI($tifFile);
-            $htmlOutput .= $tifModel->visualisationRoughness($tifFile);
         }
 
         $this->body .= $htmlOutput; // Ajoute la sortie HTML à la vue
