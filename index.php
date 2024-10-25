@@ -70,17 +70,11 @@
                 $success = $inscriptionModel->verifInscription($username, $password, $email);
 
                 if ($success) {
-                    // Redirection vers l'accueil en cas de succès
-                    header("Location: /accueil");
-                    exit; // Arrêt de l'exécution du script
-                } else {
-                    echo "Erreur lors de l'inscription.";
-                }
-            } else {
-                echo "Données d'inscription manquantes.";
-            }
-            break;
 
+                    header("Location: /accueil");
+                    break;
+                }
+            }
 
 
     }

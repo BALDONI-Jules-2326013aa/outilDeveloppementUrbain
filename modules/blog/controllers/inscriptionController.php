@@ -1,10 +1,9 @@
 <?php
-
 namespace blog\controllers;
 
-use blog\views\ConnexionView;
-use blog\views\HomePageView;
 use blog\views\inscriptionView;
+use blog\models\GestionTenracModel;
+use blog\models\DbConnect;
 
 class inscriptionController
 {
@@ -18,21 +17,41 @@ class inscriptionController
     public function Inscription(): void
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            // Vérifiez que les champs ne sont pas vides
+            if (empty($_POST['email']) || empty($_POST['username']) || empty($_POST['password'])) {
+                echo "Tous les champs sont requis.";
+                return; // Stoppe l'exécution si des champs sont vides
+            }
+
             $newuser = [
                 'email' => $_POST['email'],
                 'username' => $_POST['username'],
                 'password' => $_POST['password'],
             ];
 
-            $tenracModel = new GestionTenracModel(new DbConnect());
-            $tenracModel->Inscription(
-                $newuser['email'],
-                $newuser['username'],
-                $newuser['password']
-            );
-            mail($newuser['email'], 'Bienvenue', 'Votre inscription a bien été prise en compte');
-            header('Location: /'); // Redirect to homepage
-            exit();
+            $dbConnect = new DbConnect();
+            $tenracModel = new GestionTenracModel($dbConnect);
+
+
+            try {
+                if ($tenracModel->Inscription(
+                    $newuser['email'],
+                    $newuser['username'],
+                    $newuser['password']
+                )) {
+
+                    if (mail($newuser['email'], 'Bienvenue', 'Votre inscription a bien été prise en compte')) {
+                        header('Location: /');
+                        exit();
+                    } else {
+                        echo "L'e-mail de bienvenue n'a pas pu être envoyé.";
+                    }
+                } else {
+                    echo "Erreur lors de l'inscription. Veuillez réessayer.";
+                }
+            } catch (\Exception $e) {
+                echo "Une erreur est survenue : " . $e->getMessage();
+            }
         }
     }
 }
