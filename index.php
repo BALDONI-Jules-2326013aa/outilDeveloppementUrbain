@@ -65,21 +65,22 @@
                 $username = $_POST['username'];
                 $password = $_POST['password'];
                 $email = $_POST['email'];
+
                 $inscriptionModel = new InscriptionModel();
                 $success = $inscriptionModel->verifInscription($username, $password, $email);
 
                 if ($success) {
-                    echo "Inscription réussie !";
-                    // Redirection ou autre action après inscription réussie
-                    
+                    // Redirection vers l'accueil en cas de succès
+                    header("Location: /accueil");
+                    exit; // Arrêt de l'exécution du script
                 } else {
                     echo "Erreur lors de l'inscription.";
-                    // Gérer les erreurs ici
                 }
             } else {
                 echo "Données d'inscription manquantes.";
             }
             break;
+
 
 
     }

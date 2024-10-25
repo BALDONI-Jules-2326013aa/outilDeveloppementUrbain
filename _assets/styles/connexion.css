@@ -47,7 +47,7 @@ footer{
 .btnInscription {
     margin-top: 5px;
 }
-.email{
-    padding: 2.5%;
-    margin-bottom: 2%;
+#email{
+    margin-bottom: 6%;
+    padding: 3%;
 }
