@@ -59,17 +59,31 @@ switch ($request_uri) {
         break;
     case 'connexion':
         $controller = new ConnexionController();
-        $controller->afficherFormulaireConnexion();
+        $controller->login();
         break;
 
     case 'verifConnexion':
-        $controller = new ConnexionModel();
-        $controller->verifConnexion();
+        if (isset($_POST['username'], $_POST['password'])) {
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+
+            $connexionModel = new ConnexionModel();
+            $success = $connexionModel->verifConnexion($username, $password);
+
+            if ($success) {
+                header("Location: /?header=logged");
+                exit();
+            } else {
+                echo "Erreur lors de la connexion.";
+            }
+        } else {
+            echo "Données de connexion manquantes.";
+        }
         break;
 
     case 'inscription':
         $controller = new InscriptionController();
-        $controller->afficherFormulaireInscription();
+        $controller->Inscription();
         break;
 
     case 'verifInscription':
