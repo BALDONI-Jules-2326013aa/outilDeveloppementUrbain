@@ -87,7 +87,7 @@ switch ($request_uri) {
         break;
     case 'inscription':
         $inscription = new InscriptionController();
-        $inscription->Inscription();
+        $inscription->affichePage();
         break;
     case 'verifInscription':
         if (isset($_POST['username'], $_POST['password'], $_POST['email'])) {
