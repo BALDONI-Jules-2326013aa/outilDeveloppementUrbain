@@ -16,7 +16,7 @@ class GeoJSONModel
         $data = json_decode($content, true);
 
         if (isset($data['features'][0]['properties']['Year'])) {
-            return (string) $data['features'][0]['properties']['Year'];
+            return (string)$data['features'][0]['properties']['Year'];
         }
 
         return '';
@@ -124,5 +124,35 @@ class GeoJSONModel
     <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
     <script src='/_assets/scripts/aireMoyenneBatiments.js'></script>
     ";
+    }
+
+    public static function dessineGraphiquePolar($dataArray, $fileNameArray): string
+    {
+        $dataArrayJson = json_encode($dataArray);
+        $fileNamesJson = json_encode($fileNameArray);
+        return "
+        <div style='display: none;' id='polarDataJson'>$dataArrayJson</div>
+        <div style='display: none;' id='fileNamesPolarJson'>$fileNamesJson</div>
+        <canvas id='polarChart' style='display: none;'></canvas>
+        <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
+        <script src='/_assets/scripts/polarChart.js'></script>
+        ";
+    }
+
+    public static function recupereTypeBatiment($fileArray): array
+    {
+        $buildingTypes = [];
+        foreach ($fileArray as $file) {
+            if (isset($file['features'])) {
+                foreach ($file['features'] as $feature) {
+                    $type = $feature['properties']['type'] ?? null;
+                    if ($type) {
+                        $buildingTypes[$type] = 0;
+                    }
+                    $buildingTypes[$type]++;
+                }
+            }
+        }
+        return $buildingTypes;
     }
 }

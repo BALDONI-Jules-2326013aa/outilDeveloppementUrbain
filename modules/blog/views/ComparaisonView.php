@@ -35,12 +35,13 @@ class ComparaisonView extends AbstractView
         $script =  "<link rel='stylesheet' href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css' />" .
             "<script src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'></script>" .
             "<script>
-            const geojsonDataArray = $geojsonDataJsArray;
-            const fileNamesArray = $fileNamesJsArray;
-          </script>" .
+        const geojsonDataArray = JSON.parse('$geojsonDataJsArray');
+        const fileNamesArray = JSON.parse('$fileNamesJsArray');
+      </script>" .
             "<script src='_assets/scripts/comparaison.js'></script>";
 
         $this->body = $script;
+        $this->afficherGraphiquePolar($dataArray, $fileNames);
     }
 
     public function afficherGraphiqueBatiments(array $dataArray, array $fileNames): void {
@@ -54,6 +55,13 @@ class ComparaisonView extends AbstractView
         $geoJsonModel = new GeoJSONModel();
         $surfaceMoyenne = $geoJsonModel->recupereSurfaceMoyenneBatiments($dataArray);
         $script = $geoJsonModel->dessineGraphiqueRadarAireMoyenne($surfaceMoyenne, $fileNames);
+        $this->body.= $script;
+    }
+
+    public function afficherGraphiquePolar (array $dataArray, array $fileNames): void {
+      $geoJsonModel = new GeoJSONModel();
+      $script = $geoJsonModel->dessineGraphiquePolar($dataArray, $fileNames);
+
         $this->body.= $script;
     }
 

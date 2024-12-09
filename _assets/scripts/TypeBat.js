@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function addGeoJson(geojsonData) {
         const buildingTypes = {};
-        geojsonData.feature.forEach(feature => {
+        geojsonData.features.forEach(feature => {
             const type = feature.properties.type;
             if (type) {
 

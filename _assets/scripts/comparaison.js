@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('graph1').addEventListener('click', () => displayGraphique('barBatiments'));
     document.getElementById('graph2').addEventListener('click', () => displayGraphique('radarAireMoyenne'));
+    document.getElementById('graph3').addEventListener('click', () => displayGraphique('polarAreaChart'));
 
     setElementDisplay('mainDisplay', 'flex');
     setElementDisplay('trait', 'flex');
