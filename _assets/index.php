@@ -83,7 +83,7 @@ switch ($request_uri) {
         break;
         
     case 'inscription':
-        $controller = new InscriptionController();
+        $controller = new inscriptionController();
         $controller->affichePage(); // Assure-toi d'avoir une méthode affichePage() dans InscriptionController
         break;
 
