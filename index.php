@@ -63,8 +63,8 @@ switch ($request_uri) {
         break;
 
     case 'verifConnexion':
-        $controller = new ConnexionController();
-        $controller->verifierConnexion();
+        $controller = new ConnexionModel();
+        $controller->verifConnexion();
         break;
 
     case 'inscription':
