@@ -25,39 +25,36 @@ class ConnexionController
         $view = new ConnexionView();
         $view->afficher(); // Affiche uniquement le formulaire
     }
-
-    public function verifierConnexion()
+    public static function connecter(array $post): void
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'], $_POST['password'])) {
-            $username = $_POST['username'];
-            $password = $_POST['password'];
+        $courriel = htmlspecialchars($post["email"]);
+        $password = htmlspecialchars($post["password"]);
 
-            $connexionModel = new ConnexionModel();
-            if ($connexionModel->verifConnexion($username, $password)) {
-                session_start();
-                $_SESSION['username'] = $username;
-                $_SESSION['password'] = $password;
-                header("Location: /dashboard"); // Redirige après la connexion réussie
-                exit;
-            } else {
-                echo "Nom d'utilisateur ou mot de passe incorrect.";
-            }
+        $connexionModel = new ConnexionModel(new DbConnect());
+
+        if ($connexionModel->login($courriel, $password)) {
+            setcookie(
+                'corrielSiti',
+                $post["email"],
+                [
+                    'expires' => time() + 365*24*3600,
+                    'secure' => true,
+                    'httponly' => true,
+                ]
+            );
+            header("Location: /home");
+            exit();
         } else {
-            echo "Données de connexion manquantes.";
+            echo "Mail ou mot de passe incorrect";
+            exit();
         }
     }
-    public function connecter(): void
+    public function deconnecter(): void
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $username = $_POST['username'] ?? '';
-            $password = $_POST['password'] ?? '';
-
-            if ($this->model->verifConnexion($username, $password)) {
-                echo "Connexion réussie";
-                // Redirection ou actions après connexion réussie
-            } else {
-                echo "Nom d'utilisateur ou mot de passe incorrect";
-            }
-        }
+        session_start();
+        session_destroy();
+        header("Location: /");
+        exit();
     }
+
 }

@@ -1,3 +1,4 @@
+
 <?php
 include __DIR__ . '/AutoLoader.php';
 
@@ -47,9 +48,6 @@ switch ($request_uri) {
         $controller = new SimulationController();
         $controller->startSimulation();
         break;
-
-
-
     case 'historiqueC':
         $controller = new HistoriqueCController();
         $controller->affichePage();
@@ -59,19 +57,38 @@ switch ($request_uri) {
         $controller = new HistoriqueSController();
         $controller->affichePage();
         break;
-        case 'connexion':
-            $controller = new ConnexionController();
-            $controller->afficherFormulaireConnexion();
-            break;
-        
-        case 'verifConnexion':
-            $controller = new ConnexionController();
-            $controller->verifierConnexion();
-            break;
-        
+    case 'connexion':
+        $controller = new ConnexionController();
+        $controller->afficherFormulaireConnexion();
+        break;
+
+    case 'verifConnexion':
+        $controller = new ConnexionController();
+        $controller->verifierConnexion();
+        break;
+
     case 'inscription':
         $controller = new InscriptionController();
-        $controller->affichePage(); // Assure-toi d'avoir une méthode affichePage() dans InscriptionController
+        $controller->afficherFormulaireInscription();
+        break;
+
+    case 'connexion':
+
+        $connexionPage = new ConnexionController();
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $connexionPage::connecter($_POST);
+        }
+
+        $connexionPage::affichePage();
+        break;
+
+    case 'deconnexion':
+        // On se déconnecte via la méthode deconnecter
+        $deconnexionPage = new ConnexionController();
+        $deconnexionPage::deconnecter();
+        // Puis on affiche une page d'acceuil
+        $homePage = new HomePageController();
+        $homePage::affichePage();
         break;
 
     case 'verifInscription':
