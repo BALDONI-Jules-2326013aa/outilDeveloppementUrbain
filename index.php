@@ -67,28 +67,11 @@ switch ($request_uri) {
         $controller->verifierConnexion();
         break;
 
-    case 'connexion':
-
-        $connexionPage = new ConnexionController();
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $connexionPage::connecter($_POST);
-        }
-
-        $connexionPage::affichePage();
-        break;
-
-    case 'deconnexion':
-        // On se déconnecte via la méthode deconnecter
-        $deconnexionPage = new ConnexionController();
-        $deconnexionPage::deconnecter();
-        // Puis on affiche une page d'acceuil
-        $homePage = new HomePageController();
-        $homePage::affichePage();
-        break;
     case 'inscription':
-        $inscription = new InscriptionController();
-        $inscription->affichePage();
+        $controller = new InscriptionController();
+        $controller->afficherFormulaireInscription();
         break;
+
     case 'verifInscription':
         if (isset($_POST['username'], $_POST['password'], $_POST['email'])) {
             $username = $_POST['username'];

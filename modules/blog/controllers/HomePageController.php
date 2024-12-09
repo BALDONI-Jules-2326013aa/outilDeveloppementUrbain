@@ -1,15 +1,14 @@
 <?php
 
 namespace blog\controllers;
+use blog\views\HomePageView;
 
 class HomePageController
 {
-    public function affichePage()
+    public static function affichePage():void
     {
-        $headerType = isset($_GET['header']) && $_GET['header'] === 'logged' ? 'header-logged' : 'header';
-        include __DIR__ . '/../views/Fragments/' . $headerType . '.html';
-
-        // Include the main content of the homepage
-        include __DIR__ . '/../views/HomePageContent.html';
+        session_start();
+        $view = new HomePageView();
+        $view->afficher();
     }
 }
