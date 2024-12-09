@@ -84,8 +84,8 @@ switch ($request_uri) {
             $success = $inscriptionModel->verifInscription($username, $password, $email);
 
             if ($success) {
-                echo "Inscription réussie !";
-                // Redirection ou autre action après inscription réussie
+                header("Location: /?header=logged");
+                exit();
             } else {
                 echo "Erreur lors de l'inscription.";
             }
