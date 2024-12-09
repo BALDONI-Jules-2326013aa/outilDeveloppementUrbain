@@ -69,7 +69,7 @@ switch ($request_uri) {
 
     case 'inscription':
         $controller = new InscriptionController();
-        $controller->afficherFormulaireInscription();
+        $controller->affichePage();
         break;
 
     case 'connexion':
