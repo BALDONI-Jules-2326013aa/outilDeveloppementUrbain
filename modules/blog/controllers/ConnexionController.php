@@ -7,24 +7,13 @@ use blog\views\ConnexionView;
 
 class ConnexionController
 {
-    private $model;
-
-    public function __construct()
-    {
-        $this->model = new ConnexionModel();
-    }
-
     public static function affichePage(): void
     {
         session_start();
         $view = new ConnexionView();
         $view->afficher();
     }
-    public function afficherFormulaireConnexion()
-    {
-        $view = new ConnexionView();
-        $view->afficher(); // Affiche uniquement le formulaire
-    }
+
     public static function connecter(array $post): void
     {
         $courriel = htmlspecialchars($post["email"]);

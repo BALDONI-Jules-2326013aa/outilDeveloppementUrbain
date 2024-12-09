@@ -59,7 +59,7 @@ switch ($request_uri) {
         break;
     case 'connexion':
         $controller = new ConnexionController();
-        $controller->login();
+        $controller->connecter();
         break;
 
     case 'verifConnexion':
