@@ -67,11 +67,6 @@ switch ($request_uri) {
         $controller->verifierConnexion();
         break;
 
-    case 'inscription':
-        $controller = new InscriptionController();
-        $controller->affichePage();
-        break;
-
     case 'connexion':
 
         $connexionPage = new ConnexionController();
