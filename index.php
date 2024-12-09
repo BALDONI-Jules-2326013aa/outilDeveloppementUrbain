@@ -85,7 +85,10 @@ switch ($request_uri) {
         $homePage = new HomePageController();
         $homePage::affichePage();
         break;
-
+    case 'inscription':
+        $inscription = new InscriptionController();
+        $inscription->Inscription();
+        break;
     case 'verifInscription':
         if (isset($_POST['username'], $_POST['password'], $_POST['email'])) {
             $username = $_POST['username'];
