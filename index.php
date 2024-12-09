@@ -8,7 +8,7 @@ use blog\controllers\HomePageController;
 use blog\controllers\HistoriqueCController;
 use blog\controllers\HistoriqueSController;
 use blog\controllers\SimulationController;
-use blog\controllers\InscriptionController;
+use blog\controllers\inscriptionController;
 use blog\models\InscriptionModel;
 use blog\models\ConnexionModel;
 
