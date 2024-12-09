@@ -82,7 +82,7 @@ switch ($request_uri) {
         break;
 
     case 'inscription':
-        $controller = new InscriptionController();
+        $controller = new inscriptionController();
         $controller->Inscription();
         break;
 
