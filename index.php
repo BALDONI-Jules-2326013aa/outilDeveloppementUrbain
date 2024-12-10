@@ -1,4 +1,3 @@
-
 <?php
 include __DIR__ . '/AutoLoader.php';
 
@@ -12,11 +11,12 @@ use blog\controllers\inscriptionController;
 use blog\models\InscriptionModel;
 use blog\models\ConnexionModel;
 
+session_start();
+
 $request_uri = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
 
 $controller = null;
 
-// Route par défaut pour la page d'accueil
 if ($request_uri == '' || $request_uri == 'index.php') {
     $homePage = new HomePageController();
     $homePage->affichePage();
@@ -71,7 +71,8 @@ switch ($request_uri) {
             $success = $connexionModel->verifConnexion($username, $password);
 
             if ($success) {
-                header("Location: /?header=logged");
+                $_SESSION['logged'] = true;
+                header("Location: /");
                 exit();
             } else {
                 echo "Erreur lors de la connexion.";
@@ -96,7 +97,8 @@ switch ($request_uri) {
             $success = $inscriptionModel->verifInscription($username, $password, $email);
 
             if ($success) {
-                header("Location: /?header=logged");
+                $_SESSION['logged'] = true;
+                header("Location: /");
                 exit();
             } else {
                 echo "Erreur lors de l'inscription.";
