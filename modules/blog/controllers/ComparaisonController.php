@@ -9,9 +9,16 @@ class ComparaisonController
 {
     private static array $arrayDataShape = [];
 
+    private static function startSession(): void
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+    }
+
     public static function recupereFichier(): array
     {
-            session_start();
+        self::startSession();
         $dataGeoJson = $_SESSION['dataGeoJson'] ?? [];
         $fileNamesGeojson = $_SESSION['fileNamesGeojson'] ?? [];
         $dataTif = $_SESSION['dataTif'] ?? [];
@@ -77,7 +84,7 @@ class ComparaisonController
 
     public static function ajouterFichier(): void
     {
-        session_start();
+        self::startSession();
 
         $dataGeoJson = $_SESSION['dataGeoJson'] ?? [];
         $fileNamesGeojson = $_SESSION['fileNamesGeojson'] ?? [];
@@ -123,7 +130,7 @@ class ComparaisonController
 
     public static function resetSession(): void
     {
-        session_start();
+        self::startSession();
         unset($_SESSION['dataGeoJson']);
         unset($_SESSION['fileNamesGeojson']);
         unset($_SESSION['dataTif']);
