@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const ctx = document.getElementById('barBatiments').getContext('2d');
     const fileInputElement = document.getElementById('file2');
-    const addFileButton = document.getElementById('addFileButton');
 
     const COLORS = {
         backgroundColor: '#6b5eba',
@@ -39,35 +38,5 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Fonction pour ajouter un GeoJSON et mettre à jour le graphique
-    function addGeoJsonToChart(geojsonData, fileName) {
-        if (geojsonData.features && geojsonData.features.length > 0) {
-            const nbBatiments = geojsonData.features.length;
-            labels.push(fileName);
-            nbBatimentsData.push(nbBatiments);
-            barBatiments.update(); // Mise à jour du graphique
-        } else {
-            console.warn(`Le fichier ${fileName} ne contient aucun bâtiment valide.`);
-        }
-    }
 
-    // Gestion de l'ajout de fichier via le bouton
-    addFileButton.addEventListener('click', function() {
-        const files = fileInputElement.files;
-
-        if (files.length > 0) {
-            Array.from(files).forEach(file => {
-                const reader = new FileReader();
-                reader.onload = event => {
-                    try {
-                        const geojsonData = JSON.parse(event.target.result);
-                        addGeoJsonToChart(geojsonData, file.name);
-                    } catch (error) {
-                        console.error('Erreur de parsing GeoJSON:', error);
-                    }
-                };
-                reader.readAsText(file);
-            });
-        }
-    });
 });

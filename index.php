@@ -18,11 +18,16 @@ if ($request_uri == '' || $request_uri == 'index.php') {
 switch ($request_uri) {
     case 'comparaison':
         $comparaison = new ComparaisonController();
-        $comparaison::affichePage();
+        $comparaison::afficheFichier();
         break;
     case 'comparaisonFichier':
-        $ficher = new ComparaisonController();
-        $ficher::afficheFichier();
+        $comparaison = new ComparaisonController();
+        $comparaison::ajouterFichier();
+        break;
+    case 'newMap':
+        $comparaison = new ComparaisonController();
+        $comparaison::resetSession();
+        $comparaison::afficheFichier();
         break;
     case 'Simulation':
         $simulation = new SimulationController();

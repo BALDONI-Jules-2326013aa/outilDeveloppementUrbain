@@ -17,10 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
         addGeoJSONLayer(map, layers, geojsonData, fileNamesArray[index]);
     });
 
-    document.getElementById('addFileButton').addEventListener('click', () => {
-        handleFileUpload(map, layers);
-    });
 });
+
 function setElementDisplay(elementId, displayStyle) {
     document.getElementById(elementId).style.display = displayStyle;
 }
@@ -35,9 +33,14 @@ function initializeMap() {
     return map;
 }
 
+const predefinedColors = [
+    '#FF5733', '#33FF57', '#3357FF', '#FF33A8', '#A833FF',
+    '#33FFF0', '#FFC733', '#FF8F33', '#8F33FF', '#33FF8F'
+];
+
 function addGeoJSONLayer(map, layers, geojsonData, fileName) {
     if (isValidGeoJSON(geojsonData)) {
-        const color = generateRandomColor();
+        const color = generateRandomColor(layers.length);
         const layer = createLayer(map, geojsonData, color);
         layers.push(layer);
         map.fitBounds(layer.getBounds());
@@ -51,7 +54,10 @@ function isValidGeoJSON(geojsonData) {
     return geojsonData && geojsonData.type === 'FeatureCollection';
 }
 
-function generateRandomColor() {
+function generateRandomColor(layerIndex) {
+    if (layerIndex < predefinedColors.length) {
+        return predefinedColors[layerIndex];
+    }
     return '#' + Math.floor(Math.random() * 16777215).toString(16);
 }
 
@@ -93,28 +99,6 @@ function createVisibilityCheckbox(layer, map) {
     return visibilityCheckbox;
 }
 
-function handleFileUpload(map, layers) {
-    const files = document.getElementById('file2').files;
-
-    if (files.length > 0) {
-        Array.from(files).forEach(fileInput => {
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                try {
-                    const geojsonData = JSON.parse(event.target.result);
-                    addGeoJSONLayer(map, layers, geojsonData, fileInput.name);
-                } catch (error) {
-                    console.error('Erreur de parsing GeoJSON:', error);
-                }
-            };
-            reader.readAsText(fileInput);
-        });
-    } else {
-        alert('Veuillez sélectionner un fichier GeoJSON.');
-    }
-}
-
-
 function displayPopup(elementId) {
     if (document.getElementById(elementId).style.display === 'flex') {
         document.getElementById(elementId).style.display = 'none';
@@ -122,7 +106,6 @@ function displayPopup(elementId) {
         document.getElementById(elementId).style.display = 'flex';
     }
 }
-
 
 function animationMapSettingsButton() {
     if(document.getElementById('mapSettingsButton').style.right === '25vw') {

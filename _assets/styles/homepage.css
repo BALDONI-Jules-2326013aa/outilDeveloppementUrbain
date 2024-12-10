@@ -81,14 +81,13 @@ h3{
     position: absolute;
     width: 100%;
     height: 100%;
-    border: 4px solid white;
+    border: 4px solid rgb(110, 110, 110);
     box-sizing: border-box;
     transition: 1s ;
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
     z-index: calc(var(--total) - var(--i));
 
 }
