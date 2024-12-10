@@ -66,8 +66,7 @@ class ConnexionView extends AbstractView {
             session_start();
             $_SESSION['username'] = $_POST['user'];  // Sauvegarder l'utilisateur dans la session
             
-            // Redirection vers la page d'accueil ou tableau de bord après connexion
-            header("Location: /dashboard");
+            header("Location: ");
             exit();  // Important : arrêter l'exécution après la redirection
         } else {
             // Affiche le formulaire en cas d'échec de connexion
