@@ -21,6 +21,7 @@ class AuthController {
 
     private function handleRegister() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $email = $_POST['email'];
             $username = $_POST['username'];
             $password = $_POST['password'];
             $confirmPassword = $_POST['confirm_password'];
@@ -31,7 +32,7 @@ class AuthController {
                 return;
             }
 
-            if ($this->userModel->register($username, $password)) {
+            if ($this->userModel->register($email ,$username, $password)) {
                 header("Location: ?action=login&registered=1");
                 exit;
             } else {
