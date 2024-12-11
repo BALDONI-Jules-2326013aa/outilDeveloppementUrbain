@@ -1,18 +1,21 @@
 <?php
+namespace blog\models;
+
+use PDO;
+
 class FileModel {
     private $pdo;
 
-    public function __construct($pdo) {
+    public function __construct(PDO $pdo) {
         $this->pdo = $pdo;
     }
 
     public function uploadFile($name, $content, $utilisateur_id) {
         $stmt = $this->pdo->prepare("INSERT INTO public.geojson_files (name, geojson, utilisateur_id) VALUES (:name, :geojson, :utilisateur_id)");
-        $stmt->execute([
-            ':name' => $name,
-            ':geojson' => $content,
-            ':utilisateur_id' => $utilisateur_id
-        ]);
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':geojson', $content);
+        $stmt->bindParam(':utilisateur_id', $utilisateur_id);
+        $stmt->execute();
     }
 
     public function getFiles() {
