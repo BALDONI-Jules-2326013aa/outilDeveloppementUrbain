@@ -9,51 +9,26 @@ use blog\controllers\HistoriqueSController;
 use blog\controllers\SimulationController;
 use blog\controllers\InscriptionController;
 use blog\models\InscriptionModel;
-use blog\models\FileModel;
-use blog\controllers\FileController;
-session_start();
+use blog\models\ConnexionModel;
 
 $request_uri = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
 
 $controller = null;
 
+// Route par défaut pour la page d'accueil
 if ($request_uri == '' || $request_uri == 'index.php') {
-    HomePageController::affichePage();
-}
-
-try {
-    $pdo = new PDO('pgsql:host=postgresql-siti.alwaysdata.net;dbname=siti_db', 'siti', 'motdepassesitia1');
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Erreur de connexion : " . $e->getMessage());
-}
     $homePage = new HomePageController();
     $homePage->affichePage();
     exit;
 }
 
 switch ($request_uri) {
-    case 'fichier':
-        $model = new FileModel($pdo);
-        $controller = new FileController($model);
-        $controller->handleRequest();
-        break;
-    case 'supprimerFichier':
-        $model = new FileModel($pdo);
-        $controller = new FileController($model);
-        $controller->handleRequest();
-        break;
     case 'comparaison':
         $controller = new ComparaisonController();
         $controller->affichePage();
         break;
 
     case 'comparaisonFichier':
-        ComparaisonController::ajouterFichier();
-        break;
-    case 'newMap':
-        ComparaisonController::resetSession();
-        ComparaisonController::afficheFichier();
         $controller = new ComparaisonController();
         $controller->afficheFichier();
         break;
@@ -72,6 +47,9 @@ switch ($request_uri) {
         $controller = new SimulationController();
         $controller->startSimulation();
         break;
+
+
+
     case 'historiqueC':
         $controller = new HistoriqueCController();
         $controller->affichePage();
@@ -82,15 +60,31 @@ switch ($request_uri) {
         $controller->affichePage();
         break;
     case 'connexion':
-        $connexionPage = new ConnexionController();
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $connexionPage::connecter($_POST);
-        }
-        $connexionPage::affichePage();
+        $controller = new ConnexionController();
+        $controller->affichePage();
         break;
+    case 'verifConnexion':
+        if (isset($_POST['username'], $_POST['password'])) {
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+
+            $connexionModel = new ConnexionModel();
+            $success = $connexionModel->verifConnexion($username, $password);
+
+            if ($success) {
+                echo "Connexion réussie !";
+                // Redirection ou autre action après connexion réussie
+            } else {
+                echo "Nom d'utilisateur ou mot de passe incorrect.";
+            }
+        } else {
+            echo "Données de connexion manquantes.";
+        }
+        break;
+        
     case 'inscription':
         $controller = new inscriptionController();
-        $controller->Inscription();
+        $controller->affichePage(); // Assure-toi d'avoir une méthode affichePage() dans InscriptionController
         break;
 
     case 'verifInscription':
@@ -103,9 +97,8 @@ switch ($request_uri) {
             $success = $inscriptionModel->verifInscription($username, $password, $email);
 
             if ($success) {
-                $_SESSION['logged'] = true;
-                header("Location: /");
-                exit();
+                echo "Inscription réussie !";
+                // Redirection ou autre action après inscription réussie
             } else {
                 echo "Erreur lors de l'inscription.";
             }

@@ -2,7 +2,6 @@
 
 namespace blog\controllers;
 use blog\views\HomePageView;
-
 class HomePageController
 {
     public static function affichePage():void

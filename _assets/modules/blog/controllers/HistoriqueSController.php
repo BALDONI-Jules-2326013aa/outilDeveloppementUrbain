@@ -1,14 +1,13 @@
 <?php
 
 namespace blog\controllers;
-use blog\views\HomePageView;
-
-class HomePageController
+use blog\views\HistoriqueSView;
+class HistoriqueSController
 {
     public static function affichePage():void
     {
         session_start();
-        $view = new HomePageView();
+        $view = new HistoriqueSView();
         $view->afficher();
     }
 }
