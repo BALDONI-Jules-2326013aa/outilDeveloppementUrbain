@@ -1,15 +1,23 @@
 document.addEventListener('DOMContentLoaded', function () {
-    let ctx = document.getElementById('polarAreaChart').getContext('2d');
+    let ctx = document.getElementById('polarTypeBatiment').getContext('2d');
 
+
+    const typeBatimentMap = JSON.parse(document.getElementById('typeBatimentMapJson').textContent);
+    const fileNamesPolar = JSON.parse(document.getElementById('fileNamesPolarJson').textContent);
     let labels = [];
     let data = [];
+    for (const [key, value] of Object.entries(typeBatimentMap)) {
+        labels.push(key);
+        data.push(value);
+    }
 
+    /*
     let polarAreaChart = new Chart(ctx, {
         type: 'polarArea',
         data: {
             labels: labels,
             datasets: [{
-                label: 'Types de batiments',
+                label: fileNamesPolarJson, // 'Types de batiments',
                 data:data,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
@@ -37,6 +45,40 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     });
+    */
+
+    // Initialisation du graphique
+    let barTypeBatiments = createBarChartTypeBatiments(ctx, labels, data);
+
+    // Fonction pour créer un graphique à barres
+    function createBarChartTypeBatiments(ctx, labels, data) {
+        const COLORS = {
+            backgroundColor: '#6b5eba',
+            borderColor: '#557002'
+        };
+
+        return new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Types de bâtiments',
+                    data: data,
+                    backgroundColor: COLORS.backgroundColor,
+                    borderColor: COLORS.borderColor,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
 
     function addGeoJson(geojsonData) {
         const buildingTypes = {};

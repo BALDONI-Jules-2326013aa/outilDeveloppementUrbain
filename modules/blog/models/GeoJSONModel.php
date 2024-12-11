@@ -100,6 +100,28 @@ class GeoJSONModel
         return $listAireMoyenne;
     }
 
+    public static function recupereTypeBatiment($fileArray): array
+    {
+        $buildingTypes = [];
+        $buildingTypes['Ecole'] = 1;
+        $buildingTypes['Commercial'] = 9;
+        $buildingTypes['Maison'] = 5;
+        $buildingTypes['Church'] = 3;
+        /*
+        foreach ($fileArray as $file) {
+            if (isset($file['features'])) {
+                foreach ($file['features'] as $feature) {
+                    $type = $feature['properties']['type'] ?? null;
+                    if ($type) {
+                        $buildingTypes[$type] = 0;
+                    }
+                    $buildingTypes[$type]++;
+                }
+            }
+        }*/
+        return $buildingTypes;
+    }
+
     public static function dessineGraphiqueNombreBatiments($nbBatimentsArray, $fileNameArray): string
     {
         $nbBatimentsJson = json_encode($nbBatimentsArray);
@@ -126,33 +148,17 @@ class GeoJSONModel
     ";
     }
 
-    public static function dessineGraphiquePolar($dataArray, $fileNameArray): string
+    public static function dessineGraphiquePolarTypeBat($typeBatimentMap, $fileNameArray): string
     {
-        $dataArrayJson = json_encode($dataArray);
+        $typeBatimentMapJson = json_encode($typeBatimentMap);
         $fileNamesJson = json_encode($fileNameArray);
         return "
-        <div style='display: none;' id='polarDataJson'>$dataArrayJson</div>
+        <div style='display: none;' id='typeBatimentMapJson'>$typeBatimentMapJson</div>
         <div style='display: none;' id='fileNamesPolarJson'>$fileNamesJson</div>
-        <canvas id='polarChart' style='display: none;'></canvas>
+        <canvas id='polarTypeBatiment' style='display: none;'></canvas>
         <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
-        <script src='/_assets/scripts/polarChart.js'></script>
+        <script src='/_assets/scripts/TypeBat.js'></script>
         ";
     }
 
-    public static function recupereTypeBatiment($fileArray): array
-    {
-        $buildingTypes = [];
-        foreach ($fileArray as $file) {
-            if (isset($file['features'])) {
-                foreach ($file['features'] as $feature) {
-                    $type = $feature['properties']['type'] ?? null;
-                    if ($type) {
-                        $buildingTypes[$type] = 0;
-                    }
-                    $buildingTypes[$type]++;
-                }
-            }
-        }
-        return $buildingTypes;
-    }
 }

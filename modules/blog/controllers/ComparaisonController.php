@@ -151,6 +151,7 @@ class ComparaisonController
             $view->afficherAvecFichiers($dataGeoJson, $fileNamesGeojson);
             $view->afficherGraphiqueBatiments($dataGeoJson, $fileNamesGeojson);
             $view->afficherGraphiqueRadarAireMoyenne($dataGeoJson, $fileNamesGeojson);
+            $view->afficherGraphiquePolarTypeBat($dataGeoJson, $fileNamesGeojson);
         }
 
         if (!empty($dataTif)) {

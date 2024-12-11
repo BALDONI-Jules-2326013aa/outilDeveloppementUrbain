@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('graph1').addEventListener('click', () => displayGraphique('barBatiments'));
     document.getElementById('graph2').addEventListener('click', () => displayGraphique('radarAireMoyenne'));
-    document.getElementById('graph3').addEventListener('click', () => displayGraphique('polarAreaChart'));
+    document.getElementById('graph3').addEventListener('click', () => displayGraphique('polarTypeBatiment'));
 
     setElementDisplay('mainDisplay', 'flex');
     setElementDisplay('trait', 'flex');
@@ -116,7 +116,7 @@ function animationMapSettingsButton() {
 }
 
 function displayGraphique(elementId) {
-    const listeGraphiques = ['barBatiments', 'radarAireMoyenne'];
+    const listeGraphiques = ['barBatiments', 'radarAireMoyenne', 'polarTypeBatiment'];
     listeGraphiques.forEach(graphique => {
         if (graphique === elementId) {
             if (document.getElementById(graphique).style.display === 'none') {

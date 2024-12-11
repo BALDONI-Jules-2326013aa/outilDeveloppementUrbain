@@ -61,9 +61,10 @@ class ComparaisonView extends AbstractView
         $this->body .= $script;
     }
 
-    public function afficherGraphiquePolar (array $dataArray, array $fileNames): void {
+    public function afficherGraphiquePolarTypeBat (array $dataArray, array $fileNames): void {
       $geoJsonModel = new GeoJSONModel();
-      $script = $geoJsonModel->dessineGraphiquePolar($dataArray, $fileNames);
+        $typeBatiment = $geoJsonModel->recupereTypeBatiment($dataArray);
+      $script = $geoJsonModel->dessineGraphiquePolarTypeBat($typeBatiment, $fileNames);
 
         $this->body.= $script;
     }
