@@ -57,6 +57,14 @@ switch ($request_uri) {
         $controller = new HistoriqueSController();
         $controller->affichePage();
         break;
+
+    case 'inscription':
+        $inscriptionPage = new InscriptionController();
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $inscriptionPage::inscrire($_POST);
+        }
+        $inscriptionPage::affichePage();
+        break;
     case 'connexion':
         $connexionPage = new ConnexionController();
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -64,9 +72,14 @@ switch ($request_uri) {
         }
         $connexionPage::affichePage();
         break;
-
-    case 'inscription':
-        $controller = new inscriptionController();
-        $controller->Inscription();
+    case 'deconnexion':
+        // On se déconnecte via la méthode deconnecter
+        $deconnexionPage = new ConnexionController();
+        $deconnexionPage::deconnecter();
+        // Puis on affiche une page d'acceuil
+        $homePage = new HomePageController();
+        $homePage::affichePage();
         break;
+
+
 }

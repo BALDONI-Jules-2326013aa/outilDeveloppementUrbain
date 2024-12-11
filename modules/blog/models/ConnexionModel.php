@@ -24,9 +24,15 @@ class ConnexionModel
             session_start();
             $_SESSION['loggedin'] = true;
             $_SESSION['username'] = $username;
-            $_SESSION['nom'] = $user['nom'];
             return true;
         }
         return false;
+    }
+
+    public function logout(): void
+    {
+        session_start();
+        session_unset();
+        session_destroy();
     }
 }

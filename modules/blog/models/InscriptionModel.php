@@ -6,25 +6,29 @@ class InscriptionModel
 {
     private $db;
 
-    public function __construct()
+    public function __construct($db)
     {
-        $dbConnect = new DbConnect();
-        $this->db = $dbConnect->connect();
+        $this->db = $db;
     }
 
-    public function verifInscription($username, $password, $email): bool
+    public function registerUser($email, $username, $password): bool
     {
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-        $sql = "INSERT INTO utilisateurs (username, password, email) VALUES (:username, :password, :email )";
+        // Check if email already exists
+        $sql = "SELECT COUNT(*) FROM utilisateurs WHERE email = :email";
         $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        if ($stmt->fetchColumn() > 0) {
+            return false; // Email already exists
+        }
 
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $sql = "INSERT INTO utilisateurs (email, username, password) VALUES (:email, :username, :password)";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':email', $email);
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':password', $hashedPassword);
-        $stmt->bindParam(':email', $email);
 
         return $stmt->execute();
     }
-
-
 }

@@ -19,8 +19,8 @@ class ConnexionController
 
     public static function connecter(array $post): void
     {
-        $courriel = htmlspecialchars($post["username"]);
-        $password = htmlspecialchars($post["password"]);
+        $username = htmlspecialchars($post["username"] ?? '');
+        $password = htmlspecialchars($post["password"] ?? '');
 
         $dbConnect = new DbConnect();
         $db = $dbConnect->connect();
@@ -28,10 +28,10 @@ class ConnexionController
         if ($dbConnect->isConnected()) {
             $connexionModel = new ConnexionModel($db);
 
-            if ($connexionModel->verifConnexion($courriel, $password)) {
+            if ($connexionModel->verifConnexion($username, $password)) {
                 setcookie(
                     'courrielSiti',
-                    $post["username"],
+                    $username,
                     [
                         'expires' => time() + 365*24*3600,
                         'secure' => true,
@@ -41,12 +41,21 @@ class ConnexionController
                 header("Location: /");
                 exit();
             } else {
-                echo "Mail ou mot de passe incorrect";
+                echo "Nom d'utilisateur ou mot de passe incorrect";
                 exit();
             }
         } else {
             echo "Erreur de connexion à la base de données.";
             exit();
         }
+    }
+
+    public static function deconnecter(): void
+    {
+        $connexionModel = new ConnexionModel(new DbConnect());
+        $connexionModel->logout();
+
+        header("Location: /connexion");
+        exit();
     }
 }
