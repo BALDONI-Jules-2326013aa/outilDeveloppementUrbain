@@ -17,7 +17,14 @@
         <h2>Fichiers disponibles</h2>
         <ul>
             <?php foreach ($files as $file): ?>
-                <li><?php echo htmlspecialchars($file['name']); ?></li>
+                <li>
+                    <?php echo htmlspecialchars($file['name']); ?>
+                    <form action="/supprimerFichier" method="post" style="display:inline;">
+                        <input type="hidden" name="file_id" value="<?php echo $file['id']; ?>">
+                        <input type="hidden" name="action" value="supprimer">
+                        <button type="submit">Supprimer</button>
+                    </form>
+                </li>
             <?php endforeach; ?>
         </ul>
     </div>

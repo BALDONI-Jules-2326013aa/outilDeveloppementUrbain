@@ -11,8 +11,16 @@ class FileController {
     }
 
     public function handleRequest() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
-            $this->uploadFile();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_FILES['file'])) {
+                $this->uploadFile();
+            } elseif (isset($_POST['file_id']) && isset($_POST['action'])) {
+                if ($_POST['action'] === 'modifier') {
+                    $this->modifyFile();
+                } elseif ($_POST['action'] === 'supprimer') {
+                    $this->deleteFile();
+                }
+            }
         } else {
             $this->showFiles();
         }
@@ -40,6 +48,12 @@ class FileController {
         } else {
             echo "Erreur lors du téléchargement du fichier.";
         }
+    }
+     private function deleteFile() {
+        $fileId = $_POST['file_id'];
+        $this->model->deleteFile($fileId);
+        header("Location: /fichier");
+        exit();
     }
 
     private function showFiles() {
