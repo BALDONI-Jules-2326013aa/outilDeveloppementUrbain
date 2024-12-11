@@ -15,11 +15,11 @@ class FileController {
             if (isset($_FILES['file'])) {
                 $this->uploadFile();
             } elseif (isset($_POST['file_id']) && isset($_POST['action'])) {
-                if ($_POST['action'] === 'modifier') {
-                    $this->modifyFile();
-                } elseif ($_POST['action'] === 'supprimer') {
+                if ($_POST['action'] === 'supprimer') {
                     $this->deleteFile();
                 }
+            } elseif (isset($_POST['file_id']) && !isset($_POST['action'])) {
+                $this->downloadFile();
             }
         } else {
             $this->showFiles();
@@ -38,7 +38,7 @@ class FileController {
             $allowedfileExtensions = array('geojson');
             if (in_array($fileExtension, $allowedfileExtensions)) {
                 $fileContent = file_get_contents($fileTmpPath);
-                $this->model->uploadFile($fileName, $fileContent, 19); // Remplacez 1 par l'ID utilisateur réel
+                $this->model->uploadFile($fileName, $fileContent, 1); // Remplacez 1 par l'ID utilisateur réel
                 echo "Fichier téléchargé avec succès.";
                 header("Location: /fichier");
                 exit();
@@ -49,11 +49,31 @@ class FileController {
             echo "Erreur lors du téléchargement du fichier.";
         }
     }
-     private function deleteFile() {
+
+    private function deleteFile() {
         $fileId = $_POST['file_id'];
         $this->model->deleteFile($fileId);
         header("Location: /fichier");
         exit();
+    }
+
+    private function downloadFile() {
+        $fileId = $_POST['file_id'];
+        $file = $this->model->getFileById($fileId);
+
+        if ($file) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="' . basename($file['name']) . '"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . strlen($file['geojson']));
+            echo $file['geojson'];
+            exit();
+        } else {
+            echo "Fichier non trouvé.";
+        }
     }
 
     private function showFiles() {
