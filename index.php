@@ -62,9 +62,35 @@ switch ($request_uri) {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $connexionPage::connecter($_POST);
         }
-
         $connexionPage::affichePage();
         break;
+    case 'inscription':
+        $controller = new inscriptionController();
+        $controller->Inscription();
+        break;
 
+    case 'verifInscription':
+        if (isset($_POST['username'], $_POST['password'], $_POST['email'])) {
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+            $email = $_POST['email'];
 
+            $inscriptionModel = new InscriptionModel();
+            $success = $inscriptionModel->verifInscription($username, $password, $email);
+
+            if ($success) {
+                $_SESSION['logged'] = true;
+                header("Location: /");
+                exit();
+            } else {
+                echo "Erreur lors de l'inscription.";
+            }
+        } else {
+            echo "Données d'inscription manquantes.";
+        }
+        break;
+
+    default:
+        echo "Page non trouvée";
+        break;
 }
