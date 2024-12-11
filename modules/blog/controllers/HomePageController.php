@@ -5,9 +5,11 @@ use blog\views\HomePageView;
 
 class HomePageController
 {
-    public static function affichePage():void
+    public static function affichePage(): void
     {
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
         $view = new HomePageView();
         $view->afficher();
     }
