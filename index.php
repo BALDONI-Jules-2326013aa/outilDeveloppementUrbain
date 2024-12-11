@@ -27,10 +27,6 @@ try {
 } catch (PDOException $e) {
     die("Erreur de connexion : " . $e->getMessage());
 }
-    $homePage = new HomePageController();
-    $homePage->affichePage();
-    exit;
-}
 
 switch ($request_uri) {
     case 'fichier':
