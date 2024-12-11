@@ -3,7 +3,6 @@ session_start();
 session_unset();
 session_destroy();
 
-
-header("Location: connexion.html");
+header("Location: /connexion");
 exit();
 ?>

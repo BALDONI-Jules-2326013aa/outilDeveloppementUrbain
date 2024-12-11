@@ -26,4 +26,9 @@ class DbConnect
 
         return $this->conn;
     }
+
+    public function isConnected(): bool
+    {
+        return $this->conn !== null;
+    }
 }

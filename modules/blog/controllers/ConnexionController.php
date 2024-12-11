@@ -8,27 +8,44 @@ use blog\models\DbConnect;
 
 class ConnexionController
 {
+    public static function affichePage(): void
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        $view = new ConnexionView();
+        $view->afficher();
+    }
+
     public static function connecter(array $post): void
     {
-        $courriel = htmlspecialchars($post["email"]);
+        $courriel = htmlspecialchars($post["username"]);
         $password = htmlspecialchars($post["password"]);
 
-        $connexionModel = new ConnexionModel(new DbConnect());
+        $dbConnect = new DbConnect();
+        $db = $dbConnect->connect();
 
-        if ($connexionModel->login($courriel, $password)) {
-            setcookie(
-                'courrielSiti',
-                $post["email"],
-                [
-                    'expires' => time() + 365*24*3600,
-                    'secure' => true,
-                    'httponly' => true,
-                ]
-            );
-            header("Location: /home");
-            exit();
+        if ($dbConnect->isConnected()) {
+            $connexionModel = new ConnexionModel($db);
+
+            if ($connexionModel->verifConnexion($courriel, $password)) {
+                setcookie(
+                    'courrielSiti',
+                    $post["username"],
+                    [
+                        'expires' => time() + 365*24*3600,
+                        'secure' => true,
+                        'httponly' => true,
+                    ]
+                );
+                header("Location: /");
+                exit();
+            } else {
+                echo "Mail ou mot de passe incorrect";
+                exit();
+            }
         } else {
-            echo "Mail ou mot de passe incorrect";
+            echo "Erreur de connexion à la base de données.";
             exit();
         }
     }
