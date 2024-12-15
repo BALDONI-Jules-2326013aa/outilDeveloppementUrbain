@@ -2,12 +2,27 @@
 namespace blog\controllers;
 
 use blog\models\FileModel;
+use blog\views\FileView;
 
 class FileController {
     private $model;
 
     public function __construct(FileModel $model) {
         $this->model = $model;
+    }
+
+    public static function affichePage(): void {
+        session_start();
+
+        $pdo = new \PDO('pgsql:host=postgresql-siti.alwaysdata.net;dbname=siti_db', 'siti', 'motdepassesitia1');
+        $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+
+        $model = new FileModel($pdo);
+        $files = $model->getFiles();
+
+        $view = new FileView();
+        $view->setFiles($files);
+        $view->afficher();
     }
 
     public function handleRequest() {
@@ -38,7 +53,7 @@ class FileController {
             $allowedfileExtensions = array('geojson');
             if (in_array($fileExtension, $allowedfileExtensions)) {
                 $fileContent = file_get_contents($fileTmpPath);
-                $this->model->uploadFile($fileName, $fileContent, 1); // Remplacez 1 par l'ID utilisateur réel
+                $this->model->uploadFile($fileName, $fileContent, 19); // Remplacez 1 par l'ID utilisateur réel
                 echo "Fichier téléchargé avec succès.";
                 header("Location: /fichier");
                 exit();
@@ -78,6 +93,8 @@ class FileController {
 
     private function showFiles() {
         $files = $this->model->getFiles();
-        include __DIR__ . '/../views/file_view.php';
+        $view = new FileView();
+        $view->setFiles($files);
+        $view->afficher();
     }
 }
