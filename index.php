@@ -9,6 +9,8 @@ use blog\controllers\SimulationController;
 use blog\controllers\InscriptionController;
 use blog\models\FileModel;
 use blog\controllers\FileController;
+use blog\controllers\HistoriqueCController;
+use blog\controllers\HistoriqueSController;
 
 $request_uri = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
 if ($request_uri == '' || $request_uri == 'index.php') {
