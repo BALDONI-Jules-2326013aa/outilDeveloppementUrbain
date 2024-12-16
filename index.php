@@ -37,7 +37,7 @@ switch ($request_uri) {
         $comparaison::resetSession();
         $comparaison::afficheFichier();
         break;
-    case 'simulation':
+    case 'Simulation':
         $controller = new SimulationController();
         $controller->affichePage();
         break;
