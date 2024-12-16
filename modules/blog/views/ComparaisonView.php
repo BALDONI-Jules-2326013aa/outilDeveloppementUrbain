@@ -69,7 +69,7 @@ class ComparaisonView extends AbstractView
             $htmlOutput .= $tifModel->visualisationHillShade($tifFile);
         }
 
-        $this->body .= $htmlOutput; // Ajoute la sortie HTML à la vue
+        $this->body .= $htmlOutput;
     }
 
 

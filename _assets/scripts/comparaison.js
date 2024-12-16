@@ -109,8 +109,10 @@ function displayPopup(elementId) {
 function animationMapSettingsButton() {
     if(document.getElementById('mapSettingsButton').style.right === '25vw') {
         document.getElementById('mapSettingsButton').style.right = '4vw';
+        document.getElementById('mapSettingsButton').style.rotate = '0deg';
     } else {
         document.getElementById('mapSettingsButton').style.right = '25vw';
+        document.getElementById('mapSettingsButton').style.rotate = '180deg';
     }
 }
 
