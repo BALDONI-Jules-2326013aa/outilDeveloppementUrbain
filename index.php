@@ -93,4 +93,4 @@ switch ($request_uri) {
         $homePage = new HomePageController();
         $homePage::affichePage();
         break;
-}
+ }
