@@ -53,7 +53,7 @@ class SimulationView extends AbstractView
     }
 
     public function resultatSimulation(array $dataArray, array $fileNames): void
-{
+    {
         $geojsonDataJsArray = json_encode($dataArray);
         $fileNamesJsArray = json_encode($fileNames);
 
@@ -63,7 +63,7 @@ class SimulationView extends AbstractView
             const geojsonDataArray = $geojsonDataJsArray;
             const fileNamesArray = $fileNamesJsArray;
           </script>" .
-            "<script src='_assets/scripts/simulation.js'></script>";
+            "<script src='_assets/scripts/map.js'></script>";
 
         $this->body = $script;
 
