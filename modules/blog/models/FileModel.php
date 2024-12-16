@@ -46,7 +46,7 @@ class FileModel {
     }
 
     public function getFiles() {
-        $stmt = $this->pdo->query("SELECT id, name FROM geojson_files ORDER BY id DESC");
+        $stmt = $this->pdo->query("SELECT id, name, utilisateur_id FROM geojson_files ORDER BY id DESC");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
