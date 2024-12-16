@@ -17,13 +17,6 @@ if ($request_uri == '' || $request_uri == 'index.php') {
     HomePageController::affichePage();
 }
 
-try {
-    $pdo = new \PDO('pgsql:host=postgresql-siti.alwaysdata.net;dbname=siti_db', 'siti', 'motdepassesitia1');
-    $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Erreur de connexion : " . $e->getMessage());
-}
-
 switch ($request_uri) {
     case 'fichier':
         FileController::affichePage();
@@ -32,7 +25,7 @@ switch ($request_uri) {
         $model = new FileModel($pdo);
         $controller = new FileController($model);
         $controller->handleRequest();
-        break;
+        break;  
     case 'supprimerFichier':
         $model = new FileModel($pdo);
         $controller = new FileController($model);

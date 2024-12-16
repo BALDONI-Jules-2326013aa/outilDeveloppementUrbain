@@ -2,6 +2,7 @@
 namespace blog\controllers;
 
 use blog\models\FileModel;
+use blog\models\ConnexionModel;
 use blog\views\FileView;
 
 class FileController {
@@ -13,7 +14,7 @@ class FileController {
 
     public static function affichePage(): void {
         session_start();
-
+        
         $pdo = new \PDO('pgsql:host=postgresql-siti.alwaysdata.net;dbname=siti_db', 'siti', 'motdepassesitia1');
         $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
@@ -54,16 +55,22 @@ class FileController {
             if (in_array($fileExtension, $allowedfileExtensions)) {
                 $fileContent = file_get_contents($fileTmpPath);
 
-                // Ajoutez un message de débogage pour vérifier le contenu du fichier
-                error_log("Contenu du fichier GeoJSON: " . $fileContent);
+                session_start();
+                $username = $_COOKIE['courrielSiti'] ?? null;
+                if ($username) {
+                    $connexionModel = new ConnexionModel($this->model->getPDO());
+                    $userId = $connexionModel->getID($username);
 
-                try {
-                    $this->model->uploadFile($fileName, $fileContent, 19); // Remplacez 1 par l'ID utilisateur réel
-                    echo "Fichier téléchargé avec succès.";
-                    header("Location: /fichier");
-                    exit();
-                } catch (\Exception $e) {
-                    echo "Erreur lors de l'insertion du fichier GeoJSON: " . $e->getMessage();
+                    if ($userId) {
+                        $this->model->uploadFile($fileName, $fileContent, $userId);
+                        echo "Fichier téléchargé avec succès.";
+                        header("Location: /fichier");
+                        exit();
+                    } else {
+                        echo "Utilisateur non trouvé.";
+                    }
+                } else {
+                    echo "Utilisateur non connecté.";
                 }
             } else {
                 echo "Type de fichier non autorisé.";

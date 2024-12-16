@@ -9,6 +9,10 @@ class FileModel {
     public function __construct(PDO $pdo) {
         $this->pdo = $pdo;
     }
+    public function getPDO() {
+        return $this->pdo;
+    }
+
 
     public function uploadFile($name, $geojsonContent, $userId) {
         // Valider le contenu GeoJSON
