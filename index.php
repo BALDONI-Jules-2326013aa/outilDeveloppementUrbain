@@ -59,13 +59,14 @@ switch ($request_uri) {
     case 'startSimulation':
         SimulationController::startSimulation();
         break;
+    case 'historiqueC':
+        $controller = new HistoriqueCController();
+        $controller->affichePage();
+        break;
 
-    case 'inscription':
-        $inscriptionPage = new InscriptionController();
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $inscriptionPage::inscrire($_POST);
-        }
-        $inscriptionPage::affichePage();
+    case 'historiqueS':
+        $controller = new HistoriqueSController();
+        $controller->affichePage();
         break;
 
     case 'inscription':
@@ -76,10 +77,11 @@ switch ($request_uri) {
         $inscriptionPage::affichePage();
         break;
     case 'connexion':
-        ConnexionController::affichePage();
-        break;
-    case 'verifConnexion':
-        ConnexionController::verifConnexion();
+        $connexionPage = new ConnexionController();
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $connexionPage::connecter($_POST);
+        }
+        $connexionPage::affichePage();
         break;
     case 'deconnexion':
         // On se déconnecte via la méthode deconnecter
@@ -89,6 +91,4 @@ switch ($request_uri) {
         $homePage = new HomePageController();
         $homePage::affichePage();
         break;
-
-
 }
