@@ -4,53 +4,82 @@ include __DIR__ . '/AutoLoader.php';
 use blog\controllers\ComparaisonController;
 use blog\controllers\ConnexionController;
 use blog\controllers\HomePageController;
+use blog\controllers\HistoriqueCController;
+use blog\controllers\HistoriqueSController;
 use blog\controllers\SimulationController;
+use blog\controllers\inscriptionController;
+use blog\models\InscriptionModel;
 use blog\models\ConnexionModel;
 
+session_start();
 
 $request_uri = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
-if ($request_uri == '' || $request_uri == 'index.php') {
 
+$controller = null;
+
+if ($request_uri == '' || $request_uri == 'index.php') {
     $homePage = new HomePageController();
-    $homePage::affichePage();
-    }
+    $homePage->affichePage();
+    exit;
+}
 
 switch ($request_uri) {
     case 'comparaison':
-        $comparaison = new ComparaisonController();
-        $comparaison::afficheFichier();
+        $controller = new ComparaisonController();
+        $controller->affichePage();
         break;
+
     case 'comparaisonFichier':
-        $comparaison = new ComparaisonController();
-        $comparaison::ajouterFichier();
+        $controller = new ComparaisonController();
+        $controller->afficheFichier();
         break;
-    case 'newMap':
-        $comparaison = new ComparaisonController();
-        $comparaison::resetSession();
-        $comparaison::afficheFichier();
+
+    case 'simulation':
+        $controller = new SimulationController();
+        $controller->affichePage();
         break;
-    case 'Simulation':
-        $simulation = new SimulationController();
-        $simulation::affichePage();
-        break;
+
     case 'afficheGetYears':
-        $ficher = new SimulationController();
-        $ficher::afficheGetYears();
+        $controller = new SimulationController();
+        $controller->afficheGetYears();
         break;
+
     case 'startSimulation':
-        $ficher = new SimulationController();
-        $ficher::startSimulation();
+        $controller = new SimulationController();
+        $controller->startSimulation();
+        break;
+    case 'historiqueC':
+        $controller = new HistoriqueCController();
+        $controller->affichePage();
+        break;
+
+    case 'historiqueS':
+        $controller = new HistoriqueSController();
+        $controller->affichePage();
+        break;
+
+    case 'inscription':
+        $inscriptionPage = new InscriptionController();
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $inscriptionPage::inscrire($_POST);
+        }
+        $inscriptionPage::affichePage();
         break;
     case 'connexion':
-        $connexion = new ConnexionController();
-        $connexion::affichePage();
+        $connexionPage = new ConnexionController();
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $connexionPage::connecter($_POST);
+        }
+        $connexionPage::affichePage();
         break;
-    case 'verifConnexion':
-        $verification = new ConnexionModel();
-        $verification::verifConnexion();
+    case 'deconnexion':
+        // On se déconnecte via la méthode deconnecter
+        $deconnexionPage = new ConnexionController();
+        $deconnexionPage::deconnecter();
+        // Puis on affiche une page d'acceuil
+        $homePage = new HomePageController();
+        $homePage::affichePage();
         break;
-    case 'inscription':
-        $connexion = new \blog\controllers\inscriptionController();
-        $connexion::affichePage();
-        break;
+
+
 }
