@@ -1,0 +1,17 @@
+
+<body>
+    <h1>Gestion des fichiers GeoJSON</h1>
+    <div class="file-upload">
+        <form action="/telechargerFichier" method="post" enctype="multipart/form-data">
+            <label for="file">Choisir un fichier GeoJSON:</label>
+            <input type="file" name="file" id="file" accept=".geojson">
+            <button type="submit">Uploader</button>
+        </form>
+    </div>
+    <div class="file-list">
+        <h2>Fichiers disponibles</h2>
+        <ul>
+            <?php include 'liste_fichiers.php'; ?>
+        </ul>
+    </div>
+</body>
