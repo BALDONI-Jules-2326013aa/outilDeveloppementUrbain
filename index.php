@@ -49,7 +49,7 @@ switch ($request_uri) {
 
     case 'startSimulation':
         $controller = new SimulationController();
-        $controller->startSimulation();
+            $controller->startSimulation();
         break;
     case 'historiqueC':
         $controller = new HistoriqueCController();
