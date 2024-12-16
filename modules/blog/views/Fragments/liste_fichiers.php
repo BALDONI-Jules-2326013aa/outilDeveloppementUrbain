@@ -3,7 +3,7 @@ $files = $this->getFiles();
 
 foreach ($files as $file): ?>
     <li>
-        <?php echo htmlspecialchars($file['name']); ?>
+        <span><?php echo htmlspecialchars($file['name']); ?></span>
         <form action="/telechargerFichier" method="post" style="display:inline;">
             <input type="hidden" name="file_id" value="<?php echo $file['id']; ?>">
             <button type="submit">Télécharger</button>
