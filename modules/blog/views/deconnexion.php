@@ -3,6 +3,6 @@ session_start();
 session_unset();
 session_destroy();
 
-header("Location: /connexion");
+header("Location: /Fragments/connexion");
 exit();
 ?>
