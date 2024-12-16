@@ -231,17 +231,16 @@ input[type="checkbox"] {
 
 #barBatiments {
     position: absolute;
-    top:55vh;
-    left: 4vw;
+    left: 3%;
+    top: 110%;
     z-index: 100;
     background-color: rgba(255, 255, 255, 0.6);
     flex-direction: column;
-    align-items: center;
-    padding: 20px;
     border-radius: 10px;
+    padding: 20px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     width: 20%;
-    max-width: 50vh;
+    max-width: 40vh;
     max-height: 50vh;
     backdrop-filter: blur(5px);
     border: 1px solid #e0e0e0;
