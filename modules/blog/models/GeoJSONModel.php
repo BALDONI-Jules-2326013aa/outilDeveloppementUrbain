@@ -103,22 +103,25 @@ class GeoJSONModel
     public static function recupereTypeBatiment($fileArray): array
     {
         $buildingTypes = [];
-        $buildingTypes['Ecole'] = 1;
-        $buildingTypes['Commercial'] = 9;
-        $buildingTypes['Maison'] = 5;
-        $buildingTypes['Church'] = 3;
-        /*
         foreach ($fileArray as $file) {
             if (isset($file['features'])) {
                 foreach ($file['features'] as $feature) {
-                    $type = $feature['properties']['type'] ?? null;
+                    $type = $feature['properties']['ID_2'] ?? null;
                     if ($type) {
-                        $buildingTypes[$type] = 0;
+                        if ($type == 'New'){
+                            $type = 'House';
+                        }
+                        if ($type == 'house'){
+                            $type = 'House';
+                        }
+                        if (!isset($buildingTypes[$type])) {
+                            $buildingTypes[$type] = 0;
+                        }
+                        $buildingTypes[$type]++;
                     }
-                    $buildingTypes[$type]++;
                 }
             }
-        }*/
+        }
         return $buildingTypes;
     }
 
@@ -160,5 +163,4 @@ class GeoJSONModel
         <script src='/_assets/scripts/TypeBat.js'></script>
         ";
     }
-
 }
