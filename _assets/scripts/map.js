@@ -1,5 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    document.getElementById('downloadFilesButton').addEventListener('click', () => {
+        const filePath = '/home/jules/Téléchargements/valenicina/donnes_projet/Household_3-2019.geojson';
+        const fileName = 'Household_3-2019.geojson';
+        console.log('Téléchargement de ' + fileName + ' en cours...');
+        const a = document.createElement('a');
+        a.href = filePath;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    });
+
     document.getElementById('mapSettingsButton').addEventListener('click', () => displayPopup('settingsPopup'));
     document.getElementById('mapSettingsButton').addEventListener('click', () => animationMapSettingsButton());
 
@@ -9,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setElementDisplay('mainDisplay', 'flex');
     setElementDisplay('trait', 'flex');
+    setElementDisplay('downloadFiles', 'flex');
 
     const map = initializeMap();
     const layers = [];
@@ -110,8 +123,10 @@ function displayPopup(elementId) {
 function animationMapSettingsButton() {
     if(document.getElementById('mapSettingsButton').style.right === '25vw') {
         document.getElementById('mapSettingsButton').style.right = '4vw';
+        document.getElementById('mapSettingsButton').style.rotate = '0deg';
     } else {
         document.getElementById('mapSettingsButton').style.right = '25vw';
+        document.getElementById('mapSettingsButton').style.rotate = '180deg';
     }
 }
 

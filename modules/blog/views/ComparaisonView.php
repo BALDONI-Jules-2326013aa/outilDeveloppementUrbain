@@ -39,7 +39,7 @@ class ComparaisonView extends AbstractView
             const geojsonDataArray = $geojsonDataJsArray;
             const fileNamesArray = $fileNamesJsArray;
           </script>" .
-            "<script src='_assets/scripts/comparaison.js'></script>";
+            "<script src='_assets/scripts/map.js'></script>";
 
         $this->body .= $script;
     }
@@ -77,7 +77,7 @@ class ComparaisonView extends AbstractView
             $htmlOutput .= $tifModel->visualisationHillShade($tifFile);
         }
 
-        $this->body .= $htmlOutput; // Ajoute la sortie HTML à la vue
+        $this->body .= $htmlOutput;
     }
 
 

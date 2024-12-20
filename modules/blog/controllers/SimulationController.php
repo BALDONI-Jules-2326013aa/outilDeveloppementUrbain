@@ -42,15 +42,16 @@ class SimulationController
     {
         session_start();
 
+
         $geoData = [];
         $filesNames = [];
 
         // A MODIFIER QUAND ON AURA LE LOGICIEL
 
-        // Pour l'instant, on fait comme si le logiciel renvoyait les fichiers _assets/testSimul/Household_3-2019.geojson et _assets/testSimul/Road_3-2019.geojson
+        // Pour l'instant, on fait comme si le logiciel renvoyait les fichiers /home/jules/Téléchargements/valenicina/donnes_projet/Household_3-2019.geojson et /home/jules/Téléchargements/valenicina/donnes_projet/Road_3-2019.geojson
 
-        $geoData[] = GeoJSONModel::litGeoJSON("_assets/testSimul/Household_3-2019.geojson");
-        $geoData[] = GeoJSONModel::litGeoJSON("_assets/testSimul/Road_3-2019.geojson");
+        $geoData[] = GeoJSONModel::litGeoJSON("/home/jules/Téléchargements/valenicina/donnes_projet/Household_3-2019.geojson");
+        $geoData[] = GeoJSONModel::litGeoJSON("/home/jules/Téléchargements/valenicina/donnes_projet/Road_3-2019.geojson");
         $filesNames[] = "Household_3-2019.geojson";
         $filesNames[] = "Road_3-2019.geojson";
 
