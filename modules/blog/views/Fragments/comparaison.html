@@ -1,11 +1,4 @@
-<body>
-<h1>Comparaison entre plusieurs fichiers GeoJSON</h1>
-<form id="fileForm" method="post" action="/newMap" enctype="multipart/form-data">
-  <label for="file1">Sélectionnez plusieurs fichiers GeoJSON</label>
-  <input type="file" name="files[]" id="file1" multiple required>
 
-  <button type="submit">Nouvelle carte</button>
-</form>
 
 <div id="trait" style="display: none;"></div>
 <div id="mainDisplay" style="display: none;">
@@ -21,7 +14,7 @@
       <div id="graphs">
           <h2>Graphiques</h2>
           <button class="graph-button" id="graph1">Nombre de batiments (barres)</button>
-          <button classs="graph-button" id="graph2">Surface des batiments (radar)</button>
+          <button class="graph-button" id="graph2">Surface des batiments (radar)</button>
       </div>
   </div>
   <div id="map"></div>

@@ -1,6 +1,7 @@
 <?php
 
 namespace blog\views;
+
 use blog\models\GeoJSONModel;
 use blog\models\TifModel;
 
@@ -10,6 +11,7 @@ class ComparaisonView extends AbstractView
 
     protected function body(): void
     {
+        include __DIR__ . "/Fragments/formulaireFichier.html";
         if (is_readable($this->body)) {
             include $this->body;
         } else {
@@ -61,7 +63,7 @@ class ComparaisonView extends AbstractView
         $this->body .= $script;
     }
 
-    public function afficheImageTifSurCarte(array $dataArray): void {
+    public function afficheTif(array $dataArray): void {
         $tifModel = new TifModel();
         $htmlOutput = '';
 
@@ -69,10 +71,8 @@ class ComparaisonView extends AbstractView
             $htmlOutput .= $tifModel->visualisationHillShade($tifFile);
         }
 
-        $this->body .= $htmlOutput; // Ajoute la sortie HTML à la vue
+        $this->body .= $htmlOutput;
     }
-
-
 
     public function afficher(): void
     {

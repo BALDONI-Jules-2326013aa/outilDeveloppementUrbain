@@ -18,6 +18,7 @@ if ($request_uri == '' || $request_uri == 'index.php') {
 switch ($request_uri) {
     case 'comparaison':
         $comparaison = new ComparaisonController();
+        //$comparaison::resetSession();
         $comparaison::afficheFichier();
         break;
     case 'comparaisonFichier':

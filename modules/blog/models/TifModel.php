@@ -24,5 +24,4 @@ class TifModel
         unlink($convertedFile);
         return "<h3>Erreur lors de la création de la visualisation Hillshade.</h3>";
     }
-
 }
