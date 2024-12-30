@@ -12,16 +12,23 @@
 
 <div id="trait" style="display: none;"></div>
 <div id="mainDisplay" style="display: none;">
-    <button id="mapSettingsButton" class="map-settings-button"><ion-icon name="arrow-forward"></ion-icon></button>
+    <button id="mapSettingsButton" class="map-settings-button"><ion-icon name="arrow-back"></ion-icon></button>
     <div id="settingsPopup" style="display: none;">
         <div id="color-selectors"></div>
         <div id="graphs">
+            <h2>Graphiques</h2>
             <button class="graph-button" id="graph1">Nombre de batiments (barres)</button>
+            <button class="graph-button" id="graph2">Surface des batiments (radar)</button>
         </div>
     </div>
     <div id="map"></div>
 </div>
+
+
 <div id="downloadFiles" style="display: none;">
     <button id="downloadFilesButton">Télécharger les fichiers GeoJSON</button>
 </div>
 
+
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

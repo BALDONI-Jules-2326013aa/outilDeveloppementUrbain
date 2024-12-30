@@ -41,7 +41,7 @@ class ComparaisonView extends AbstractView
             const geojsonDataArray = $geojsonDataJsArray;
             const fileNamesArray = $fileNamesJsArray;
           </script>" .
-            "<script src='_assets/scripts/comparaison.js'></script>";
+            "<script src='_assets/scripts/map.js'></script>";
 
         $this->body .= $script;
     }

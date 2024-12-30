@@ -71,8 +71,8 @@ button:hover {
 }
 
 #downloadFiles {
+	margin-top: 15vh;
 	text-align: center;
-	margin-top: 1.5rem;
 }
 
 #downloadFilesButton {
@@ -89,18 +89,33 @@ button:hover {
 #downloadFilesButton:hover {
 	background-color: #3e8e41;
 }
+#trait {
+	width: 100%;
+	height: 2px;
+	background-color: #59481d;
+	margin: 5vh 0 8vh;
+}
+
+#mainDisplay {
+	display: flex;
+	width: 95%;
+	height: 55vh;
+	justify-content: space-around;
+	border-radius: 10px;
+}
 
 #map {
+	display: block;
 	width: 100%;
-	max-width: 1000px;
-	height: 500px;
-	margin: 2rem auto;
-	border-radius: 10px;
+	max-width: 100%;
+	height: 65vh;
+	border-radius: 15px;
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 	border: 2px solid #4a90e2;
 	background-color: #f0f0f0;
 	overflow: hidden;
 	position: relative;
+	z-index: 50;
 }
 
 #map::before {
@@ -116,36 +131,167 @@ button:hover {
 	font-weight: bold;
 }
 
+#mapSettingsButton {
+	position: absolute;
+	top: 66vh;
+	right: 4vw;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	background-color: #4a90e2;
+	color: #fff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	z-index: 100;
+}
+
+#mapSettingsButton:hover {
+	background-color: #3a7ac2;
+}
+
+#settingsPopup {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 20%;
+	height: 61vh;
+	border-radius: 15px 15px 0 0;
+	position: absolute;
+	top: 66vh;
+	right: 4vw;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	backdrop-filter: blur(5px);
+	background-color: rgba(255, 255, 255, 0.1);
+	z-index: 100;
+	overflow-y: auto;
+	overflow-x: hidden;
+	animation: slideIn 0.5s ease;
+}
+
+@keyframes slideIn {
+	from {
+		transform: translateX(100%);
+	} to {
+		  transform: translateX(0);
+	  }
+}
+
+#addFileContainer {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+	width: 100%;
+	min-height: 20vh;
+	margin-bottom: 2vh;
+	border-bottom: 2px solid #59481d;
+	border-radius: 10px 10px 0 0;
+}
+
+#addFileContainer label {
+	text-align: center;
+}
+
+input[type="file"] {
+	width: 80%;
+}
 
 #color-selectors {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 10px;
-	margin: 2rem auto;
-	max-width: 600px;
-	padding: 15px;
-	border: 2px solid #4a90e2;
+	justify-content: space-around;
+	align-items: center;
+	border-radius: 10px;
+	width: 100%;
+	border-bottom: 2px solid #59481d;
+}
+
+#color-selectors label {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	padding: 0.5rem;
+	font-size: 1rem;
 	border-radius: 8px;
-	background-color: #f9f9f9;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+	margin: 0.5rem 0;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .color-option {
 	width: 40px;
 	height: 40px;
-	border-radius: 50%;
 	cursor: pointer;
 	transition: transform 0.2s ease, box-shadow 0.2s ease;
 	border: 2px solid #ddd;
+	margin-right: 10px;
 }
 
-.color-option:hover {
-	transform: scale(1.1);
+
+input[type="color"] {
+	cursor: pointer;
+	border: none;
+	min-width: 40px;
+	min-height: 40px;
+	max-width: 40px;
+	max-height: 40px;
+	border-radius: 50%;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+input[type="color"]:hover {
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 	border-color: #4a90e2;
 }
 
-.color-option.selected {
-	box-shadow: 0 0 12px rgba(74, 144, 226, 0.4);
-	border-color: #4a90e2;
+input[type="checkbox"] {
+	cursor: pointer;
+}
+
+#graphs {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	min-height: 22vh;
+	width: 100%;
+	padding: 2vh 0 2vh;
+	border-radius: 0 0 10px 10px;
+}
+
+.graph-button {
+	width: 80%;
+	padding: 0.7rem;
+	font-size: 1rem;
+	border: 1px solid #59481d;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+#barBatiments, #radarAireMoyenne {
+	display: none;
+	position: absolute;
+	top:55vh;
+	left: 4vw;
+	z-index: 100;
+	background-color: rgba(255, 255, 255, 0.6);
+	flex-direction: column;
+	align-items: center;
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	width: 20%;
+	max-width: 50vh;
+	max-height: 50vh;
+	backdrop-filter: blur(5px);
+	border: 1px solid #e0e0e0;
+}
+
+
+.espace {
+	height: 80vh;
 }

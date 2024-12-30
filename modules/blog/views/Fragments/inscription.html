@@ -1,13 +1,11 @@
 <body>
-<form method="post" action="/verifInscription">
+<form method="post" action="/inscription">
   <h1>
     S'inscrire
   </h1>
-  <label for="email">Mail</label>
-  <input type="text" name="mail" id="email" required>
-  <label for="user">Indentifiant</label>
-  <input type="text" name="user" id="user" required>
-  <label for="password">Mot de passe</label>
-  <input type="password" name="user" id="password" required>
-  <button type="submit">s'inscrire</button>
-</form>
+    <input type="email" name="email" placeholder="Email" class="email" required>
+    <input type="text" name="username" placeholder="Nom d'utilisateur" required>
+    <input type="password" name="password" placeholder="Mot de passe" required>
+    <button type="submit">S'inscrire</button>
+  </form>
+

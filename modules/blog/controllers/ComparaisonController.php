@@ -176,4 +176,12 @@ class ComparaisonController
             return "Pas de fichier reconnu";
         }
     }
+    public static function affichePage(): void
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        $view = new ComparaisonView();
+        $view->afficher();
+    }
 }
