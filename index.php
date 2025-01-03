@@ -40,6 +40,7 @@ switch ($request_uri) {
         break;
     case 'comparaison':
         $comparaison = new ComparaisonController();
+        //$comparaison::resetSession();
         $comparaison::afficheFichier();
         break;
     case 'comparaisonFichier':

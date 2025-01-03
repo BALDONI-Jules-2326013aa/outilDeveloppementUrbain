@@ -4,87 +4,84 @@ namespace blog\controllers;
 use blog\models\GeoJSONModel;
 use blog\models\ShapefileModel;
 use blog\views\ComparaisonView;
+use blog\views\tifView;
+use JetBrains\PhpStorm\NoReturn;
 
 class ComparaisonController
 {
     private static array $arrayDataShape = [];
 
-    private static function startSession(): void
-    {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-    }
+        public static function recupereFichier(): array
+        {
+            if(!isset($_SESSION)){
+                session_start();
+            }
+            $dataGeoJson = $_SESSION['dataGeoJson'] ?? [];
+            $fileNamesGeojson = $_SESSION['fileNamesGeojson'] ?? [];
+            $dataTif = $_SESSION['dataTif'] ?? [];
+            $fileNamesTif = $_SESSION['fileNamesTif'] ?? [];
 
-    public static function recupereFichier(): array
-    {
-        self::startSession();
-        $dataGeoJson = $_SESSION['dataGeoJson'] ?? [];
-        $fileNamesGeojson = $_SESSION['fileNamesGeojson'] ?? [];
-        $dataTif = $_SESSION['dataTif'] ?? [];
-        $fileNamesTif = $_SESSION['fileNamesTif'] ?? [];
+            $processFiles = function ($files) use (&$dataGeoJson, &$dataTif, &$fileNamesGeojson, &$fileNamesTif) {
+                foreach ($files['tmp_name'] as $key => $tmpName) {
+                    if (is_uploaded_file($tmpName)) {
+                        $fileName = $files['name'][$key];
+                        $ext = self::checkExtension($fileName, $tmpName);
 
-        $processFiles = function ($files) use (&$dataGeoJson, &$dataTif, &$fileNamesGeojson, &$fileNamesTif) {
-            foreach ($files['tmp_name'] as $key => $tmpName) {
-                if (is_uploaded_file($tmpName)) {
-                    $fileName = $files['name'][$key];
-                    $ext = self::checkExtension($fileName, $tmpName);
+                        if ($ext === 'geojson') {
+                            $data = GeoJSONModel::litGeoJSON($tmpName);
+                            if (!empty($data)) {
+                                $dataGeoJson[] = $data;
+                                $fileNamesGeojson[] = $fileName;
 
-                    if ($ext === 'geojson') {
-                        $data = GeoJSONModel::litGeoJSON($tmpName);
-                        if (!empty($data)) {
-                            $dataGeoJson[] = $data;
-                            $fileNamesGeojson[] = $fileName;
-
+                            }
+                        } else if ($ext === 'tif') {
+                            $dataTif[] = $tmpName;
+                            $fileNamesTif[] = $fileName;
                         }
-                    } else if ($ext === 'tif') {
-                        $dataTif[] = $tmpName;
-                        $fileNamesTif[] = $fileName;
+                    }
+                }
+            };
+
+
+
+            // Traitement des fichiers nouvellement ajoutés
+            if (!empty($_FILES)) {
+                foreach ($_FILES as $fileGroup) {
+                    if (isset($fileGroup['tmp_name'])) {
+                        $processFiles($fileGroup);
                     }
                 }
             }
-        };
 
-
-
-        // Traitement des fichiers nouvellement ajoutés
-        if (!empty($_FILES)) {
-            foreach ($_FILES as $fileGroup) {
-                if (isset($fileGroup['tmp_name'])) {
-                    $processFiles($fileGroup);
+            // Si des fichiers Shapefile ont été détectés, les traiter
+            if (!empty(self::$arrayDataShape)) {
+                foreach (self::$arrayDataShape as $shapeFiles) {
+                    $geojsonData = ShapefileModel::convertToGeoJSON($shapeFiles);
+                    if (!empty($geojsonData)) {
+                        $dataGeoJson[] = $geojsonData;
+                        $fileNamesGeojson[] = basename($shapeFiles['shp']);
+                    }
                 }
             }
+
+            // Mise à jour de la session avec les nouveaux fichiers
+            $_SESSION['dataGeoJson'] = $dataGeoJson;
+            $_SESSION['fileNamesGeojson'] = $fileNamesGeojson;
+            $_SESSION['dataTif'] = $dataTif;
+            $_SESSION['fileNamesTif'] = $fileNamesTif;
+
+            return [
+                'geojson' => $dataGeoJson,
+                'fileNamesGeojson' => $fileNamesGeojson,
+                'tif' => $dataTif,
+                'fileNamesTif' => $fileNamesTif
+            ];
+
         }
 
-        // Si des fichiers Shapefile ont été détectés, les traiter
-        if (!empty(self::$arrayDataShape)) {
-            foreach (self::$arrayDataShape as $shapeFiles) {
-                $geojsonData = ShapefileModel::convertToGeoJSON($shapeFiles);
-                if (!empty($geojsonData)) {
-                    $dataGeoJson[] = $geojsonData;
-                    $fileNamesGeojson[] = basename($shapeFiles['shp']);
-                }
-            }
-        }
-
-        // Mise à jour de la session avec les nouveaux fichiers
-        $_SESSION['dataGeoJson'] = $dataGeoJson;
-        $_SESSION['fileNamesGeojson'] = $fileNamesGeojson;
-        $_SESSION['dataTif'] = $dataTif;
-        $_SESSION['fileNamesTif'] = $fileNamesTif;
-
-        return [
-            'geojson' => $dataGeoJson,
-            'fileNamesGeojson' => $fileNamesGeojson,
-            'tif' => $dataTif,
-            'fileNamesTif' => $fileNamesTif
-        ];
-
-    }
-
-    public static function ajouterFichier(): void
+    #[NoReturn] public static function ajouterFichier(): void
     {
-        self::startSession();
+        session_start();
 
         $dataGeoJson = $_SESSION['dataGeoJson'] ?? [];
         $fileNamesGeojson = $_SESSION['fileNamesGeojson'] ?? [];
@@ -130,7 +127,7 @@ class ComparaisonController
 
     public static function resetSession(): void
     {
-        self::startSession();
+        session_start();
         unset($_SESSION['dataGeoJson']);
         unset($_SESSION['fileNamesGeojson']);
         unset($_SESSION['dataTif']);
@@ -138,14 +135,14 @@ class ComparaisonController
         self::$arrayDataShape = [];
     }
 
-    public static function afficheFichier(): void
-    {
+    public static function afficheFichier(): void {
         $data = self::recupereFichier();
         $dataGeoJson = $data['geojson'];
         $fileNamesGeojson = $data['fileNamesGeojson'];
         $dataTif = $data['tif'];
-        $fileNamesTif = $data['fileNamesTif'];
+        //$fileNamesTif = $data['fileNamesTif'];
         $view = new ComparaisonView();
+        $autreAffichage = false;
 
         if (!empty($dataGeoJson)) {
             $view->afficherAvecFichiers($dataGeoJson, $fileNamesGeojson);
@@ -155,13 +152,15 @@ class ComparaisonController
         }
 
         if (!empty($dataTif)) {
-            $view->afficheImageTifSurCarte($dataTif);
+            $viewTif = new tifView();
+            $viewTif->afficher();
+            $autreAffichage = true;
+
         }
-
-        $view->afficher();
+        if (!$autreAffichage){
+            $view->afficher();;
+        }
     }
-
-
 
     private static function checkExtension(string $fileName, string $tmpName): string
     {

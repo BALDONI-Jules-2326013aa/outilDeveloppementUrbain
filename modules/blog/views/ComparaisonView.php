@@ -1,6 +1,7 @@
 <?php
 
 namespace blog\views;
+
 use blog\models\GeoJSONModel;
 use blog\models\TifModel;
 
@@ -10,6 +11,7 @@ class ComparaisonView extends AbstractView
 
     protected function body(): void
     {
+        include __DIR__ . "/Fragments/formulaireFichier.html";
         if (is_readable($this->body)) {
             include $this->body;
         } else {
@@ -61,15 +63,7 @@ class ComparaisonView extends AbstractView
         $this->body .= $script;
     }
 
-    public function afficherGraphiquePolarTypeBat (array $dataArray, array $fileNames): void {
-      $geoJsonModel = new GeoJSONModel();
-        $typeBatiment = $geoJsonModel->recupereTypeBatiment($dataArray);
-      $script = $geoJsonModel->dessineGraphiquePolarTypeBat($typeBatiment, $fileNames);
-
-        $this->body.= $script;
-    }
-
-    public function afficheImageTifSurCarte(array $dataArray): void {
+    public function afficheTif(array $dataArray): void {
         $tifModel = new TifModel();
         $htmlOutput = '';
 
@@ -80,9 +74,16 @@ class ComparaisonView extends AbstractView
         $this->body .= $htmlOutput;
     }
 
+    public function afficherGraphiquePolarTypeBat (array $dataArray, array $fileNames): void {
+        $geoJsonModel = new GeoJSONModel();
+        $typeBatiment = $geoJsonModel->recupereTypeBatiment($dataArray);
+        $script = $geoJsonModel->dessineGraphiquePolarTypeBat($typeBatiment, $fileNames);
+
+        $this->body.= $script;
 
 
-    public function afficher(): void
+
+        public function afficher(): void
     {
         parent::afficher();
     }

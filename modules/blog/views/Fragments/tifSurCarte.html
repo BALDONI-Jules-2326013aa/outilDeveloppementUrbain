@@ -1,0 +1,71 @@
+<div id="map"></div>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script src="https://unpkg.com/georaster"></script>
+<script src="https://unpkg.com/georaster-layer-for-leaflet/dist/georaster-layer-for-leaflet.min.js"></script>
+<script src="https://unpkg.com/geoblaze"></script>
+<link rel="stylesheet" href="/../../../../_assets/styles/comparaison.css">
+<link rel="stylesheet" href="/../../../../_assets/styles/style.css">
+
+<script>
+    var map = L.map("map").setView([28.3949, 84.124], 7);
+    var osm = L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+            attribution:
+                '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        }
+    );
+    osm.addTo(map);
+
+    document.querySelector("form").addEventListener("submit", function (event) {
+        event.preventDefault();
+        var fileInput = document.getElementById("file1");
+        if (fileInput.files.length === 0) {
+            alert("Veuillez sélectionner des fichiers.");
+            return;
+        }
+
+        Array.from(fileInput.files).forEach(file => {
+            if (file.type === "image/tiff" || file.name.endsWith(".tif") || file.name.endsWith(".tiff")) {
+                var reader = new FileReader();
+                reader.onload = function (event) {
+                    var arrayBuffer = event.target.result;
+                    parseGeoraster(arrayBuffer).then((georaster) => {
+                        var layer = new GeoRasterLayer({
+                            georaster: georaster,
+                            opacity: 0.7,
+                            resolution: 2048,
+                        });
+                        layer.addTo(map);
+                        map.fitBounds(layer.getBounds());
+
+                        map.on("click", function (event) {
+                            var lat = event.latlng.lat;
+                            var lng = event.latlng.lng;
+                            var elevation = geoblaze.identify(georaster, [lng, lat]);
+
+                            map.eachLayer(function (layer) {
+                                if (layer instanceof L.Marker) {
+                                    map.removeLayer(layer);
+                                }
+                            });
+
+                            L.marker([lat, lng])
+                                .addTo(map)
+                                .bindPopup("Elevation: " + elevation)
+                                .openPopup();
+                        });
+                    }).catch(error => {
+                        console.log("Erreur lors du traitement du fichier : ", error);
+                    });
+                };
+                reader.readAsArrayBuffer(file);
+            }
+            if (file.name.endsWith(".geojson")) {
+                console.log("skibidi")
+            }
+            });
+    });
+
+</script>
