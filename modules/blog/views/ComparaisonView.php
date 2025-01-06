@@ -44,6 +44,7 @@ class ComparaisonView extends AbstractView
             "<script src='_assets/scripts/map.js'></script>";
 
         $this->body .= $script;
+
     }
 
     public function afficherGraphiqueBatiments(array $dataArray, array $fileNames): void {

@@ -132,7 +132,7 @@ class GeoJSONModel
         return "
     <div style='display: none;' id='nbBatimentsJson'>$nbBatimentsJson</div>
     <div style='display: none;' id='fileNamesJson'>$fileNamesJson</div>
-    <canvas id='barBatiments' style='display: none;'></canvas>
+    <canvas id='barBatiments'></canvas>
     <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
     <script src='/_assets/scripts/nombreBatiments.js'></script>
     ";
@@ -145,7 +145,7 @@ class GeoJSONModel
         return "
     <div style='display: none;' id='aireMoyenneJson'>$aireMoyenneJson</div>
     <div style='display: none;' id='fileNamesRadarJson'>$fileNamesJson</div>
-    <canvas id='radarAireMoyenne' style='display: none;'></canvas>
+    <canvas id='radarAireMoyenne'></canvas>
     <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
     <script src='/_assets/scripts/aireMoyenneBatiments.js'></script>
     ";
@@ -158,7 +158,7 @@ class GeoJSONModel
         return "
         <div style='display: none;' id='typeBatimentMapJson'>$typeBatimentMapJson</div>
         <div style='display: none;' id='fileNamesPolarJson'>$fileNamesJson</div>
-        <canvas id='polarTypeBatiment' style='display: none;'></canvas>
+        <canvas id='polarTypeBatiment'></canvas>
         <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
         <script src='/_assets/scripts/TypeBat.js'></script>
         ";
