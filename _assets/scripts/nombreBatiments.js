@@ -1,29 +1,27 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const ctx = document.getElementById('barBatiments').getContext('2d');
-    const fileInputElement = document.getElementById('file2');
+document.addEventListener('DOMContentLoaded', function () {
+    const canvas = document.getElementById('barBatiments');
+    const chartTypeElement = document.getElementById('chartType');
+    const fileNames = JSON.parse(document.getElementById('fileNamesJson').textContent);
+    const nbBatimentsData = JSON.parse(document.getElementById('nbBatimentsJson').textContent);
 
-    const COLORS = {
-        backgroundColor: '#6b5eba',
-        borderColor: '#557002'
-    };
+    let colors = fileNames.map(() => ({
+        backgroundColor: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
+        borderColor: `#${Math.floor(Math.random() * 16777215).toString(16)}`
+    }));
 
-    let labels = JSON.parse(document.getElementById('fileNamesJson').textContent);
-    let nbBatimentsData = JSON.parse(document.getElementById('nbBatimentsJson').textContent);
+    let currentChartType = 'bar';
+    let chart = createBarChart();
 
-    // Initialisation du graphique
-    let barBatiments = createBarChart(ctx, labels, nbBatimentsData);
-
-    // Fonction pour créer un graphique à barres
-    function createBarChart(ctx, labels, data) {
-        return new Chart(ctx, {
+    function createBarChart() {
+        return new Chart(canvas.getContext('2d'), {
             type: 'bar',
             data: {
-                labels: labels,
+                labels: fileNames,
                 datasets: [{
                     label: 'Nombre de bâtiments',
-                    data: data,
-                    backgroundColor: COLORS.backgroundColor,
-                    borderColor: COLORS.borderColor,
+                    data: nbBatimentsData,
+                    backgroundColor: colors.map(c => c.backgroundColor),
+                    borderColor: colors.map(c => c.borderColor),
                     borderWidth: 1
                 }]
             },
@@ -38,5 +36,158 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    function createLineChart() {
+        return new Chart(canvas.getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: fileNames,
+                datasets: [{
+                    label: 'Nombre de bâtiments',
+                    data: nbBatimentsData,
+                    backgroundColor: colors.map(c => c.backgroundColor),
+                    borderColor: colors.map(c => c.borderColor),
+                    borderWidth: 2,
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
 
+    function createPieChart() {
+        return new Chart(canvas.getContext('2d'), {
+            type: 'pie',
+            data: {
+                labels: fileNames,
+                datasets: [{
+                    data: nbBatimentsData,
+                    backgroundColor: colors.map(c => c.backgroundColor),
+                    borderColor: colors.map(c => c.borderColor)
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+    }
+
+    function createRadarChart() {
+        return new Chart(canvas.getContext('2d'), {
+            type: 'radar',
+            data: {
+                labels: fileNames,
+                datasets: [{
+                    label: 'Nombre de bâtiments',
+                    data: nbBatimentsData,
+                    backgroundColor: colors.map(c => c.backgroundColor),
+                    borderColor: colors.map(c => c.borderColor),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scale: {
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    function createDoughnutChart() {
+        return new Chart(canvas.getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                labels: fileNames,
+                datasets: [{
+                    data: nbBatimentsData,
+                    backgroundColor: colors.map(c => c.backgroundColor),
+                    borderColor: colors.map(c => c.borderColor)
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+    }
+
+    function createPolarAreaChart() {
+        return new Chart(canvas.getContext('2d'), {
+            type: 'polarArea',
+            data: {
+                labels: fileNames,
+                datasets: [{
+                    data: nbBatimentsData,
+                    backgroundColor: colors.map(c => c.backgroundColor),
+                    borderColor: colors.map(c => c.borderColor)
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+    }
+
+    function updateChartType(newType) {
+        if (chart) {
+            chart.destroy();
+        }
+
+        switch (newType) {
+            case 'barChartNbBatiments':
+                chart = createBarChart();
+                break;
+            case 'lineChartNbBatiments':
+                chart = createLineChart();
+                break;
+            case 'pieChartNbBatiments':
+                chart = createPieChart();
+                break;
+            case 'radarChartNbBatiments':
+                chart = createRadarChart();
+                break;
+            case 'doughnutChartNbBatiments':
+                chart = createDoughnutChart();
+                break;
+            case 'polarChartNbBatiments':
+                chart = createPolarAreaChart();
+                break;
+            default:
+                chart = createBarChart();
+        }
+    }
+
+    function updateChartColors() {
+        fileNames.forEach((_, index) => {
+            const colorPicker = document.getElementById(`color_${index}`);
+            if (colorPicker) {
+                colors[index].backgroundColor = colorPicker.value;
+                colors[index].borderColor = colorPicker.value;
+            }
+        });
+
+        chart.data.datasets[0].backgroundColor = colors.map(c => c.backgroundColor);
+        chart.data.datasets[0].borderColor = colors.map(c => c.borderColor);
+        chart.update();
+    }
+
+    chartTypeElement.addEventListener('change', (event) => {
+        const newType = event.target.value;
+        updateChartType(newType);
+    });
+
+    fileNames.forEach((_, index) => {
+        const colorPicker = document.getElementById(`color_${index}`);
+        if (colorPicker) {
+            colorPicker.addEventListener('input', updateChartColors);
+        }
+    });
 });

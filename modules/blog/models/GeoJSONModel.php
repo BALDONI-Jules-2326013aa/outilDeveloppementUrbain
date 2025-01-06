@@ -129,14 +129,45 @@ class GeoJSONModel
     {
         $nbBatimentsJson = json_encode($nbBatimentsArray);
         $fileNamesJson = json_encode($fileNameArray);
+
+        // Génération des sélecteurs de couleur pour chaque fichier
+        $colorPickersHtml = '';
+        foreach ($fileNameArray as $index => $fileName) {
+            $colorPickersHtml .= "
+        <div class='color-picker'>
+            <label for='color_$index'>Couleur pour $fileName :</label>
+            <input type='color' id='color_$index' class='color-input' value='#" . substr(md5($fileName), 0, 6) . "'>
+        </div>";
+        }
+
         return "
     <div style='display: none;' id='nbBatimentsJson'>$nbBatimentsJson</div>
     <div style='display: none;' id='fileNamesJson'>$fileNamesJson</div>
-    <canvas id='barBatiments'></canvas>
+    <div class='graphique'>
+        <div class='chart-options'>
+            <div>
+                <label for='chartTypeNbBatiments'>Choisir un type de graphique :</label>
+                <select id='chartType' class='combobox-chart'>
+                    <option value='barChartNbBatiments' selected>Barres</option>
+                    <option value='lineChartNbBatiments'>Ligne</option>
+                    <option value='radarChartNbBatiments'>Radar</option>
+                    <option value='polarChartNbBatiments'>Polaire</option>
+                    <option value='doughnutChartNbBatiments'>Donut</option>
+                    <option value='pieChartNbBatiments'>Camembert</option>
+                </select>
+            </div>
+            <div class='chart-colors'>
+                <h4>Choisir les couleurs :</h4>
+                $colorPickersHtml
+            </div>
+        </div>
+        <canvas id='barBatiments'></canvas>
+    </div>
     <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
     <script src='/_assets/scripts/nombreBatiments.js'></script>
     ";
     }
+
 
     public static function dessineGraphiqueRadarAireMoyenne($aireMoyenneArray, $fileNameArray): string
     {
@@ -164,3 +195,5 @@ class GeoJSONModel
         ";
     }
 }
+
+
