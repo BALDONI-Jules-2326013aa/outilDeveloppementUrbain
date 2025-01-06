@@ -1,27 +1,28 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    document.getElementById('downloadFilesButton').addEventListener('click', () => {
-        const filePath = '/home/jules/Téléchargements/valenicina/donnes_projet/Household_3-2019.geojson';
-        const fileName = 'Household_3-2019.geojson';
-        console.log('Téléchargement de ' + fileName + ' en cours...');
-        const a = document.createElement('a');
-        a.href = filePath;
-        a.download = fileName;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-    });
+    if(document.getElementById('downloadFilesButton')) {
+        document.getElementById('downloadFilesButton').addEventListener('click', () => {
+            const filePath = '/home/jules/Téléchargements/valenicina/donnes_projet/Household_3-2019.geojson';
+            const fileName = 'Household_3-2019.geojson';
+            console.log('Téléchargement de ' + fileName + ' en cours...');
+            const a = document.createElement('a');
+            a.href = filePath;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        })
+    }
 
     document.getElementById('mapSettingsButton').addEventListener('click', () => displayPopup('settingsPopup'));
     document.getElementById('mapSettingsButton').addEventListener('click', () => animationMapSettingsButton());
 
-    document.getElementById('graph1').addEventListener('click', () => displayGraphique('barBatiments'));
-    document.getElementById('graph2').addEventListener('click', () => displayGraphique('radarAireMoyenne'));
-    document.getElementById('graph3').addEventListener('click', () => displayGraphique('polarTypeBatiment'));
 
     setElementDisplay('mainDisplay', 'flex');
     setElementDisplay('trait', 'flex');
-    setElementDisplay('downloadFiles', 'flex');
+    if(document.getElementById('downloadFiles')) {
+        setElementDisplay('downloadFiles', 'flex');
+    }
 
     const map = initializeMap();
     const layers = [];
@@ -128,19 +129,4 @@ function animationMapSettingsButton() {
         document.getElementById('mapSettingsButton').style.right = '25vw';
         document.getElementById('mapSettingsButton').style.rotate = '180deg';
     }
-}
-
-function displayGraphique(elementId) {
-    const listeGraphiques = ['barBatiments', 'radarAireMoyenne', 'polarTypeBatiment'];
-    listeGraphiques.forEach(graphique => {
-        if (graphique === elementId) {
-            if (document.getElementById(graphique).style.display === 'none') {
-                document.getElementById(graphique).style.display = 'block';
-            } else {
-                document.getElementById(graphique).style.display = 'none';
-            }
-        } else {
-            document.getElementById(graphique).style.display = 'none';
-        }
-    });
 }
