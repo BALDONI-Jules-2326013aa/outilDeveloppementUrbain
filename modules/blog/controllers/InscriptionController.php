@@ -2,7 +2,8 @@
 
 namespace blog\controllers;
 
-use blog\views\InscriptionView;
+use blog\views\inscriptionView;
+
 use blog\models\InscriptionModel;
 use blog\models\DbConnect;
 
@@ -13,7 +14,7 @@ class InscriptionController
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-        $view = new InscriptionView();
+        $view = new inscriptionView();
         $view->afficher();
     }
 

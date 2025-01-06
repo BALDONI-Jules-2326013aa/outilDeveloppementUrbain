@@ -86,10 +86,8 @@ switch ($request_uri) {
         $connexionPage::affichePage();
         break;
     case 'deconnexion':
-        // On se déconnecte via la méthode deconnecter
         $deconnexionPage = new ConnexionController();
         $deconnexionPage::deconnecter();
-        // Puis on affiche une page d'acceuil
         $homePage = new HomePageController();
         $homePage::affichePage();
         break;
