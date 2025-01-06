@@ -16,7 +16,7 @@ class GeoJSONModel
         $data = json_decode($content, true);
 
         if (isset($data['features'][0]['properties']['Year'])) {
-            return (string) $data['features'][0]['properties']['Year'];
+            return (string)$data['features'][0]['properties']['Year'];
         }
 
         return '';
@@ -100,6 +100,31 @@ class GeoJSONModel
         return $listAireMoyenne;
     }
 
+    public static function recupereTypeBatiment($fileArray): array
+    {
+        $buildingTypes = [];
+        foreach ($fileArray as $file) {
+            if (isset($file['features'])) {
+                foreach ($file['features'] as $feature) {
+                    $type = $feature['properties']['ID_2'] ?? null;
+                    if ($type) {
+                        if ($type == 'New'){
+                            $type = 'House';
+                        }
+                        if ($type == 'house'){
+                            $type = 'House';
+                        }
+                        if (!isset($buildingTypes[$type])) {
+                            $buildingTypes[$type] = 0;
+                        }
+                        $buildingTypes[$type]++;
+                    }
+                }
+            }
+        }
+        return $buildingTypes;
+    }
+
     public static function dessineGraphiqueNombreBatiments($nbBatimentsArray, $fileNameArray): string
     {
         $nbBatimentsJson = json_encode($nbBatimentsArray);
@@ -124,5 +149,18 @@ class GeoJSONModel
     <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
     <script src='/_assets/scripts/aireMoyenneBatiments.js'></script>
     ";
+    }
+
+    public static function dessineGraphiquePolarTypeBat($typeBatimentMap, $fileNameArray): string
+    {
+        $typeBatimentMapJson = json_encode($typeBatimentMap);
+        $fileNamesJson = json_encode($fileNameArray);
+        return "
+        <div style='display: none;' id='typeBatimentMapJson'>$typeBatimentMapJson</div>
+        <div style='display: none;' id='fileNamesPolarJson'>$fileNamesJson</div>
+        <canvas id='polarTypeBatiment' style='display: none;'></canvas>
+        <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
+        <script src='/_assets/scripts/TypeBat.js'></script>
+        ";
     }
 }

@@ -1,15 +1,8 @@
-<body>
-<h1>Comparaison entre plusieurs fichiers GeoJSON</h1>
-<form id="fileForm" method="post" action="/newMap" enctype="multipart/form-data">
-  <label for="file1">Sélectionnez plusieurs fichiers GeoJSON</label>
-  <input type="file" name="files[]" id="file1" multiple required>
 
-  <button type="submit">Nouvelle carte</button>
-</form>
 
 <div id="trait" style="display: none;"></div>
 <div id="mainDisplay" style="display: none;">
-  <button id="mapSettingsButton" class="map-settings-button"><ion-icon name="arrow-back"></ion-icon></button>
+  <button id="mapSettingsButton" class="map-settings-button"><ion-icon name="arrow-forward"></ion-icon></button>
   <div id="settingsPopup" style="display: none;">
       <form id="addFileContainer" method="post" action="/comparaisonFichier" enctype="multipart/form-data" class="add-file-container">
           <label for="file2" class="add-file-label">Ajouter un fichier GeoJSON</label>
@@ -22,6 +15,7 @@
           <h2>Graphiques</h2>
           <button class="graph-button" id="graph1">Nombre de batiments (barres)</button>
           <button class="graph-button" id="graph2">Surface des batiments (radar)</button>
+          <button class="graph-button" id="graph3">Types des batiments (polar)</button>
       </div>
   </div>
   <div id="map"></div>

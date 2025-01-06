@@ -4,9 +4,10 @@ namespace blog\views;
 
 class SimulationView extends AbstractView
 {
+    private $body;
 
-    public function __construct()
-    {
+    public function __construct() {
+        $this->body = '';
     }
 
     public function css(): string

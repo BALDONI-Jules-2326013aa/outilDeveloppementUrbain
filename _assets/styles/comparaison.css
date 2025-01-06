@@ -233,7 +233,7 @@ input[type="checkbox"] {
     transition: background-color 0.3s ease;
 }
 
-#barBatiments, #radarAireMoyenne {
+#barBatiments, #radarAireMoyenne, #polarTypeBatiment {
     display: none;
     position: absolute;
     top:55vh;
