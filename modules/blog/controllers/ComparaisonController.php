@@ -81,7 +81,7 @@ class ComparaisonController
 
     #[NoReturn] public static function ajouterFichier(): void
     {
-        self::startSession();
+        session_start();
 
         $dataGeoJson = $_SESSION['dataGeoJson'] ?? [];
         $fileNamesGeojson = $_SESSION['fileNamesGeojson'] ?? [];
@@ -127,7 +127,7 @@ class ComparaisonController
 
     public static function resetSession(): void
     {
-        self::startSession();
+        session_start();
         unset($_SESSION['dataGeoJson']);
         unset($_SESSION['fileNamesGeojson']);
         unset($_SESSION['dataTif']);
