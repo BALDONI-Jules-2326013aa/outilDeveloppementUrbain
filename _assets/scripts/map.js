@@ -48,25 +48,44 @@ function initializeMap() {
 }
 
 const predefinedColors = [
-    '#FF5733', '#33FF57', '#3357FF', '#FF33A8', '#A833FF',
-    '#33FFF0', '#FFC733', '#FF8F33', '#8F33FF', '#33FF8F'
+    '#FF5733', '#79fd8c', '#3357FF', '#FF33A8', '#A833FF',
+    '#33FFF0', '#FFC733', '#FF8F33', '#8f33ff', '#33FF8F'
 ];
 
+function isValidGeoJSON(geojsonData) {
+    return geojsonData && geojsonData.type === 'FeatureCollection' && geojsonData.features;
+}
+
+function normalizeGeoJSON(geojsonData) {
+    console.log("Normalizing GeoJSON:", geojsonData);
+    if (!geojsonData.features && geojsonData.geometry) {
+        return {
+            type: 'FeatureCollection',
+            features: [{
+                type: 'Feature',
+                geometry: geojsonData.geometry,
+                properties: geojsonData.properties || {}
+            }]
+        };
+    }
+
+    return geojsonData;
+}
+
+
 function addGeoJSONLayer(map, layers, geojsonData, fileName) {
-    if (isValidGeoJSON(geojsonData)) {
+    const normalizedData = normalizeGeoJSON(geojsonData);
+    if (isValidGeoJSON(normalizedData)) {
         const color = generateRandomColor(layers.length);
-        const layer = createLayer(map, geojsonData, color);
+        const layer = createLayer(map, normalizedData, color);
         layers.push(layer);
         map.fitBounds(layer.getBounds());
         createLayerControls(layer, color, fileName, map);
     } else {
-        console.warn('Fichier GeoJSON vide ou structure invalide');
+        console.warn('Fichier GeoJSON vide ou structure invalide :', fileName);
     }
 }
 
-function isValidGeoJSON(geojsonData) {
-    return geojsonData && geojsonData.type === 'FeatureCollection';
-}
 
 function generateRandomColor(layerIndex) {
     if (layerIndex < predefinedColors.length) {

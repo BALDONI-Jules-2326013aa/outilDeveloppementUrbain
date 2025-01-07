@@ -1,7 +1,6 @@
 <?php
 
 namespace blog\models;
-
 class GeoJSONModel
 {
     public static function litGeoJSON($file): array
@@ -40,24 +39,77 @@ class GeoJSONModel
         return $listNbBatiments;
     }
 
-    public static function recupereSurfaceTotale($fileArray): array
+    public static function formuleHaversine($lat1, $lon1, $lat2, $lon2): float
     {
-        $listAireTotale = [];
+        $R = 6371000; // Rayon de la Terre en kilomètres
+        $phi1 = deg2rad($lat1);
+        $phi2 = deg2rad($lat2);
+        $deltaPhi = deg2rad($lat2 - $lat1);
+        $deltaLambda = deg2rad($lon2 - $lon1);
+
+        $a = sin($deltaPhi / 2) ** 2 + cos($phi1) * cos($phi2) * sin($deltaLambda / 2) ** 2;
+        $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
+
+        return $R * $c;
+    }
+
+    public static function calculPointCentral($coordinates): array
+    {
+        $sumLat = 0;
+        $sumLon = 0;
+        $count = count($coordinates);
+
+        foreach ($coordinates as $coordinate) {
+            $sumLon += $coordinate[0];
+            $sumLat += $coordinate[1];
+        }
+
+        return [
+            'lon' => $sumLon / $count,
+            'lat' => $sumLat / $count,
+        ];
+    }
+
+    public static function recupereDistanceMoyenneBatiments($fileArray): float
+    {
+        $pointsCentraux = [];
         foreach ($fileArray as $file) {
-            $totalArea = 0;
             if (isset($file['features'])) {
                 foreach ($file['features'] as $feature) {
-                    if (isset($feature['geometry']['type']) && in_array($feature['geometry']['type'], ['Polygon', 'MultiPolygon'])) {
-                        $totalArea += self::calculatePolygonArea($feature['geometry']);
+                    if (isset($feature['geometry']['type']) && $feature['geometry']['type'] === 'Polygon') {
+                        $coordinates = $feature['geometry']['coordinates'][0];
+                        $pointCentral = self::calculPointCentral($coordinates);
+                        $pointsCentraux[] = $pointCentral;
                     }
                 }
             }
-            $listAireTotale[] = $totalArea * 1000000; // Multiplication pour avoir des valeurs lisibles
         }
 
-        return $listAireTotale;
+        $totalDistance = 0;
+        $comparisons = 0;
+
+        for ($i = 0; $i < count($pointsCentraux); $i++) {
+            for ($j = $i + 1; $j < count($pointsCentraux); $j++) {
+                $distance = self::formuleHaversine(
+                    $pointsCentraux[$i]['lat'],
+                    $pointsCentraux[$i]['lon'],
+                    $pointsCentraux[$j]['lat'],
+                    $pointsCentraux[$j]['lon']
+                );
+                $totalDistance += $distance;
+                $comparisons++;
+            }
+        }
+
+        return ($comparisons > 0 ? $totalDistance / $comparisons : 0);
     }
 
+    public function dessineGraphiqueDistanceMoyenne(int $distanceMoyenne, mixed $fileNamesGeojson): string
+    {
+        // todo
+        // Faire l'affichage visuel des donnees
+        return ;
+    }
 
     private static function calculatePolygonArea($geometry): float
     {
@@ -172,7 +224,6 @@ class GeoJSONModel
     ";
     }
 
-
     public static function dessineGraphiqueRadarAireMoyenne($aireMoyenneArray, $fileNameArray): string
     {
         $aireMoyenneJson = json_encode($aireMoyenneArray);
@@ -221,8 +272,6 @@ class GeoJSONModel
     ";
     }
 
-
-
     public static function dessineGraphiquePolarTypeBat($typeBatimentMap, $fileNameArray): string
     {
         $typeBatimentMapJson = json_encode($typeBatimentMap);
@@ -235,6 +284,8 @@ class GeoJSONModel
         <script src='/_assets/scripts/TypeBat.js'></script>
         ";
     }
+
+
 }
 
 
