@@ -11,6 +11,18 @@ class ConnexionModel
         $this->db = $db;
     }
 
+    public function getID($username): ?int
+    {
+        $sql = "SELECT id FROM utilisateurs WHERE username = :username";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':username', $username);
+
+        $stmt->execute();
+        $user = $stmt->fetch();
+
+        return $user ? (int)$user['id'] : null;
+    }
+
     public function verifConnexion($username, $password): bool
     {
         $sql = "SELECT * FROM utilisateurs WHERE username = :username";
