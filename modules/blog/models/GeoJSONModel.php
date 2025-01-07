@@ -70,10 +70,14 @@ class GeoJSONModel
         ];
     }
 
-    public static function recupereDistanceMoyenneBatiments($fileArray): float
+    public static function recupereDistanceMoyenneBatiments($fileArray): array
     {
-        $pointsCentraux = [];
+        $moyennesParFichier = [];
+
         foreach ($fileArray as $file) {
+            $pointsCentraux = [];
+            $distances = [];
+
             if (isset($file['features'])) {
                 foreach ($file['features'] as $feature) {
                     if (isset($feature['geometry']['type']) && $feature['geometry']['type'] === 'Polygon') {
@@ -83,26 +87,26 @@ class GeoJSONModel
                     }
                 }
             }
-        }
 
-        $totalDistance = 0;
-        $comparisons = 0;
-
-        for ($i = 0; $i < count($pointsCentraux); $i++) {
-            for ($j = $i + 1; $j < count($pointsCentraux); $j++) {
-                $distance = self::formuleHaversine(
-                    $pointsCentraux[$i]['lat'],
-                    $pointsCentraux[$i]['lon'],
-                    $pointsCentraux[$j]['lat'],
-                    $pointsCentraux[$j]['lon']
-                );
-                $totalDistance += $distance;
-                $comparisons++;
+            for ($i = 0; $i < count($pointsCentraux); $i++) {
+                for ($j = $i + 1; $j < count($pointsCentraux); $j++) {
+                    $distance = self::formuleHaversine(
+                        $pointsCentraux[$i]['lat'],
+                        $pointsCentraux[$i]['lon'],
+                        $pointsCentraux[$j]['lat'],
+                        $pointsCentraux[$j]['lon']
+                    );
+                    $distances[] = $distance;
+                }
             }
+
+            $moyenne = count($distances) > 0 ? array_sum($distances) / count($distances) : 0;
+            $moyennesParFichier[] = $moyenne;
         }
 
-        return ($comparisons > 0 ? $totalDistance / $comparisons : 0);
+        return $moyennesParFichier;
     }
+
 
 
 

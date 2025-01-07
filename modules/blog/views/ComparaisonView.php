@@ -24,6 +24,10 @@ class ComparaisonView extends AbstractView
     {
         $geoJsonModel = new GeoJSONModel();
         $distanceMoyenne = $geoJsonModel->recupereDistanceMoyenneBatiments($dataGeoJson);
+        foreach ($dataGeoJson as $key => $value) {
+            $dataGeoJson[$key] = $value['features'];
+        }
+
         $script = $geoJsonModel->dessineGraphiqueDistanceMoyenne($distanceMoyenne, $fileNamesGeojson);
         $this->body .= $script;
 
