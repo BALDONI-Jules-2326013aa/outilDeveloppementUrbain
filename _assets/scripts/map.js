@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('mapSettingsButton').addEventListener('click', () => displayPopup('settingsPopup'));
     document.getElementById('mapSettingsButton').addEventListener('click', () => animationMapSettingsButton());
 
-
     setElementDisplay('mainDisplay', 'flex');
     setElementDisplay('trait', 'flex');
     if(document.getElementById('downloadFiles')) {
@@ -30,6 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
     geojsonDataArray.forEach((geojsonData, index) => {
         addGeoJSONLayer(map, layers, geojsonData, fileNamesArray[index]);
     });
+
+    document.getElementById('espace').style.height = '30vh';
+    setElementDisplay('menuGraphique', 'flex');
 
 });
 

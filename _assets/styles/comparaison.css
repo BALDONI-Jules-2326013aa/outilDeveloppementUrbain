@@ -248,11 +248,11 @@ input[type="checkbox"] {
     min-width: 70vh;
 }
 
-.espace {
-    height: 30vh;
+#espace {
+    height: 50vh;
 }
 
-.zoneGraphique {
+.graphiqueBox {
     display: none;
     flex-direction: column;
     justify-content: space-around;
@@ -263,6 +263,8 @@ input[type="checkbox"] {
     background-color: #9bc6ca;
     padding: 2vh;
     margin-bottom: 6vh;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.5s ease;
 }
 
 .mainContentGraph {
@@ -301,8 +303,8 @@ input[type="checkbox"] {
     border-radius: 10px;
 }
 
-.menuGraphique {
-    display: flex;
+#menuGraphique {
+    display: none;
     width: 100%;
     justify-content: space-around;
     align-items: center;
