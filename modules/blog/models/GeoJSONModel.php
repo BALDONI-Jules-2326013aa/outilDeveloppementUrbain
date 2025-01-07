@@ -104,12 +104,7 @@ class GeoJSONModel
         return ($comparisons > 0 ? $totalDistance / $comparisons : 0);
     }
 
-    public function dessineGraphiqueDistanceMoyenne(int $distanceMoyenne, mixed $fileNamesGeojson): string
-    {
-        // todo
-        // Faire l'affichage visuel des donnees
-        return ;
-    }
+
 
     private static function calculatePolygonArea($geometry): float
     {
@@ -210,7 +205,6 @@ class GeoJSONModel
                     </select>
                 </div>
                 <div class='chart-colors'>
-                    <h4>Choisir les couleurs :</h4>
                     $colorPickersHtml
                 </div>
             </div>
@@ -258,7 +252,6 @@ class GeoJSONModel
                     </select>
                 </div>
                 <div class='chart-colors'>
-                    <h4>Choisir les couleurs :</h4>
                     $colorPickersHtml
                 </div>
             </div>
@@ -271,6 +264,54 @@ class GeoJSONModel
     <script src='/_assets/scripts/aireMoyenneBatiments.js'></script>
     ";
     }
+
+    public static function dessineGraphiqueDistanceMoyenne($distanceMoyenneArray, $fileNameArray): string
+    {
+        $distanceMoyenneJson = json_encode($distanceMoyenneArray);
+        $fileNamesJson = json_encode($fileNameArray);
+
+        $colorPickersHtml = '';
+        foreach ($fileNameArray as $index => $fileName) {
+            $colorPickersHtml .= "
+        <div class='color-picker'>
+            <label for='colorDistanceMoyenne_$index'>Couleur pour $fileName :</label>
+            <input type='color' id='colorDistanceMoyenne_$index' class='color-input' value='#" . substr(md5($fileName), 0, 6) . "'>
+        </div>";
+        }
+
+        return "
+    <div style='display: none;' id='distanceMoyenneJson'>$distanceMoyenneJson</div>
+    <div style='display: none;' id='fileNamesJson'>$fileNamesJson</div>
+
+    <div class='graphiqueBox' id='zoneDistanceMoyenne'>
+        <h2>Distance moyenne entre bâtiments</h2>
+        <div class='mainContentGraph'>
+            <div class='chart-options'>
+                <div>
+                    <label for='chartTypeDistanceMoyenne'>Choisir un type de graphique :</label>
+                    <select id='chartTypeDistanceMoyenne' class='combobox-chart'>
+                        <option value='barChartDistanceMoyenne' selected>Barres</option>
+                        <option value='lineChartDistanceMoyenne'>Ligne</option>
+                        <option value='radarChartDistanceMoyenne'>Radar</option>
+                        <option value='polarChartDistanceMoyenne'>Polaire</option>
+                        <option value='doughnutChartDistanceMoyenne'>Donut</option>
+                        <option value='pieChartDistanceMoyenne'>Camembert</option>
+                    </select>
+                </div>
+                <div class='chart-colors'>
+                    $colorPickersHtml
+                </div>
+            </div>
+            <div class='graphs'>
+                <canvas id='barDistanceMoyenne'></canvas>
+            </div>
+        </div>
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
+    <script src='/_assets/scripts/distanceMoyenneBatiments.js'></script>
+    ";
+    }
+
 
     public static function dessineGraphiquePolarTypeBat($typeBatimentMap, $fileNameArray): string
     {
