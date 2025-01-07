@@ -19,13 +19,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 datasets: [{
                     label: 'Nombre de bâtiments',
                     data: nbBatimentsData,
-                    backgroundColor: colors.map(c => c.backgroundColor),
-                    borderColor: colors.map(c => c.borderColor),
-                    borderWidth: 1
+                    backgroundColor: colors.map(c => c.backgroundColor)
                 }]
             },
             options: {
                 responsive: true,
+                plugins: {
+                    legend: {
+                        display: true
+                    }
+                },
                 scales: {
                     y: {
                         beginAtZero: true
@@ -34,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+
 
     function createLineChart() {
         return new Chart(canvas.getContext('2d'), {
@@ -44,9 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     label: 'Nombre de bâtiments',
                     data: nbBatimentsData,
                     backgroundColor: colors.map(c => c.backgroundColor),
-                    borderColor: colors.map(c => c.borderColor),
-                    borderWidth: 2,
-                    fill: false
+                    fill: true
                 }]
             },
             options: {
@@ -67,8 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 labels: fileNames,
                 datasets: [{
                     data: nbBatimentsData,
-                    backgroundColor: colors.map(c => c.backgroundColor),
-                    borderColor: colors.map(c => c.borderColor)
+                    backgroundColor: colors.map(c => c.backgroundColor)
                 }]
             },
             options: {
@@ -85,9 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 datasets: [{
                     label: 'Nombre de bâtiments',
                     data: nbBatimentsData,
-                    backgroundColor: colors.map(c => c.backgroundColor),
-                    borderColor: colors.map(c => c.borderColor),
-                    borderWidth: 1
+                    backgroundColor: colors.map(c => c.backgroundColor)
                 }]
             },
             options: {
@@ -108,8 +107,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 labels: fileNames,
                 datasets: [{
                     data: nbBatimentsData,
-                    backgroundColor: colors.map(c => c.backgroundColor),
-                    borderColor: colors.map(c => c.borderColor)
+                    backgroundColor: colors.map(c => c.backgroundColor)
                 }]
             },
             options: {
@@ -125,8 +123,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 labels: fileNames,
                 datasets: [{
                     data: nbBatimentsData,
-                    backgroundColor: colors.map(c => c.backgroundColor),
-                    borderColor: colors.map(c => c.borderColor)
+                    backgroundColor: colors.map(c => c.backgroundColor)
                 }]
             },
             options: {

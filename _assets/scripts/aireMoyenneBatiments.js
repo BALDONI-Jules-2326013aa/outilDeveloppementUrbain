@@ -6,8 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     let colors = fileNames.map(() => ({
-        backgroundColor: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
-        borderColor: `#${Math.floor(Math.random() * 16777215).toString(16)}`
+        backgroundColor: `#${Math.floor(Math.random() * 16777215).toString(16)}`
     }));
 
     let chart = createBarChart();
@@ -20,9 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 datasets: [{
                     label: 'Aire moyenne des batiments',
                     data: aireMoyenneData,
-                    backgroundColor: colors.map(c => c.backgroundColor),
-                    borderColor: colors.map(c => c.borderColor),
-                    borderWidth: 1
+                    backgroundColor: colors.map(c => c.backgroundColor)
                 }]
             },
             options: {
@@ -45,9 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     label: 'Aire moyenne des batiments',
                     data: aireMoyenneData,
                     backgroundColor: colors.map(c => c.backgroundColor),
-                    borderColor: colors.map(c => c.borderColor),
-                    borderWidth: 2,
-                    fill: false
+                    fill: true
                 }]
             },
             options: {
@@ -68,8 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 labels: fileNames,
                 datasets: [{
                     data: aireMoyenneData,
-                    backgroundColor: colors.map(c => c.backgroundColor),
-                    borderColor: colors.map(c => c.borderColor)
+                    backgroundColor: colors.map(c => c.backgroundColor)
                 }]
             },
             options: {
@@ -86,9 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 datasets: [{
                     label: 'Aire moyenne des batiments',
                     data: aireMoyenneData,
-                    backgroundColor: colors.map(c => c.backgroundColor),
-                    borderColor: colors.map(c => c.borderColor),
-                    borderWidth: 1
+                    backgroundColor: colors.map(c => c.backgroundColor)
                 }]
             },
             options: {
@@ -109,8 +101,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 labels: fileNames,
                 datasets: [{
                     data: aireMoyenneData,
-                    backgroundColor: colors.map(c => c.backgroundColor),
-                    borderColor: colors.map(c => c.borderColor)
+                    backgroundColor: colors.map(c => c.backgroundColor)
                 }]
             },
             options: {
@@ -126,8 +117,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 labels: fileNames,
                 datasets: [{
                     data: aireMoyenneData,
-                    backgroundColor: colors.map(c => c.backgroundColor),
-                    borderColor: colors.map(c => c.borderColor)
+                    backgroundColor: colors.map(c => c.backgroundColor)
                 }]
             },
             options: {
@@ -175,7 +165,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         chart.data.datasets[0].backgroundColor = colors.map(c => c.backgroundColor);
-        chart.data.datasets[0].borderColor = colors.map(c => c.borderColor);
         chart.update();
     }
 
