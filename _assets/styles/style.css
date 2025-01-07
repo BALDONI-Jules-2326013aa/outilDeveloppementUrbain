@@ -102,3 +102,8 @@ footer {
         text-align: center;
     }
 }
+@media (max-width: 600px){
+    a{
+        font-size: 18px;
+    }
+}

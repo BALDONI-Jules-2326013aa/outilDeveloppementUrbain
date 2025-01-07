@@ -47,15 +47,6 @@
     font-weight: bold;
 }
 
-.mainTitle{
-    margin:auto;
-    position: absolute;
-    z-index: 100;
-    color: #fff;
-    top: 53%;
-    left: 47%;
-    text-align: center;
-}
 
 h3{
     text-align: center;
@@ -176,13 +167,27 @@ h3{
         background: silver;
         transform: rotate(45deg);
     }
-    .mainTitle{
-        margin:auto;
-        position: absolute;
-        z-index: 100;
-        color: #fff;
-        top: 50%;
-        left: 42%;
-        text-align: center;
+
+
+}
+
+@media (max-width: 600px) {
+    .texte {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
     }
+    .gallery {
+        margin: 15% auto;
+        position: relative;
+        perspective: 750px;
+        transform-style: preserve-3d;
+        width: 50%;
+        aspect-ratio: 1;
+        background: silver;
+        transform: rotate(45deg);
+    }
+
+
 }
