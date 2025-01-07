@@ -161,7 +161,9 @@ class GeoJSONModel
                 $colorPickersHtml
             </div>
         </div>
-        <canvas id='barBatiments'></canvas>
+        <div>
+            <canvas id='barBatiments'></canvas>
+        </div>
     </div>
     <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
     <script src='/_assets/scripts/nombreBatiments.js'></script>

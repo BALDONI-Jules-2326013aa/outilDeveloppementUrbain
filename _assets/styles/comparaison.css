@@ -107,6 +107,7 @@ button:hover {
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     z-index: 100;
+    transition: right 0.5s ease, rotate 0.5s ease;
 }
 
 #mapSettingsButton:hover {
@@ -242,7 +243,8 @@ input[type="checkbox"] {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 20%;
+    min-width: 80vh;
+    min-height: 60vh;
     max-width: 80vh;
     max-height: 80vh;
     backdrop-filter: blur(5px);
