@@ -2,7 +2,7 @@
 namespace blog\views;
 
 class FileView extends AbstractView {
-    private $files = []; // Initialize with an empty array
+    private $files = []; 
 
     public function setFiles(array $files): void {
         $this->files = $files;

@@ -25,6 +25,12 @@ class FileModel {
         }
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    public function getFolderName($folderId) {
+        $stmt = $this->pdo->prepare("SELECT name FROM folders WHERE id = :id");
+        $stmt->bindParam(':id', $folderId);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 
 
 
