@@ -16,6 +16,8 @@ $request_uri = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
 if ($request_uri == '' || $request_uri == 'index.php') {
     HomePageController::affichePage();
 }
+$pdo = new PDO('pgsql:host=postgresql-siti.alwaysdata.net;dbname=siti_db', 'siti', 'motdepassesitia1');
+$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 switch ($request_uri) {
     case 'fichier':

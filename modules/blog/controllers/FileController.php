@@ -48,9 +48,9 @@ class FileController {
             $fileName = $_FILES['file']['name'];
             $fileSize = $_FILES['file']['size'];
             $fileType = $_FILES['file']['type'];
+            $folder_id = $_POST['folder'];
             $fileNameCmps = explode(".", $fileName);
             $fileExtension = strtolower(end($fileNameCmps));
-
             $allowedfileExtensions = array('geojson');
             if (in_array($fileExtension, $allowedfileExtensions)) {
                 $fileContent = file_get_contents($fileTmpPath);
@@ -62,7 +62,8 @@ class FileController {
                     $userId = $connexionModel->getID($username);
 
                     if ($userId) {
-                        $this->model->uploadFile($fileName, $fileContent, $userId);
+                        $folder_id = $this->model->getFolderId($folder_id,$userId)['id'];
+                        $this->model->uploadFile($fileName, $fileContent, $userId, $folder_id);
                         echo "Fichier téléchargé avec succès.";
                         header("Location: /fichier");
                         exit();
