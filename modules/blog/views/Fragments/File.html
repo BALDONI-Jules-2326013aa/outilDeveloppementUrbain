@@ -5,10 +5,8 @@
         <form action="/telechargerFichier" method="post" enctype="multipart/form-data">
             <label for="file">Choisir un fichier GeoJSON:</label>
             <input type="file" name="file" id="file" accept=".geojson">
-            <label for="folder">Nom Fichier</label>
-            <input type="text" name="folder" id="folder">
             <label for="folder">Nom du dossier</label>
-            <input type="text" name="folder" id="folder">
+            <input type="text" name="folder" id="folder" required> 
             <button type="submit">Uploader</button>
         </form>
     </div>

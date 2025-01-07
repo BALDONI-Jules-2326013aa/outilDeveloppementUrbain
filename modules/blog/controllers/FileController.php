@@ -45,10 +45,10 @@ class FileController {
     private function uploadFile() {
         if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
             $fileTmpPath = $_FILES['file']['tmp_name'];
-            $fileName = $_FILES['file']['name'];
             $fileSize = $_FILES['file']['size'];
             $fileType = $_FILES['file']['type'];
             $folder_id = $_POST['folder'];
+            $fileName = $_FILES['file']['name'];
             $fileNameCmps = explode(".", $fileName);
             $fileExtension = strtolower(end($fileNameCmps));
             $allowedfileExtensions = array('geojson');
