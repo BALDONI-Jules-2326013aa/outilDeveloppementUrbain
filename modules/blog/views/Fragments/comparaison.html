@@ -2,7 +2,7 @@
 
 <div id="trait" style="display: none;"></div>
 <div id="mainDisplay" style="display: none;">
-  <button id="mapSettingsButton" class="map-settings-button"><ion-icon name="arrow-forward"></ion-icon></button>
+  <button id="mapSettingsButton" class="map-settings-button"><ion-icon name="arrow-back"></ion-icon></button>
   <div id="settingsPopup" style="display: none;">
       <form id="addFileContainer" method="post" action="/comparaisonFichier" enctype="multipart/form-data" class="add-file-container">
           <label for="file2" class="add-file-label">Ajouter un fichier GeoJSON</label>
@@ -11,17 +11,36 @@
       </form>
 
       <div id="color-selectors"></div>
-      <div id="graphs">
-          <h2>Graphiques</h2>
-          <button class="graph-button" id="graph1">Nombre de batiments (barres)</button>
-          <button class="graph-button" id="graph2">Surface des batiments (radar)</button>
-          <button class="graph-button" id="graph3">Types des batiments (polar)</button>
-      </div>
   </div>
   <div id="map"></div>
 </div>
 
 <div class="espace"></div>
+<div class="menuGraphique">
+    <h2>Gestionnaire de graphique</h2>
+    <div id='listeGraphique'>
+        <div class="graphique">
+            <input type="checkbox" id="nbBatiments" name="nbBatiments" value="nbBatiments">
+            <label for="nbBatiments">Nombre de batiments par fichier</label>
+        </div>
+        <div class="graphique">
+            <input type="checkbox" id="aireMoyenne" name="aireMoyenne" value="aireMoyenne">
+            <label for="aireMoyenne">Aire moyenne des batiments par fichier</label>
+        </div>
+        <div class="graphique">
+            <input type="checkbox" id="graphique3" name="graphique3" value="graphique3">
+            <label for="graphique3">Graphique 3</label>
+        </div>
+        <div class="graphique">
+            <input type="checkbox" id="graphique4" name="graphique4" value="graphique4">
+            <label for="graphique4">Graphique 4</label>
+        </div>
+        <div class="graphique">
+            <input type="checkbox" id="graphique5" name="graphique5" value="graphique5">
+            <label for="graphique5">Graphique 5</label>
+        </div>
+    </div>
+</div>
 
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

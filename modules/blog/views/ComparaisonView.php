@@ -44,6 +44,7 @@ class ComparaisonView extends AbstractView
             "<script src='_assets/scripts/map.js'></script>";
 
         $this->body .= $script;
+
     }
 
     public function afficherGraphiqueBatiments(array $dataArray, array $fileNames): void {
@@ -102,8 +103,7 @@ class ComparaisonView extends AbstractView
         $this->body.= $script;
         }
 
-
-        public function afficher(): void
+    public function afficher(): void
     {
         parent::afficher();
     }

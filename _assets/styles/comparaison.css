@@ -107,6 +107,7 @@ button:hover {
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     z-index: 100;
+    transition: right 0.5s ease, rotate 0.5s ease;
 }
 
 #mapSettingsButton:hover {
@@ -212,15 +213,15 @@ input[type="checkbox"] {
     cursor: pointer;
 }
 
-#graphs {
+.graphs {
+    min-height: 70vh;
+    min-width: 70vh;
+    max-height: 70vh;
+    max-width: 70vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    min-height: 22vh;
-    width: 100%;
-    padding: 2vh 0 2vh;
-    border-radius: 0 0 10px 10px;
+    justify-content: space-around;
 }
 
 .graph-button {
@@ -234,26 +235,96 @@ input[type="checkbox"] {
 }
 
 #barBatiments, #radarAireMoyenne, #polarTypeBatiment {
-    display: none;
-    position: absolute;
-    top:55vh;
-    left: 4vw;
+    display: block;
     z-index: 100;
     background-color: rgba(255, 255, 255, 0.6);
     flex-direction: column;
     align-items: center;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 20px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 20%;
-    max-width: 50vh;
-    max-height: 50vh;
     backdrop-filter: blur(5px);
     border: 1px solid #e0e0e0;
+    min-width: 70vh;
 }
 
-
-
 .espace {
-    height: 80vh;
+    height: 30vh;
+}
+
+.zoneGraphique {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 85vh;
+    width: 70%;
+    border-radius: 20px;
+    background-color: #9bc6ca;
+    padding: 2vh;
+    margin-bottom: 6vh;
+}
+
+.mainContentGraph {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+    height: 100%;
+
+}
+
+.chart-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 20vh;
+    height: 60%;
+}
+
+.chart-colors {
+    min-width: 40vh;
+    min-height: 35vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+}
+
+.color-picker {
+    min-height: 6vh;
+    min-width: 46vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.menuGraphique {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    height: 40vh;
+    background-color: blue;
+    border-radius: 20px;
+}
+
+.btn-chart {
+    width: 80%;
+    height: 3rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #4a90e2;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    padding:0;
+}
+
+.btn-chart:hover {
+    background-color: #357ab8;
 }

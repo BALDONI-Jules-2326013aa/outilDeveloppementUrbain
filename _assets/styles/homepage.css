@@ -1,13 +1,21 @@
 .middleBox {
-    width: 100%;
+    width: 98%;
     min-height: 50vh;
     position: relative;
+    background-image: url('/_assets/images/image_fond-accueil.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    box-shadow: 0 0 10px white;
+    margin-top: 1%;
+    filter: brightness(60%);
+    border-radius: 15px;
 }
 
 .box{
     display: flex;
     justify-content: space-around;
-    width: 99%;
+    width: 100%;
+    margin: 1%;
 }
 
 .littleBox{
@@ -17,7 +25,6 @@
     border-radius: 10px;
     box-shadow: 0 0 10px #000;
     padding: 1em;
-    margin-bottom: 1%;
 }
 
 .littleBox h3 {
@@ -40,15 +47,6 @@
     font-weight: bold;
 }
 
-.mainTitle{
-    margin:auto;
-    position: absolute;
-    z-index: 100;
-    color: #fff;
-    top: 53%;
-    left: 47%;
-    text-align: center;
-}
 
 h3{
     text-align: center;
@@ -76,19 +74,22 @@ h3{
     aspect-ratio: 1;
     background: silver;
     transform: rotate(45deg);
+    filter: none;
+    z-index: 100;
 }
 
 .gallery .img {
     position: absolute;
     width: 100%;
     height: 100%;
-    border: 4px solid rgb(110, 110, 110);
+    border: 4px solid white;
     box-sizing: border-box;
     transition: 1s ;
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
     z-index: calc(var(--total) - var(--i));
 
 }
@@ -96,8 +97,8 @@ h3{
     --rotate: rotate(-45deg);
     transform: var(--rotate);
     transition: .3s ease;
-    height: 600px;
-    filter: brightness(50%);
+    height: 800px;
+
 }
 .gallery .img:nth-of-type(odd) {
     --hovermove: -100px, 100px;
@@ -137,4 +138,56 @@ h3{
     to {
         transform: translate(0px, 0px) translateZ(0px);
     }
+}
+@media (max-width: 800px) {
+    .box{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        margin: 1%;
+    }
+    .littleBox{
+        width: 95%;
+        background-color: #274852;
+        color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px #000;
+        padding: 1em;
+        margin:1%;
+
+    }
+    .gallery {
+        margin: 10% auto;
+        position: relative;
+        perspective: 1500px;
+        transform-style: preserve-3d;
+        width: 40%;
+        aspect-ratio: 1;
+        background: silver;
+        transform: rotate(45deg);
+    }
+
+
+}
+
+@media (max-width: 600px) {
+    .texte {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .gallery {
+        margin: 15% auto;
+        position: relative;
+        perspective: 750px;
+        transform-style: preserve-3d;
+        width: 50%;
+        aspect-ratio: 1;
+        background: silver;
+        transform: rotate(45deg);
+    }
+
+
 }
