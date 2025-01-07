@@ -9,6 +9,14 @@ document.addEventListener('DOMContentLoaded', function () {
         backgroundColor: `#${Math.floor(Math.random() * 16777215).toString(16)}`
     }));
 
+    document.getElementById('aireMoyenne').addEventListener('change', function () {
+        if (document.getElementById('aireMoyenne').checked) {
+            document.getElementById('zoneAireMoyenne').style.display = 'flex';
+        } else {
+            document.getElementById('zoneAireMoyenne').style.display = 'none';
+        }
+    });
+
     let chart = createBarChart();
 
     function createBarChart() {

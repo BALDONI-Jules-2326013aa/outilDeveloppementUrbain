@@ -9,6 +9,14 @@ document.addEventListener('DOMContentLoaded', function () {
         borderColor: `#${Math.floor(Math.random() * 16777215).toString(16)}`
     }));
 
+    document.getElementById('nbBatiments').addEventListener('change', function () {
+        if (document.getElementById('nbBatiments').checked) {
+            document.getElementById('zoneNbBatiments').style.display = 'flex';
+        } else {
+            document.getElementById('zoneNbBatiments').style.display = 'none';
+        }
+    });
+
     let chart = createBarChart();
 
     function createBarChart() {
