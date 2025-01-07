@@ -84,16 +84,6 @@ class ComparaisonView extends AbstractView
         $this->body .= $htmlOutput;
     }
 
-    public function afficherGraphiquePolarTypeBat (array $dataArray, array $fileNames): void
-    {
-        $geoJsonModel = new GeoJSONModel();
-        $typeBatiment = $geoJsonModel->recupereTypeBatiment($dataArray);
-        $script = $geoJsonModel->dessineGraphiquePolarTypeBat($typeBatiment, $fileNames);
-
-        $this->body .= $script;
-
-    }
-
     public function afficher(): void
     {
         parent::afficher();

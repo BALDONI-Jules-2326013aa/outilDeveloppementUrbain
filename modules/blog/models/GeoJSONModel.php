@@ -194,7 +194,7 @@ class GeoJSONModel
         return "
     <div style='display: none;' id='nbBatimentsJson'>$nbBatimentsJson</div>
     <div style='display: none;' id='fileNamesJson'>$fileNamesJson</div>
-    <div class='zoneGraphique'>
+    <div class='zoneGraphique' id='zoneNbBatiments'>
         <h2>Nombre de bâtiments par fichier</h2>
         <div class='mainContentGraph'>
             <div class='chart-options'>
@@ -242,7 +242,7 @@ class GeoJSONModel
     <div style='display: none;' id='aireMoyenneJson'>$aireMoyenneJson</div>
     <div style='display: none;' id='fileNamesJson'>$fileNamesJson</div>
 
-    <div class='zoneGraphique'>
+    <div class='zoneGraphique' id='zoneAireMoyenne'>
         <h2>Aire moyenne par fichier</h2>
         <div class='mainContentGraph'>
             <div class='chart-options'>

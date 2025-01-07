@@ -9,8 +9,32 @@ class FileModel {
     public function __construct(PDO $pdo) {
         $this->pdo = $pdo;
     }
+    public function getPDO() {
+        return $this->pdo;
+    }
+    public function getFolderId($folderName, $userId) {
+        $stmt = $this->pdo->prepare("SELECT id FROM folders WHERE name = :name");
+        $stmt->bindParam(':name', $folderName);
+        $stmt->execute();
+        if ($stmt->rowCount() === 0) {
+            $createStmt = $this->pdo->prepare("INSERT INTO folders (name, user_id) VALUES (:name, :user_id)");
+            $createStmt->bindParam(':user_id', $userId);
+            $createStmt->bindParam(':name', $folderName);
+            $createStmt->execute();
+            $stmt->execute();
+        }
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    public function getFolderName($folderId) {
+        $stmt = $this->pdo->prepare("SELECT name FROM folders WHERE id = :id");
+        $stmt->bindParam(':id', $folderId);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 
-    public function uploadFile($name, $geojsonContent, $userId) {
+
+
+    public function uploadFile($name, $geojsonContent, $userId, $folder_id) {
         // Valider le contenu GeoJSON
         if (!$this->isValidGeoJSON($geojsonContent)) {
             throw new \Exception("Invalid GeoJSON content");
@@ -20,14 +44,14 @@ class FileModel {
         error_log("Insertion du fichier GeoJSON: " . $geojsonContent);
 
         $stmt = $this->pdo->prepare("
-            INSERT INTO geojson_files (name, geojson, utilisateur_id)
-            VALUES (:name, :geojson_text, :user_id)
+            INSERT INTO geojson_files (name, geojson, utilisateur_id, folder_id)
+            VALUES (:name, :geojson_text, :user_id, :folder_id)
         ");
     
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':geojson_text', $geojsonContent); // Pour sauvegarder le texte brut
         $stmt->bindParam(':user_id', $userId);
-    
+        $stmt->bindParam(':folder_id', $folder_id); 
         $stmt->execute();
     }
 
@@ -46,7 +70,7 @@ class FileModel {
     }
 
     public function getFiles() {
-        $stmt = $this->pdo->query("SELECT id, name, utilisateur_id FROM geojson_files ORDER BY id DESC");
+        $stmt = $this->pdo->query("SELECT id, name, utilisateur_id, folder_id FROM geojson_files ORDER BY id DESC");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
