@@ -130,39 +130,41 @@ class GeoJSONModel
         $nbBatimentsJson = json_encode($nbBatimentsArray);
         $fileNamesJson = json_encode($fileNameArray);
 
-        // Génération des sélecteurs de couleur pour chaque fichier
         $colorPickersHtml = '';
         foreach ($fileNameArray as $index => $fileName) {
             $colorPickersHtml .= "
         <div class='color-picker'>
             <label for='color_$index'>Couleur pour $fileName :</label>
-            <input type='color' id='color_$index' class='color-input' value='#" . substr(md5($fileName), 0, 6) . "'>
+            <input type='color' id='colorNbBatiments_$index' class='color-input' value='#" . substr(md5($fileName), 0, 6) . "'>
         </div>";
         }
 
         return "
     <div style='display: none;' id='nbBatimentsJson'>$nbBatimentsJson</div>
     <div style='display: none;' id='fileNamesJson'>$fileNamesJson</div>
-    <div class='graphique'>
-        <div class='chart-options'>
-            <div>
-                <label for='chartTypeNbBatiments'>Choisir un type de graphique :</label>
-                <select id='chartType' class='combobox-chart'>
-                    <option value='barChartNbBatiments' selected>Barres</option>
-                    <option value='lineChartNbBatiments'>Ligne</option>
-                    <option value='radarChartNbBatiments'>Radar</option>
-                    <option value='polarChartNbBatiments'>Polaire</option>
-                    <option value='doughnutChartNbBatiments'>Donut</option>
-                    <option value='pieChartNbBatiments'>Camembert</option>
-                </select>
+    <div class='zoneGraphique'>
+        <h2>Nombre de bâtiments par fichier</h2>
+        <div class='mainContentGraph'>
+            <div class='chart-options'>
+                <div>
+                    <label for='chartTypeNbBatiments'>Choisir un type de graphique :</label>
+                    <select id='chartTypeNbBatiments' class='combobox-chart'>
+                        <option value='barChartNbBatiments' selected>Barres</option>
+                        <option value='lineChartNbBatiments'>Ligne</option>
+                        <option value='radarChartNbBatiments'>Radar</option>
+                        <option value='polarChartNbBatiments'>Polaire</option>
+                        <option value='doughnutChartNbBatiments'>Donut</option>
+                        <option value='pieChartNbBatiments'>Camembert</option>
+                    </select>
+                </div>
+                <div class='chart-colors'>
+                    <h4>Choisir les couleurs :</h4>
+                    $colorPickersHtml
+                </div>
             </div>
-            <div class='chart-colors'>
-                <h4>Choisir les couleurs :</h4>
-                $colorPickersHtml
+            <div class='graphs'>
+                <canvas id='barBatiments'></canvas>
             </div>
-        </div>
-        <div>
-            <canvas id='barBatiments'></canvas>
         </div>
     </div>
     <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
@@ -175,14 +177,51 @@ class GeoJSONModel
     {
         $aireMoyenneJson = json_encode($aireMoyenneArray);
         $fileNamesJson = json_encode($fileNameArray);
+
+        $colorPickersHtml = '';
+        foreach ($fileNameArray as $index => $fileName) {
+            $colorPickersHtml .= "
+        <div class='color-picker'>
+            <label for='colorAireMoyenne_$index'>Couleur pour $fileName :</label>
+            <input type='color' id='colorAireMoyenne_$index' class='color-input' value='#" . substr(md5($fileName), 0, 6) . "'>
+        </div>";
+        }
+
         return "
     <div style='display: none;' id='aireMoyenneJson'>$aireMoyenneJson</div>
-    <div style='display: none;' id='fileNamesRadarJson'>$fileNamesJson</div>
-    <canvas id='radarAireMoyenne'></canvas>
+    <div style='display: none;' id='fileNamesJson'>$fileNamesJson</div>
+
+    <div class='zoneGraphique'>
+        <h2>Aire moyenne par fichier</h2>
+        <div class='mainContentGraph'>
+            <div class='chart-options'>
+                <div>
+                    <label for='chartTypeAireMoyenne'>Choisir un type de graphique :</label>
+                    <select id='chartTypeAireMoyenne' class='combobox-chart'>
+                        <option value='barChartAireMoyenne' selected>Barres</option>
+                        <option value='lineChartAireMoyenne'>Ligne</option>
+                        <option value='radarChartAireMoyenne'>Radar</option>
+                        <option value='polarChartAireMoyenne'>Polaire</option>
+                        <option value='doughnutChartAireMoyenne'>Donut</option>
+                        <option value='pieChartAireMoyenne'>Camembert</option>
+                    </select>
+                </div>
+                <div class='chart-colors'>
+                    <h4>Choisir les couleurs :</h4>
+                    $colorPickersHtml
+                </div>
+            </div>
+            <div class='graphs'>
+                <canvas id='radarAireMoyenne'></canvas>
+            </div>
+        </div>
+    </div>
     <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
     <script src='/_assets/scripts/aireMoyenneBatiments.js'></script>
     ";
     }
+
+
 
     public static function dessineGraphiquePolarTypeBat($typeBatimentMap, $fileNameArray): string
     {

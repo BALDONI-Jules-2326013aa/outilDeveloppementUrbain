@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     const canvas = document.getElementById('barBatiments');
-    const chartTypeElement = document.getElementById('chartType');
+    const chartTypeElement = document.getElementById('chartTypeNbBatiments');
     const fileNames = JSON.parse(document.getElementById('fileNamesJson').textContent);
     const nbBatimentsData = JSON.parse(document.getElementById('nbBatimentsJson').textContent);
 
@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function () {
         borderColor: `#${Math.floor(Math.random() * 16777215).toString(16)}`
     }));
 
-    let currentChartType = 'bar';
     let chart = createBarChart();
 
     function createBarChart() {
@@ -167,7 +166,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function updateChartColors() {
         fileNames.forEach((_, index) => {
-            const colorPicker = document.getElementById(`color_${index}`);
+            const colorPicker = document.getElementById(`colorNbBatiments_${index}`);
             if (colorPicker) {
                 colors[index].backgroundColor = colorPicker.value;
                 colors[index].borderColor = colorPicker.value;
@@ -185,7 +184,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     fileNames.forEach((_, index) => {
-        const colorPicker = document.getElementById(`color_${index}`);
+        const colorPicker = document.getElementById(`colorNbBatiments_${index}`);
         if (colorPicker) {
             colorPicker.addEventListener('input', updateChartColors);
         }
