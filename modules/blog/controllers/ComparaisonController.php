@@ -11,7 +11,7 @@ class ComparaisonController
 {
     private static array $arrayDataShape = [];
 
-        public static function recupereFichier(): array
+    public static function recupereFichier(): array
         {
             if(!isset($_SESSION)){
                 session_start();
@@ -140,7 +140,6 @@ class ComparaisonController
         $dataGeoJson = $data['geojson'];
         $fileNamesGeojson = $data['fileNamesGeojson'];
         $dataTif = $data['tif'];
-        //$fileNamesTif = $data['fileNamesTif'];
         $view = new ComparaisonView();
         $autreAffichage = false;
 
@@ -149,6 +148,7 @@ class ComparaisonController
             $view->afficherGraphiqueBatiments($dataGeoJson, $fileNamesGeojson);
             $view->afficherGraphiqueRadarAireMoyenne($dataGeoJson, $fileNamesGeojson);
             //$view->afficherGraphiquePolarTypeBat($dataGeoJson, $fileNamesGeojson);
+            $view->afficherGraphiqueDistanceMoyenne($dataGeoJson, $fileNamesGeojson);
         }
 
         if (!empty($dataTif)) {

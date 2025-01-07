@@ -20,6 +20,15 @@ class ComparaisonView extends AbstractView
         }
     }
 
+    public function afficherGraphiqueDistanceMoyenne(mixed $dataGeoJson, mixed $fileNamesGeojson): void
+    {
+        $geoJsonModel = new GeoJSONModel();
+        $distanceMoyenne = $geoJsonModel->recupereDistanceMoyenneBatiments($dataGeoJson);
+        $script = $geoJsonModel->dessineGraphiqueDistanceMoyenne($distanceMoyenne, $fileNamesGeojson);
+        $this->body .= $script;
+
+    }
+
     function css(): string
     {
         return 'comparaison.css';
