@@ -105,7 +105,7 @@ function createLayerControls(layer, color, fileName, map) {
     const visibilityCheckbox = createVisibilityCheckbox(layer, map);
 
     const label = document.createElement('label');
-    label.textContent = 'Affichage pour \n' + fileName + ': ';
+    label.textContent = '\n' + fileName + ': ';
     label.appendChild(visibilityCheckbox);
     label.appendChild(colorSelector);
 
