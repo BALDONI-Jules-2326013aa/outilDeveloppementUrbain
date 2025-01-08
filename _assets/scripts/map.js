@@ -59,7 +59,6 @@ function isValidGeoJSON(geojsonData) {
 }
 
 function normalizeGeoJSON(geojsonData) {
-    console.log("Normalizing GeoJSON:", geojsonData);
     if (!geojsonData.features && geojsonData.geometry) {
         return {
             type: 'FeatureCollection',

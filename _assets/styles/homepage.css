@@ -188,6 +188,16 @@ h3{
         background: silver;
         transform: rotate(45deg);
     }
-
-
+}
+@media (max-width: 500px){
+    .gallery {
+        margin: 15% auto;
+        position: relative;
+        perspective: 750px;
+        transform-style: preserve-3d;
+        width: 40%;
+        aspect-ratio: 1;
+        background: silver;
+        transform: rotate(45deg);
+    }
 }
