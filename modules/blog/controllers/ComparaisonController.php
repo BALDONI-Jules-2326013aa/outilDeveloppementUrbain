@@ -186,12 +186,14 @@ class ComparaisonController
     public static function afficheGraphiques($dataGeoJson, $fileNamesGeojson, $view): void
     {
         $geoJsonModel = new GeoJSONModel();
-        $data = $geoJsonModel->recupereNombreBatiment($dataGeoJson);
-        $view->afficherGraphiqueBatiments($data, $fileNamesGeojson);
-        $data = $geoJsonModel->calculerAireMoyMinMax($dataGeoJson);
-        $view->afficherGraphiqueRadarAireMoyenne($data, $fileNamesGeojson);
-        $data = $geoJsonModel->recupereDistanceMoyenneBatiments($dataGeoJson);
-        $view->afficherGraphiqueDistanceMoyenne($data, $fileNamesGeojson);
+        $dataG1 = $geoJsonModel->recupereNombreBatiment($dataGeoJson);
+        $view->afficherGraphiqueBatiments($dataG1, $fileNamesGeojson);
+        $dataG2 = $geoJsonModel->calculerAireMoyMinMax($dataGeoJson);
+        $view->afficherGraphiqueRadarAireMoyenne($dataG2, $fileNamesGeojson);
+        $dataG3 = $geoJsonModel->recupereDistanceMoyenneBatiments($dataGeoJson);
+        $view->afficherGraphiqueDistanceMoyenne($dataG3, $fileNamesGeojson);
+
+
 
     }
 }

@@ -187,6 +187,58 @@ class ComparaisonView extends AbstractView
 
     }
 
+    public function afficherGraphiqueRecap(array $nbBatimentsArray, array $aireMoyenneArray, array $distanceMoyenneArray, array $fileNames): void
+    {
+        $nbBatimentsJson = json_encode($nbBatimentsArray);
+        $aireMoyenneJson = json_encode($aireMoyenneArray);
+        $distanceMoyenneJson = json_encode($distanceMoyenneArray);
+        $fileNamesJson = json_encode($fileNames);
+
+        $colorPickersHtml = '';
+        foreach ($fileNames as $index => $fileName) {
+            $colorPickersHtml .= "
+        <div class='color-picker'>
+            <label for='colorRecap_$index'>Couleur pour $fileName :</label>
+            <input type='color' id='colorRecap_$index' class='color-input' value='#" . substr(md5($fileName), 0, 6) . "'>
+        </div>";
+        }
+
+        $graphique = "
+        <div style='display: none;' id='nbBatimentsJson'>$nbBatimentsJson</div>
+        <div style='display: none;' id='aireMoyenneJson'>$aireMoyenneJson</div>
+        <div style='display: none;' id='distanceMoyenneJson'>$distanceMoyenneJson</div>
+        <div style='display: none;' id='fileNamesJson'>$fileNamesJson</div>
+    
+        <div class='graphiqueBox' id='zoneRecap'>
+            <h2>Récapitulatif</h2>
+            <div class='mainContentGraph'>
+                <div class='chart-options'>
+                    <div>
+                        <label for='chartTypeRecap'>Choisir un type de graphique :</label>
+                        <select id='chartTypeRecap' class='combobox-chart'>
+                            <option value='barChartRecap' selected>Barres</option>
+                            <option value='lineChartRecap'>Ligne</option>
+                            <option value='radarChartRecap'>Radar</option>
+                            <option value='polarChartRecap'>Polaire</option>
+                            <option value='doughnutChartRecap'>Donut</option>
+                            <option value='pieChartRecap'>Camembert</option>
+                        </select>
+                    </div>
+                    <div class='chart-colors'>
+                        $colorPickersHtml
+                    </div>
+                </div>
+                <div class='graphs'>
+                    <canvas id='barRecap'></canvas>
+                </div>
+            </div>
+        </div>
+        <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
+        <script src='/_assets/scripts/recapChart.js'></script>
+        ";
+        $this->body .= $graphique;
+    }
+
     public function afficheTif(array $dataArray): void {
         $tifModel = new TifModel();
         $htmlOutput = '';
