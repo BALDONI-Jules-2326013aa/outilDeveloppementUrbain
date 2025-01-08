@@ -102,6 +102,11 @@ footer {
         text-align: center;
     }
 }
+@media (max-width: 500px){
+   a{
+         font-size: 12px;
+   }
+}
 
 .dropdown-content {
     display: none;
