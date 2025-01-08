@@ -18,28 +18,35 @@
 <div id="espace" ></div>
 <div id="menuGraphique">
     <h2>Gestionnaire de graphique</h2>
-    <div id='listeGraphique'>
-        <div class="graphique">
-            <input type="checkbox" id="nbBatiments" name="nbBatiments" value="nbBatiments">
-            <label for="nbBatiments">Nombre de batiments par fichier</label>
+    <div>
+        <div id='leftBox'>
+            <div class="graphique">
+                <input type="checkbox" id="nbBatiments" name="nbBatiments" value="nbBatiments">
+                <label for="nbBatiments">Nombre de batiments par fichier</label>
+            </div>
+            <div class="graphique">
+                <input type="checkbox" id="aireMoyenne" name="aireMoyenne" value="aireMoyenne">
+                <label for="aireMoyenne">Aire moyenne des batiments par fichier</label>
+            </div>
+            <div class="graphique">
+                <input type="checkbox" id="distanceMoyenne" name="distanceMoyenne" value="distanceMoyenne">
+                <label for="distanceMoyenne">Distance moyenne entre les batiments par fichier</label>
+            </div>
+            <div class="graphique">
+                <input type="checkbox" id="graphique4" name="graphique4" value="graphique4">
+                <label for="graphique4">Graphique 4</label>
+            </div>
+            <div class="graphique">
+                <input type="checkbox" id="graphique5" name="graphique5" value="graphique5">
+                <label for="graphique5">Graphique 5</label>
+            </div>
         </div>
-        <div class="graphique">
-            <input type="checkbox" id="aireMoyenne" name="aireMoyenne" value="aireMoyenne">
-            <label for="aireMoyenne">Aire moyenne des batiments par fichier</label>
-        </div>
-        <div class="graphique">
-            <input type="checkbox" id="distanceMoyenne" name="distanceMoyenne" value="distanceMoyenne">
-            <label for="distanceMoyenne">Distance moyenne entre les batiments par fichier</label>
-        </div>
-        <div class="graphique">
-            <input type="checkbox" id="graphique4" name="graphique4" value="graphique4">
-            <label for="graphique4">Graphique 4</label>
-        </div>
-        <div class="graphique">
-            <input type="checkbox" id="graphique5" name="graphique5" value="graphique5">
-            <label for="graphique5">Graphique 5</label>
+        <div id="traitVertical"></div>
+        <div id="rightbox">
+            <button id="btnAfficher" class="btnAfficher">Générer le récapitulatif de comparaison</button>
         </div>
     </div>
+
 </div>
 
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>

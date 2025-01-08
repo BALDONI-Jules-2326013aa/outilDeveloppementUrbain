@@ -20,19 +20,6 @@ class ComparaisonView extends AbstractView
         }
     }
 
-    public function afficherGraphiqueDistanceMoyenne(mixed $dataGeoJson, mixed $fileNamesGeojson): void
-    {
-        $geoJsonModel = new GeoJSONModel();
-        $distanceMoyenne = $geoJsonModel->recupereDistanceMoyenneBatiments($dataGeoJson);
-        foreach ($dataGeoJson as $key => $value) {
-            $dataGeoJson[$key] = $value['features'];
-        }
-
-        $script = $geoJsonModel->dessineGraphiqueDistanceMoyenne($distanceMoyenne, $fileNamesGeojson);
-        $this->body .= $script;
-
-    }
-
     function css(): string
     {
         return 'comparaison.css';
@@ -75,6 +62,19 @@ class ComparaisonView extends AbstractView
         }
         $script = $geoJsonModel->dessineGraphiqueRadarAireMoyenne($surfaceMoyenne, $fileNames);
         $this->body .= $script;
+    }
+
+    public function afficherGraphiqueDistanceMoyenne(mixed $dataGeoJson, mixed $fileNamesGeojson): void
+    {
+        $geoJsonModel = new GeoJSONModel();
+        $distanceMoyenne = $geoJsonModel->recupereDistanceMoyenneBatiments($dataGeoJson);
+        foreach ($dataGeoJson as $key => $value) {
+            $dataGeoJson[$key] = $value['features'];
+        }
+
+        $script = $geoJsonModel->dessineGraphiqueDistanceMoyenne($distanceMoyenne, $fileNamesGeojson);
+        $this->body .= $script;
+
     }
 
     public function afficheTif(array $dataArray): void {
