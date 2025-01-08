@@ -192,7 +192,7 @@ class ComparaisonController
         $view->afficherGraphiqueRadarAireMoyenne($dataG2, $fileNamesGeojson);
         $dataG3 = $geoJsonModel->recupereDistanceMoyenneBatiments($dataGeoJson);
         $view->afficherGraphiqueDistanceMoyenne($dataG3, $fileNamesGeojson);
-
+        $view->afficherGraphiqueRecap($dataG1, $dataG2, $dataG3, $fileNamesGeojson);
 
 
     }

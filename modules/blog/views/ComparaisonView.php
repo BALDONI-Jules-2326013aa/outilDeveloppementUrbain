@@ -204,10 +204,6 @@ class ComparaisonView extends AbstractView
         }
 
         $graphique = "
-        <div style='display: none;' id='nbBatimentsJson'>$nbBatimentsJson</div>
-        <div style='display: none;' id='aireMoyenneJson'>$aireMoyenneJson</div>
-        <div style='display: none;' id='distanceMoyenneJson'>$distanceMoyenneJson</div>
-        <div style='display: none;' id='fileNamesJson'>$fileNamesJson</div>
     
         <div class='graphiqueBox' id='zoneRecap'>
             <h2>Récapitulatif</h2>
@@ -217,11 +213,7 @@ class ComparaisonView extends AbstractView
                         <label for='chartTypeRecap'>Choisir un type de graphique :</label>
                         <select id='chartTypeRecap' class='combobox-chart'>
                             <option value='barChartRecap' selected>Barres</option>
-                            <option value='lineChartRecap'>Ligne</option>
                             <option value='radarChartRecap'>Radar</option>
-                            <option value='polarChartRecap'>Polaire</option>
-                            <option value='doughnutChartRecap'>Donut</option>
-                            <option value='pieChartRecap'>Camembert</option>
                         </select>
                     </div>
                     <div class='chart-colors'>
@@ -229,7 +221,7 @@ class ComparaisonView extends AbstractView
                     </div>
                 </div>
                 <div class='graphs'>
-                    <canvas id='barRecap'></canvas>
+                    <canvas id='recapChartCanva'></canvas>
                 </div>
             </div>
         </div>
