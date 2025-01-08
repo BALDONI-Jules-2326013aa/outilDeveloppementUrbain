@@ -7,15 +7,13 @@ use blog\models\TifModel;
 
 class ComparaisonView extends AbstractView
 {
-    private string $body = __DIR__ . '/Fragments/comparaison.html';
+    private string $body = '';
 
     protected function body(): void
     {
         include __DIR__ . "/Fragments/formulaireFichier.html";
-        if (is_readable($this->body)) {
-            include $this->body;
-        } else {
-            include __DIR__ . '/Fragments/comparaison.html';
+        include __DIR__ . '/Fragments/comparaison.html';
+        if (!is_readable($this->body)) {
             echo $this->body;
         }
     }
