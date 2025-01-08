@@ -109,10 +109,11 @@ class GeoJSONModel
 
     public static function calculerAireMoyMinMax($fileArray): array
     {
+        $resultats = [];
         $airesMoyennes = [];
 
         foreach ($fileArray as $index => $file) {
-            $airesTotales = 0;
+            $aires = [];
             $nombreDePolygones = 0;
 
             if (isset($file['features'])) {
@@ -121,18 +122,39 @@ class GeoJSONModel
                         $coordinates = $feature['geometry']['coordinates'][0];
                         $aire = self::calculerAireBatiment($coordinates);
 
-                        $airesTotales += $aire;
+                        $aires[] = $aire;
                         $nombreDePolygones++;
                     }
                 }
             }
 
-            $airesMoyennes[$index] = $nombreDePolygones > 0 ? $airesTotales / $nombreDePolygones : 0;
+            if ($nombreDePolygones > 0) {
+                $aireMoyenne = array_sum($aires) / $nombreDePolygones;
+                $aireMin = min($aires);
+                $aireMax = max($aires);
+            } else {
+                $aireMoyenne = 0;
+                $aireMin = 0;
+                $aireMax = 0;
+            }
+
+            $resultats[$index] = [
+                'aire_moyenne' => $aireMoyenne,
+                'aire_min' => $aireMin,
+                'aire_max' => $aireMax,
+            ];
+
+            $airesMoyennes[] = $aireMoyenne;
         }
 
-        print_r($airesMoyennes);
+        // Retourne tous les détails : moyenne, minimum et maximum
+        // return $resultats;
+
+        // Retourne uniquement les moyennes sous forme de liste
         return $airesMoyennes;
     }
+
+
 
 
 
