@@ -111,7 +111,7 @@ class GeoJSONModel
     {
         $airesMoyennes = [];
 
-        foreach ($fileArray as $file) {
+        foreach ($fileArray as $index => $file) {
             $airesTotales = 0;
             $nombreDePolygones = 0;
 
@@ -127,11 +127,13 @@ class GeoJSONModel
                 }
             }
 
-            $airesMoyennes[$file['name']] = $nombreDePolygones > 0 ? $airesTotales / $nombreDePolygones : 0;
+            $airesMoyennes[$index] = $nombreDePolygones > 0 ? $airesTotales / $nombreDePolygones : 0;
         }
 
+        print_r($airesMoyennes);
         return $airesMoyennes;
     }
+
 
 
     public static function calculerAireBatiment(array $coordinates): float
