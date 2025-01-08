@@ -56,10 +56,7 @@ class ComparaisonView extends AbstractView
 
     public function afficherGraphiqueRadarAireMoyenne(array $dataArray, array $fileNames): void {
         $geoJsonModel = new GeoJSONModel();
-        $surfaceMoyenne = $geoJsonModel->recupereSurfaceMoyenneBatiments($dataArray);
-        foreach ($surfaceMoyenne as $key => $value) {
-            $surfaceMoyenne[$key] = 1000000000 * $value;
-        }
+        $surfaceMoyenne = $geoJsonModel->calculerAireMoyMinMax($dataArray);
         $script = $geoJsonModel->dessineGraphiqueRadarAireMoyenne($surfaceMoyenne, $fileNames);
         $this->body .= $script;
     }

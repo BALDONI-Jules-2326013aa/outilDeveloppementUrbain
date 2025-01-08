@@ -107,48 +107,78 @@ class GeoJSONModel
         return $moyennesParFichier;
     }
 
-
-
-
-    private static function calculatePolygonArea($geometry): float
+    public static function calculerAireMoyMinMax($fileArray): array
     {
-        $area = 0;
+        $resultats = [];
+        $airesMoyennes = [];
 
-        if ($geometry['type'] === 'Polygon') {
-            foreach ($geometry['coordinates'][0] as $i => $coord) {
-                if ($i < count($geometry['coordinates'][0]) - 1) {
-                    $x1 = $coord[0];
-                    $y1 = $coord[1];
-                    $x2 = $geometry['coordinates'][0][$i + 1][0];
-                    $y2 = $geometry['coordinates'][0][$i + 1][1];
-                    $area += $x1 * $y2 - $x2 * $y1;
-                }
-            }
-            $area = abs($area / 2);
-        }
+        foreach ($fileArray as $index => $file) {
+            $aires = [];
+            $nombreDePolygones = 0;
 
-        return $area;
-    }
-
-    public static function recupereSurfaceMoyenneBatiments($fileArray): array
-    {
-        $listAireMoyenne = [];
-        foreach ($fileArray as $file) {
-            $totalArea = 0;
-            $buildingCount = 0;
             if (isset($file['features'])) {
                 foreach ($file['features'] as $feature) {
-                    if (isset($feature['geometry']['type']) && in_array($feature['geometry']['type'], ['Polygon', 'MultiPolygon'])) {
-                        $totalArea += self::calculatePolygonArea($feature['geometry']);
-                        $buildingCount++;
+                    if (isset($feature['geometry']['type']) && $feature['geometry']['type'] === 'Polygon') {
+                        $coordinates = $feature['geometry']['coordinates'][0];
+                        $aire = self::calculerAireBatiment($coordinates);
+
+                        $aires[] = $aire;
+                        $nombreDePolygones++;
                     }
                 }
             }
-            $moyenne = $buildingCount > 0 ? $totalArea / $buildingCount : 0;
-            $listAireMoyenne[] = $moyenne;
+
+            if ($nombreDePolygones > 0) {
+                $aireMoyenne = array_sum($aires) / $nombreDePolygones;
+                $aireMin = min($aires);
+                $aireMax = max($aires);
+            } else {
+                $aireMoyenne = 0;
+                $aireMin = 0;
+                $aireMax = 0;
+            }
+
+            $resultats[$index] = [
+                'aire_moyenne' => $aireMoyenne,
+                'aire_min' => $aireMin,
+                'aire_max' => $aireMax,
+            ];
+
+            $airesMoyennes[] = $aireMoyenne;
         }
 
-        return $listAireMoyenne;
+        // Retourne tous les détails : moyenne, minimum et maximum
+        // return $resultats;
+
+        // Retourne uniquement les moyennes sous forme de liste
+        return $airesMoyennes;
+    }
+
+
+
+
+
+    public static function calculerAireBatiment(array $coordinates): float
+    {
+        $R = 6371000;
+        $n = count($coordinates);
+
+        if ($n < 3) {
+            return 0;
+        }
+
+        $aire = 0.0;
+
+        for ($i = 0; $i < $n; $i++) {
+            $lat1 = deg2rad($coordinates[$i][1]);
+            $lon1 = deg2rad($coordinates[$i][0]);
+            $lat2 = deg2rad($coordinates[($i + 1) % $n][1]);
+            $lon2 = deg2rad($coordinates[($i + 1) % $n][0]);
+
+            $aire += ($lon2 - $lon1) * (sin($lat1) + sin($lat2));
+        }
+
+        return abs($aire * $R * $R / 2);
     }
 
     public static function recupereTypeBatiment($fileArray): array
