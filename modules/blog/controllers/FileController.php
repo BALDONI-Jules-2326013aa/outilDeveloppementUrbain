@@ -43,11 +43,13 @@ class FileController {
     }
 
     private function uploadFile() {
+        
         if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
             $fileTmpPath = $_FILES['file']['tmp_name'];
             $fileSize = $_FILES['file']['size'];
             $fileType = $_FILES['file']['type'];
             $folder_id = $_POST['folder'];
+            $fatherFolder = $_POST['foldersupp'];
             $fileName = $_FILES['file']['name'];
             $fileNameCmps = explode(".", $fileName);
             $fileExtension = strtolower(end($fileNameCmps));
@@ -62,7 +64,7 @@ class FileController {
                     $userId = $connexionModel->getID($username);
 
                     if ($userId) {
-                        $folder_id = $this->model->getFolderId($folder_id,$userId)['id'];
+                        $folder_id = $this->model->getFolderId($folder_id,$userId,$fatherFolder)['id'];
                         $this->model->uploadFile($fileName, $fileContent, $userId, $folder_id);
                         echo "Fichier téléchargé avec succès.";
                         header("Location: /fichier");

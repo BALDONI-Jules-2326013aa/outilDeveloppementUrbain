@@ -12,17 +12,26 @@ class FileModel {
     public function getPDO() {
         return $this->pdo;
     }
-    public function getFolderId($folderName, $userId) {
-        $stmt = $this->pdo->prepare("SELECT id FROM folders WHERE name = :name");
+    public function getFolderId($folderName, $userId, $fatherFolder) {
+        $stmt = $this->pdo->prepare("SELECT id FROM folders WHERE name = :name AND parent_folder_id = :fatherFolder");
         $stmt->bindParam(':name', $folderName);
+        $stmt->bindParam(':fatherFolder', $fatherFolder);
         $stmt->execute();
-        if ($stmt->rowCount() === 0) {
+        if ($stmt->rowCount() === 0 && $fatherFolder == null) {
             $createStmt = $this->pdo->prepare("INSERT INTO folders (name, user_id) VALUES (:name, :user_id)");
             $createStmt->bindParam(':user_id', $userId);
             $createStmt->bindParam(':name', $folderName);
             $createStmt->execute();
             $stmt->execute();
         }
+        if ($stmt->rowCount() === 0 && $fatherFolder != null) {
+            $createStmt = $this->pdo->prepare(query: "INSERT INTO folders (name, user_id, parent_folder_id) VALUES (:name, :user_id, :fatherFolder)");
+            $createStmt->bindParam(':user_id', $userId);
+            $createStmt->bindParam(':name', $folderName);
+            $createStmt->bindParam(':fatherFolder', $fatherFolder);
+            $createStmt->execute();
+            $stmt->execute();
+        } 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
     public function getFolderName($folderId) {
