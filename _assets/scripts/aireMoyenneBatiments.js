@@ -5,12 +5,28 @@ document.addEventListener('DOMContentLoaded', function () {
     const aireMoyenneData = JSON.parse(document.getElementById('aireMoyenneJson').textContent);
 
 
-    let colors = fileNames.map(() => ({
-        backgroundColor: `#${Math.floor(Math.random() * 16777215).toString(16)}`
-    }));
+    let colors = [
+        { backgroundColor: '#FF5733', borderColor: '#FF5733' },  // Rouge vif
+        { backgroundColor: '#79fd8c', borderColor: '#79fd8c' },  // Vert clair
+        { backgroundColor: '#3357FF', borderColor: '#3357FF' },  // Bleu vif
+        { backgroundColor: '#FF33A8', borderColor: '#FF33A8' },  // Rose vif
+        { backgroundColor: '#A833FF', borderColor: '#A833FF' },  // Violet
+        { backgroundColor: '#33FFF0', borderColor: '#33FFF0' },  // Bleu cyan
+        { backgroundColor: '#FFC733', borderColor: '#FFC733' },  // Jaune vif
+        { backgroundColor: '#FF8F33', borderColor: '#FF8F33' },  // Orange vif
+        { backgroundColor: '#8f33ff', borderColor: '#8f33ff' },  // Violet foncé
+        { backgroundColor: '#33FF8F', borderColor: '#33FF8F' }   // Vert vif
+    ];
+
+    colors = colors.concat(fileNames.slice(10).map(() => ({
+        backgroundColor: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
+        borderColor: `#${Math.floor(Math.random() * 16777215).toString(16)}`
+    })));
+
 
     document.getElementById('aireMoyenne').addEventListener('change', function () {
         if (document.getElementById('aireMoyenne').checked) {
+            console.log('checked');
             document.getElementById('zoneAireMoyenne').style.display = 'flex';
         } else {
             document.getElementById('zoneAireMoyenne').style.display = 'none';

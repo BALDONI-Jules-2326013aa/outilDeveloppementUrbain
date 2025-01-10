@@ -7,15 +7,13 @@ use blog\models\TifModel;
 
 class ComparaisonView extends AbstractView
 {
-    private string $body = __DIR__ . '/Fragments/comparaison.html';
+    private string $body = '';
 
     protected function body(): void
     {
         include __DIR__ . "/Fragments/formulaireFichier.html";
-        if (is_readable($this->body)) {
-            include $this->body;
-        } else {
-            include __DIR__ . '/Fragments/comparaison.html';
+        include __DIR__ . '/Fragments/comparaison.html';
+        if (!is_readable($this->body)) {
             echo $this->body;
         }
     }
@@ -48,30 +46,189 @@ class ComparaisonView extends AbstractView
     }
 
     public function afficherGraphiqueBatiments(array $dataArray, array $fileNames): void {
-        $geoJsonModel = new GeoJSONModel();
-        $nbBatiments = $geoJsonModel->recupereNombreBatiment($dataArray);
-        $script = $geoJsonModel->dessineGraphiqueNombreBatiments($nbBatiments, $fileNames);
-        $this->body .= $script;
+        $nbBatimentsJson = json_encode($dataArray);
+        $fileNamesJson = json_encode($fileNames);
+
+        $colorPickersHtml = '';
+        foreach ($fileNames as $index => $fileName) {
+            $colorPickersHtml .= "
+        <div class='color-picker'>
+            <label for='color_$index'>Couleur pour $fileName :</label>
+            <input type='color' id='colorNbBatiments_$index' class='color-input' value='#" . substr(md5($fileName), 0, 6) . "'>
+        </div>";
+        }
+        $graphique = "
+        <div style='display: none;' id='nbBatimentsJson'>$nbBatimentsJson</div>
+        <div style='display: none;' id='fileNamesJson'>$fileNamesJson</div>
+        <div class='graphiqueBox' id='zoneNbBatiments'>
+            <h2>Nombre de bâtiments par fichier</h2>
+            <div class='mainContentGraph'>
+                <div class='chart-options'>
+                    <div>
+                        <label for='chartTypeNbBatiments'>Choisir un type de graphique :</label>
+                        <select id='chartTypeNbBatiments' class='combobox-chart'>
+                            <option value='barChartNbBatiments' selected>Barres</option>
+                            <option value='lineChartNbBatiments'>Ligne</option>
+                            <option value='radarChartNbBatiments'>Radar</option>
+                            <option value='polarChartNbBatiments'>Polaire</option>
+                            <option value='doughnutChartNbBatiments'>Donut</option>
+                            <option value='pieChartNbBatiments'>Camembert</option>
+                        </select>
+                    </div>
+                    <div class='chart-colors'>
+                        $colorPickersHtml
+                    </div>
+                </div>
+                <div class='graphs'>
+                    <canvas id='barBatiments'></canvas>
+                </div>
+            </div>
+        </div>
+        <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
+        <script src='/_assets/scripts/nombreBatiments.js'></script>
+        ";
+        $this->body .= $graphique;
     }
 
     public function afficherGraphiqueRadarAireMoyenne(array $dataArray, array $fileNames): void {
-        $geoJsonModel = new GeoJSONModel();
-        $surfaceMoyenne = $geoJsonModel->calculerAireMoyMinMax($dataArray);
-        $script = $geoJsonModel->dessineGraphiqueRadarAireMoyenne($surfaceMoyenne, $fileNames);
-        $this->body .= $script;
+        $aireMoyenneJson = json_encode($dataArray);
+        $fileNamesJson = json_encode($fileNames);
+
+        $colorPickersHtml = '';
+        foreach ($fileNames as $index => $fileName) {
+            $colorPickersHtml .= "
+        <div class='color-picker'>
+            <label for='colorAireMoyenne_$index'>Couleur pour $fileName :</label>
+            <input type='color' id='colorAireMoyenne_$index' class='color-input' value='#" . substr(md5($fileName), 0, 6) . "'>
+        </div>";
+        }
+
+        $graphique = "
+    <div style='display: none;' id='aireMoyenneJson'>$aireMoyenneJson</div>
+    <div style='display: none;' id='fileNamesJson'>$fileNamesJson</div>
+
+    <div class='graphiqueBox' id='zoneAireMoyenne'>
+        <h2>Aire moyenne par fichier</h2>
+        <div class='mainContentGraph'>
+            <div class='chart-options'>
+                <div>
+                    <label for='chartTypeAireMoyenne'>Choisir un type de graphique :</label>
+                    <select id='chartTypeAireMoyenne' class='combobox-chart'>
+                        <option value='barChartAireMoyenne' selected>Barres</option>
+                        <option value='lineChartAireMoyenne'>Ligne</option>
+                        <option value='radarChartAireMoyenne'>Radar</option>
+                        <option value='polarChartAireMoyenne'>Polaire</option>
+                        <option value='doughnutChartAireMoyenne'>Donut</option>
+                        <option value='pieChartAireMoyenne'>Camembert</option>
+                    </select>
+                </div>
+                <div class='chart-colors'>
+                    $colorPickersHtml
+                </div>
+            </div>
+            <div class='graphs'>
+                <canvas id='radarAireMoyenne'></canvas>
+            </div>
+        </div>
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
+    <script src='/_assets/scripts/aireMoyenneBatiments.js'></script>
+    ";
+
+        $this->body .= $graphique;
     }
 
     public function afficherGraphiqueDistanceMoyenne(mixed $dataGeoJson, mixed $fileNamesGeojson): void
     {
-        $geoJsonModel = new GeoJSONModel();
-        $distanceMoyenne = $geoJsonModel->recupereDistanceMoyenneBatiments($dataGeoJson);
-        foreach ($dataGeoJson as $key => $value) {
-            $dataGeoJson[$key] = $value['features'];
+        $distanceMoyenneJson = json_encode($dataGeoJson);
+        $fileNamesJson = json_encode($fileNamesGeojson);
+
+        $colorPickersHtml = '';
+        foreach ($fileNamesGeojson as $index => $fileName) {
+            $colorPickersHtml .= "
+        <div class='color-picker'>
+            <label for='colorDistanceMoyenne_$index'>Couleur pour $fileName :</label>
+            <input type='color' id='colorDistanceMoyenne_$index' class='color-input' value='#" . substr(md5($fileName), 0, 6) . "'>
+        </div>";
         }
 
-        $script = $geoJsonModel->dessineGraphiqueDistanceMoyenne($distanceMoyenne, $fileNamesGeojson);
-        $this->body .= $script;
+        $graphique =  "
+        <div style='display: none;' id='distanceMoyenneJson'>$distanceMoyenneJson</div>
+        <div style='display: none;' id='fileNamesJson'>$fileNamesJson</div>
+    
+        <div class='graphiqueBox' id='zoneDistanceMoyenne'>
+            <h2>Distance moyenne entre bâtiments</h2>
+            <div class='mainContentGraph'>
+                <div class='chart-options'>
+                    <div>
+                        <label for='chartTypeDistanceMoyenne'>Choisir un type de graphique :</label>
+                        <select id='chartTypeDistanceMoyenne' class='combobox-chart'>
+                            <option value='barChartDistanceMoyenne' selected>Barres</option>
+                            <option value='lineChartDistanceMoyenne'>Ligne</option>
+                            <option value='radarChartDistanceMoyenne'>Radar</option>
+                            <option value='polarChartDistanceMoyenne'>Polaire</option>
+                            <option value='doughnutChartDistanceMoyenne'>Donut</option>
+                            <option value='pieChartDistanceMoyenne'>Camembert</option>
+                        </select>
+                    </div>
+                    <div class='chart-colors'>
+                        $colorPickersHtml
+                    </div>
+                </div>
+                <div class='graphs'>
+                    <canvas id='barDistanceMoyenne'></canvas>
+                </div>
+            </div>
+        </div>
+        <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
+        <script src='/_assets/scripts/distanceMoyenneBatiments.js'></script>
+        ";
+        $this->body .= $graphique;
 
+    }
+
+    public function afficherGraphiqueRecap(array $nbBatimentsArray, array $aireMoyenneArray, array $distanceMoyenneArray, array $fileNames): void
+    {
+        $nbBatimentsJson = json_encode($nbBatimentsArray);
+        $aireMoyenneJson = json_encode($aireMoyenneArray);
+        $distanceMoyenneJson = json_encode($distanceMoyenneArray);
+        $fileNamesJson = json_encode($fileNames);
+
+        $colorPickersHtml = '';
+        foreach ($fileNames as $index => $fileName) {
+            $colorPickersHtml .= "
+        <div class='color-picker'>
+            <label for='colorRecap_$index'>Couleur pour $fileName :</label>
+            <input type='color' id='colorRecap_$index' class='color-input' value='#" . substr(md5($fileName), 0, 6) . "'>
+        </div>";
+        }
+
+        $graphique = "
+    
+        <div class='graphiqueBox' id='zoneRecap'>
+            <h2>Récapitulatif</h2>
+            <div class='mainContentGraph'>
+                <div class='chart-options'>
+                    <div>
+                        <label for='chartTypeRecap'>Choisir un type de graphique :</label>
+                        <select id='chartTypeRecap' class='combobox-chart'>
+                            <option value='barChartRecap' selected>Barres</option>
+                            <option value='radarChartRecap'>Radar</option>
+                        </select>
+                    </div>
+                    <div class='chart-colors'>
+                        $colorPickersHtml
+                    </div>
+                </div>
+                <div class='graphs'>
+                    <canvas id='recapChartCanva'></canvas>
+                </div>
+            </div>
+        </div>
+        <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
+        <script src='/_assets/scripts/recapChart.js'></script>
+        ";
+        $this->body .= $graphique;
     }
 
     public function afficheTif(array $dataArray): void {

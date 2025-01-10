@@ -145,10 +145,7 @@ class ComparaisonController
 
         if (!empty($dataGeoJson)) {
             $view->afficherAvecFichiers($dataGeoJson, $fileNamesGeojson);
-            $view->afficherGraphiqueBatiments($dataGeoJson, $fileNamesGeojson);
-            $view->afficherGraphiqueRadarAireMoyenne($dataGeoJson, $fileNamesGeojson);
-            //$view->afficherGraphiquePolarTypeBat($dataGeoJson, $fileNamesGeojson);
-            $view->afficherGraphiqueDistanceMoyenne($dataGeoJson, $fileNamesGeojson);
+            self::afficheGraphiques($dataGeoJson, $fileNamesGeojson, $view);
         }
 
         if (!empty($dataTif)) {
@@ -184,5 +181,19 @@ class ComparaisonController
         }
         $view = new ComparaisonView();
         $view->afficher();
+    }
+
+    public static function afficheGraphiques($dataGeoJson, $fileNamesGeojson, $view): void
+    {
+        $geoJsonModel = new GeoJSONModel();
+        $dataG1 = $geoJsonModel->recupereNombreBatiment($dataGeoJson);
+        $view->afficherGraphiqueBatiments($dataG1, $fileNamesGeojson);
+        $dataG2 = $geoJsonModel->calculerAireMoyMinMax($dataGeoJson);
+        $view->afficherGraphiqueRadarAireMoyenne($dataG2, $fileNamesGeojson);
+        $dataG3 = $geoJsonModel->recupereDistanceMoyenneBatiments($dataGeoJson);
+        $view->afficherGraphiqueDistanceMoyenne($dataG3, $fileNamesGeojson);
+        $view->afficherGraphiqueRecap($dataG1, $dataG2, $dataG3, $fileNamesGeojson);
+
+
     }
 }
