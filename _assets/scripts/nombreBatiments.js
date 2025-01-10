@@ -1,9 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
+    // Récupère les éléments du DOM nécessaires
     const canvas = document.getElementById('barBatiments');
     const chartTypeElement = document.getElementById('chartTypeNbBatiments');
     const fileNames = JSON.parse(document.getElementById('fileNamesJson').textContent);
     const nbBatimentsData = JSON.parse(document.getElementById('nbBatimentsJson').textContent);
 
+    // Définit les couleurs par défaut pour les graphiques
     let colors = [
         { backgroundColor: '#FF5733', borderColor: '#FF5733' },  // Rouge vif
         { backgroundColor: '#79fd8c', borderColor: '#79fd8c' },  // Vert clair
@@ -17,12 +19,13 @@ document.addEventListener('DOMContentLoaded', function () {
         { backgroundColor: '#33FF8F', borderColor: '#33FF8F' }   // Vert vif
     ];
 
+    // Ajoute des couleurs aléatoires si le nombre de fichiers dépasse 10
     colors = colors.concat(fileNames.slice(10).map(() => ({
         backgroundColor: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
         borderColor: `#${Math.floor(Math.random() * 16777215).toString(16)}`
     })));
 
-
+    // Affiche ou cache la zone du nombre de bâtiments en fonction de la case à cocher
     document.getElementById('nbBatiments').addEventListener('change', function () {
         if (document.getElementById('nbBatiments').checked) {
             document.getElementById('zoneNbBatiments').style.display = 'flex';
@@ -31,8 +34,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // Crée le graphique initial (bar chart)
     let chart = createBarChart();
 
+    // Fonction pour créer un bar chart
     function createBarChart() {
         return new Chart(canvas.getContext('2d'), {
             type: 'bar',
@@ -60,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-
+    // Fonction pour créer un line chart
     function createLineChart() {
         return new Chart(canvas.getContext('2d'), {
             type: 'line',
@@ -84,6 +89,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Fonction pour créer un pie chart
     function createPieChart() {
         return new Chart(canvas.getContext('2d'), {
             type: 'pie',
@@ -100,6 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Fonction pour créer un radar chart
     function createRadarChart() {
         return new Chart(canvas.getContext('2d'), {
             type: 'radar',
@@ -122,6 +129,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Fonction pour créer un doughnut chart
     function createDoughnutChart() {
         return new Chart(canvas.getContext('2d'), {
             type: 'doughnut',
@@ -138,6 +146,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Fonction pour créer un polar area chart
     function createPolarAreaChart() {
         return new Chart(canvas.getContext('2d'), {
             type: 'polarArea',
@@ -154,11 +163,13 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Met à jour le type de graphique en fonction de la sélection de l'utilisateur
     function updateChartType(newType) {
         if (chart) {
-            chart.destroy();
+            chart.destroy(); // Détruit le graphique existant
         }
 
+        // Crée un nouveau graphique en fonction du type sélectionné
         switch (newType) {
             case 'barChartNbBatiments':
                 chart = createBarChart();
@@ -183,6 +194,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // Met à jour les couleurs du graphique en fonction des sélections de l'utilisateur
     function updateChartColors() {
         fileNames.forEach((_, index) => {
             const colorPicker = document.getElementById(`colorNbBatiments_${index}`);
@@ -194,18 +206,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
         chart.data.datasets[0].backgroundColor = colors.map(c => c.backgroundColor);
         chart.data.datasets[0].borderColor = colors.map(c => c.borderColor);
-        chart.update();
+        chart.update(); // Met à jour le graphique avec les nouvelles couleurs
     }
 
+    // Ajoute un écouteur d'événement pour changer le type de graphique
     chartTypeElement.addEventListener('change', (event) => {
         const newType = event.target.value;
-        updateChartType(newType);
+        updateChartType(newType); // Met à jour le type de graphique en fonction de la sélection de l'utilisateur
     });
 
+    // Ajoute des écouteurs d'événements pour mettre à jour les couleurs des graphiques
     fileNames.forEach((_, index) => {
         const colorPicker = document.getElementById(`colorNbBatiments_${index}`);
         if (colorPicker) {
-            colorPicker.addEventListener('input', updateChartColors);
+            colorPicker.addEventListener('input', updateChartColors); // Met à jour les couleurs du graphique en fonction des sélections de l'utilisateur
         }
     });
 });

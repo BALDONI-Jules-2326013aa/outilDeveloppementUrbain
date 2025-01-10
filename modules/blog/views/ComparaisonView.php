@@ -9,30 +9,39 @@ class ComparaisonView extends AbstractView
 {
     private string $body = '';
 
+    // Affiche le corps de la page
     protected function body(): void
     {
+        // Inclut le formulaire de téléchargement de fichiers
         include __DIR__ . "/Fragments/formulaireFichier.html";
+        // Inclut le fichier de comparaison
         include __DIR__ . '/Fragments/comparaison.html';
+        // Affiche le contenu du corps si lisible
         if (!is_readable($this->body)) {
             echo $this->body;
         }
     }
 
+    // Retourne le nom du fichier CSS spécifique à cette vue
     function css(): string
     {
         return 'comparaison.css';
     }
 
+    // Retourne le titre de la page
     function pageTitle(): string
     {
         return 'Comparaison';
     }
 
+    // Affiche la page avec les fichiers GeoJSON
     public function afficherAvecFichiers(array $dataArray, array $fileNames): void
     {
+        // Encode les données GeoJSON et les noms de fichiers en JSON
         $geojsonDataJsArray = json_encode($dataArray);
         $fileNamesJsArray = json_encode($fileNames);
 
+        // Crée le script pour inclure Leaflet et les données GeoJSON
         $script =  "<link rel='stylesheet' href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css' />" .
             "<script src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'></script>" .
             "<script>
@@ -41,14 +50,17 @@ class ComparaisonView extends AbstractView
           </script>" .
             "<script src='_assets/scripts/map.js'></script>";
 
+        // Ajoute le script au corps de la page
         $this->body .= $script;
-
     }
 
+    // Affiche le graphique du nombre de bâtiments par fichier
     public function afficherGraphiqueBatiments(array $dataArray, array $fileNames): void {
+        // Encode les données et les noms de fichiers en JSON
         $nbBatimentsJson = json_encode($dataArray);
         $fileNamesJson = json_encode($fileNames);
 
+        // Génère les sélecteurs de couleur pour chaque fichier
         $colorPickersHtml = '';
         foreach ($fileNames as $index => $fileName) {
             $colorPickersHtml .= "
@@ -57,6 +69,8 @@ class ComparaisonView extends AbstractView
             <input type='color' id='colorNbBatiments_$index' class='color-input' value='#" . substr(md5($fileName), 0, 6) . "'>
         </div>";
         }
+
+        // Crée le HTML pour le graphique du nombre de batiments
         $graphique = "
         <div style='display: none;' id='nbBatimentsJson'>$nbBatimentsJson</div>
         <div style='display: none;' id='fileNamesJson'>$fileNamesJson</div>
@@ -87,13 +101,18 @@ class ComparaisonView extends AbstractView
         <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
         <script src='/_assets/scripts/nombreBatiments.js'></script>
         ";
+
+        // Ajoute le graphique au corps de la page
         $this->body .= $graphique;
     }
 
+    // Affiche le graphique radar de l'aire moyenne par fichier
     public function afficherGraphiqueRadarAireMoyenne(array $dataArray, array $fileNames): void {
+        // Encode les données et les noms de fichiers en JSON
         $aireMoyenneJson = json_encode($dataArray);
         $fileNamesJson = json_encode($fileNames);
 
+        // Génère les sélecteurs de couleur pour chaque fichier
         $colorPickersHtml = '';
         foreach ($fileNames as $index => $fileName) {
             $colorPickersHtml .= "
@@ -103,6 +122,7 @@ class ComparaisonView extends AbstractView
         </div>";
         }
 
+        // Crée le HTML pour le graphique de l'aire moyenne
         $graphique = "
     <div style='display: none;' id='aireMoyenneJson'>$aireMoyenneJson</div>
     <div style='display: none;' id='fileNamesJson'>$fileNamesJson</div>
@@ -135,14 +155,18 @@ class ComparaisonView extends AbstractView
     <script src='/_assets/scripts/aireMoyenneBatiments.js'></script>
     ";
 
+        // Ajoute le graphique au corps de la page
         $this->body .= $graphique;
     }
 
+    // Affiche le graphique de la distance moyenne entre bâtiments
     public function afficherGraphiqueDistanceMoyenne(mixed $dataGeoJson, mixed $fileNamesGeojson): void
     {
+        // Encode les données et les noms de fichiers en JSON
         $distanceMoyenneJson = json_encode($dataGeoJson);
         $fileNamesJson = json_encode($fileNamesGeojson);
 
+        // Génère les sélecteurs de couleur pour chaque fichier
         $colorPickersHtml = '';
         foreach ($fileNamesGeojson as $index => $fileName) {
             $colorPickersHtml .= "
@@ -152,10 +176,11 @@ class ComparaisonView extends AbstractView
         </div>";
         }
 
+        // Crée le HTML pour le graphique de la distance moyenne
         $graphique =  "
         <div style='display: none;' id='distanceMoyenneJson'>$distanceMoyenneJson</div>
         <div style='display: none;' id='fileNamesJson'>$fileNamesJson</div>
-    
+
         <div class='graphiqueBox' id='zoneDistanceMoyenne'>
             <h2>Distance moyenne entre bâtiments</h2>
             <div class='mainContentGraph'>
@@ -183,19 +208,23 @@ class ComparaisonView extends AbstractView
         <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
         <script src='/_assets/scripts/distanceMoyenneBatiments.js'></script>
         ";
-        $this->body .= $graphique;
 
+        // Ajoute le graphique au corps de la page
+        $this->body .= $graphique;
     }
 
+    // Affiche le graphique récapitulatif des aires minimales et maximales
     public function afficherGraphiqueRecap(array $aireMin, array $aireMax, array $fileNames): void
     {
+        // Encode les données en JSON
         $aireMinJson = json_encode($aireMin);
         $aireMaxJson = json_encode($aireMax);
 
+        // Journalise les données pour le débogage
         echo '<script>console.log("aireMin dans la view: ' . $aireMin . '")</script>';
         echo '<script>console.log("aireMax dans la view: ' . $aireMax . '")</script>';
 
-
+        // Génère les sélecteurs de couleur pour chaque fichier
         $colorPickersHtml = '';
         foreach ($fileNames as $index => $fileName) {
             $colorPickersHtml .= "
@@ -205,6 +234,7 @@ class ComparaisonView extends AbstractView
         </div>";
         }
 
+        // Crée le HTML pour le graphique récapitulatif
         $graphique = "
         <div style='display: none;' id='aireMinJson'>$aireMinJson</div>
         <div style='display: none;' id='aireMaxJson'>$aireMaxJson</div>
@@ -231,20 +261,26 @@ class ComparaisonView extends AbstractView
         <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
         <script src='/_assets/scripts/recapChart.js'></script>
         ";
+
+        // Ajoute le graphique récapitulatif au corps de la page
         $this->body .= $graphique;
     }
 
+    // Affiche les visualisations Hillshade pour les fichiers TIFF
     public function afficheTif(array $dataArray): void {
         $tifModel = new TifModel();
         $htmlOutput = '';
 
+        // Génère la visualisation Hillshade pour chaque fichier TIFF
         foreach ($dataArray as $tifFile) {
             $htmlOutput .= $tifModel->visualisationHillShade($tifFile);
         }
 
+        // Ajoute les visualisations au corps de la page
         $this->body .= $htmlOutput;
     }
 
+    // Affiche la page complète
     public function afficher(): void
     {
         parent::afficher();

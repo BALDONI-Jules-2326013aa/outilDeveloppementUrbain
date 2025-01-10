@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
+    // Récupère les éléments du DOM nécessaires
     const canvas = document.getElementById('recapChartCanva');
     const chartTypeElement = document.getElementById('chartTypeRecap');
     const fileNames = JSON.parse(document.getElementById('fileNamesJson').textContent);
@@ -7,9 +8,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const distanceMoyenneData = JSON.parse(document.getElementById('distanceMoyenneJson').textContent);
     const aireMinData = JSON.parse(document.getElementById('aireMinJson').textContent);
     const aireMaxData = JSON.parse(document.getElementById('aireMaxJson').textContent);
-    console.log(aireMinData);
-    console.log(aireMaxData);
 
+    // Définit les couleurs par défaut pour les graphiques
     let colors = [
         { backgroundColor: '#FF5733', borderColor: '#FF5733' },  // Rouge vif
         { backgroundColor: '#79fd8c', borderColor: '#79fd8c' },  // Vert clair
@@ -23,12 +23,13 @@ document.addEventListener('DOMContentLoaded', function () {
         { backgroundColor: '#33FF8F', borderColor: '#33FF8F' }   // Vert vif
     ];
 
+    // Ajoute des couleurs aléatoires si le nombre de fichiers dépasse 10
     colors = colors.concat(fileNames.slice(10).map(() => ({
         backgroundColor: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
         borderColor: `#${Math.floor(Math.random() * 16777215).toString(16)}`
     })));
 
-
+    // Affiche ou cache la zone de récapitulation en fonction de la case à cocher
     document.getElementById('btnAfficher').addEventListener('click', function () {
         if (document.getElementById('zoneRecap').style.display === 'flex') {
             document.getElementById('zoneRecap').style.display = 'none';
@@ -37,8 +38,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // Crée le graphique initial (bar chart)
     let chart = createBarChart();
 
+    // Fonction pour créer un bar chart
     function createBarChart() {
         return new Chart(canvas.getContext('2d'), {
             type: 'bar',
@@ -82,6 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Fonction pour créer un radar chart
     function createRadarChart() {
         return new Chart(canvas.getContext('2d'), {
             type: 'radar',
@@ -115,13 +119,13 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-
-
+    // Met à jour le type de graphique en fonction de la sélection de l'utilisateur
     function updateChartType(newType) {
         if (chart) {
-            chart.destroy();
+            chart.destroy(); // Détruit le graphique existant
         }
 
+        // Crée un nouveau graphique en fonction du type sélectionné
         switch (newType) {
             case 'barChartRecap':
                 chart = createBarChart();
@@ -135,10 +139,12 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // Ajoute un écouteur d'événement pour changer le type de graphique
     chartTypeElement.addEventListener('change', function () {
         updateChartType(chartTypeElement.value);
     });
 
+    // Ajoute des écouteurs d'événements pour mettre à jour les couleurs des graphiques
     fileNames.forEach((_, index) => {
         const colorPicker = document.getElementById(`colorRecap_${index}`);
         if (colorPicker) {
@@ -154,6 +160,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // Fonction pour convertir une couleur hexadécimale en rgba
     function hexToRgba(hex, alpha) {
         hex = hex.replace('#', '');
 

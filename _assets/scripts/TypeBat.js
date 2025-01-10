@@ -1,9 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
+    // Récupère le contexte du canvas pour le graphique
     let ctx = document.getElementById('polarTypeBatiment').getContext('2d');
 
+    // Récupère les données JSON pour les types de bâtiments et les noms de fichiers
     const typeBatimentMap = JSON.parse(document.getElementById('typeBatimentMapJson').textContent);
     const fileNamesPolar = JSON.parse(document.getElementById('fileNamesPolarJson').textContent);
 
+    // Initialise les labels et les données pour le graphique
     let labels = [];
     let data = [];
     for (const [key, value] of Object.entries(typeBatimentMap)) {
@@ -11,12 +14,13 @@ document.addEventListener('DOMContentLoaded', function () {
         data.push(value);
     }
 
-    // Calculate the maximum value from the data
+    // Calcule la valeur maximale des données
     const maxValue = Math.max(...data);
 
-    // Initialisation du graphique
+    // Initialisation du graphique en polar area
     let polarAreaChart = createPolarTypeBatiments(ctx, labels, data, maxValue);
 
+    // Fonction pour créer un graphique en polar area
     function createPolarTypeBatiments(ctx, labels, data, maxValue) {
         return new Chart(ctx, {
             type: 'polarArea',
@@ -48,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     r: {
                         beginAtZero: true,
                         min: 0,
-                        max: maxValue, // Set the maximum value dynamically
+                        max: maxValue, // Définit la valeur maximale dynamiquement
                         ticks: {
                             stepSize: 10,
                             font: {
@@ -71,6 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Fonction pour ajouter des données GeoJSON au graphique
     function addGeoJson(geojsonData) {
         const buildingTypes = {};
         geojsonData.features.forEach(feature => {
@@ -85,12 +90,13 @@ document.addEventListener('DOMContentLoaded', function () {
         polarAreaChart.data.labels = Object.keys(buildingTypes);
         polarAreaChart.data.datasets[0].data = Object.values(buildingTypes);
 
-        // Update the maximum value dynamically based on the new data
+        // Met à jour la valeur maximale dynamiquement en fonction des nouvelles données
         const updatedMaxValue = Math.max(...polarAreaChart.data.datasets[0].data);
         polarAreaChart.options.scales.r.max = updatedMaxValue;
         polarAreaChart.update();
     }
 
+    // Ajoute un écouteur d'événement pour le bouton d'ajout de fichier
     document.getElementById('addFileButton').addEventListener('click', function () {
         const fileInput = document.getElementById('fileInput').files[0];
 
