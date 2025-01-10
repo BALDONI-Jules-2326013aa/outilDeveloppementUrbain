@@ -5,7 +5,6 @@ $pdo = new PDO('pgsql:host=postgresql-siti.alwaysdata.net;dbname=siti_db', 'siti
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 $model = new FileModel($pdo);
-// Supposons que $fileModel soit une instance de FileModel passée à la vue
 $files = $model->getFiles();
 
 usort($files, function($a, $b) {
