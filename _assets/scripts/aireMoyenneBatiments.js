@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.getElementById('aireMoyenne').addEventListener('change', function () {
         if (document.getElementById('aireMoyenne').checked) {
-            console.log('checked');
             document.getElementById('zoneAireMoyenne').style.display = 'flex';
         } else {
             document.getElementById('zoneAireMoyenne').style.display = 'none';

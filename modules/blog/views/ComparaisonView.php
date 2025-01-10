@@ -187,12 +187,14 @@ class ComparaisonView extends AbstractView
 
     }
 
-    public function afficherGraphiqueRecap(array $nbBatimentsArray, array $aireMoyenneArray, array $distanceMoyenneArray, array $fileNames): void
+    public function afficherGraphiqueRecap(array $aireMin, array $aireMax, array $fileNames): void
     {
-        $nbBatimentsJson = json_encode($nbBatimentsArray);
-        $aireMoyenneJson = json_encode($aireMoyenneArray);
-        $distanceMoyenneJson = json_encode($distanceMoyenneArray);
-        $fileNamesJson = json_encode($fileNames);
+        $aireMinJson = json_encode($aireMin);
+        $aireMaxJson = json_encode($aireMax);
+
+        echo '<script>console.log("aireMin dans la view: ' . $aireMin . '")</script>';
+        echo '<script>console.log("aireMax dans la view: ' . $aireMax . '")</script>';
+
 
         $colorPickersHtml = '';
         foreach ($fileNames as $index => $fileName) {
@@ -204,7 +206,8 @@ class ComparaisonView extends AbstractView
         }
 
         $graphique = "
-    
+        <div style='display: none;' id='aireMinJson'>$aireMinJson</div>
+        <div style='display: none;' id='aireMaxJson'>$aireMaxJson</div>
         <div class='graphiqueBox' id='zoneRecap'>
             <h2>Récapitulatif</h2>
             <div class='mainContentGraph'>

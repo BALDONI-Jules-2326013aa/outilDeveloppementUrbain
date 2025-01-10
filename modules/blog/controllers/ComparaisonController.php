@@ -188,12 +188,19 @@ class ComparaisonController
         $geoJsonModel = new GeoJSONModel();
         $dataG1 = $geoJsonModel->recupereNombreBatiment($dataGeoJson);
         $view->afficherGraphiqueBatiments($dataG1, $fileNamesGeojson);
-        $dataG2 = $geoJsonModel->calculerAireMoyMinMax($dataGeoJson);
+
+        $dataAire = $geoJsonModel->calculerAireMoyMinMax($dataGeoJson);
+        $dataG2 = $dataAire['aire_moyenne'];
         $view->afficherGraphiqueRadarAireMoyenne($dataG2, $fileNamesGeojson);
+
         $dataG3 = $geoJsonModel->recupereDistanceMoyenneBatiments($dataGeoJson);
         $view->afficherGraphiqueDistanceMoyenne($dataG3, $fileNamesGeojson);
-        $view->afficherGraphiqueRecap($dataG1, $dataG2, $dataG3, $fileNamesGeojson);
 
+        echo '<script>console.log("aireMin dans le controller : ' . $dataAire['aire_min'] . '")</script>';
+        echo '<script>console.log("aireMax dans le controller : ' . $dataAire['aire_max'] . '")</script>';
 
+        $view->afficherGraphiqueRecap($dataAire['aire_min'], $dataAire['aire_max'], $fileNamesGeojson);
     }
+
+
 }

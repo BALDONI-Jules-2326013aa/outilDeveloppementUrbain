@@ -5,6 +5,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const aireMoyenneData = JSON.parse(document.getElementById('aireMoyenneJson').textContent);
     const nbBatimentsData = JSON.parse(document.getElementById('nbBatimentsJson').textContent);
     const distanceMoyenneData = JSON.parse(document.getElementById('distanceMoyenneJson').textContent);
+    const aireMinData = JSON.parse(document.getElementById('aireMinJson').textContent);
+    const aireMaxData = JSON.parse(document.getElementById('aireMaxJson').textContent);
+    console.log(aireMinData);
+    console.log(aireMaxData);
 
     let colors = [
         { backgroundColor: '#FF5733', borderColor: '#FF5733' },  // Rouge vif
@@ -25,7 +29,6 @@ document.addEventListener('DOMContentLoaded', function () {
     })));
 
 
-    // Gestion de l'affichage du graphique
     document.getElementById('btnAfficher').addEventListener('click', function () {
         if (document.getElementById('zoneRecap').style.display === 'flex') {
             document.getElementById('zoneRecap').style.display = 'none';
@@ -53,6 +56,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     label: 'Distance moyenne entre bâtiments',
                     data: distanceMoyenneData,
                     backgroundColor: colors.map(c => c.backgroundColor)
+                }, {
+                    label: 'Aire minimale',
+                    data: aireMinData,
+                    backgroundColor: colors.map(c => c.backgroundColor)
+                }, {
+                    label: 'Aire maximale',
+                    data: aireMaxData,
+                    backgroundColor: colors.map(c => c.backgroundColor)
                 }]
             },
             options: {
@@ -75,20 +86,18 @@ document.addEventListener('DOMContentLoaded', function () {
         return new Chart(canvas.getContext('2d'), {
             type: 'radar',
             data: {
-                labels: fileNames,
-                datasets: [{
-                    label: 'Nombre de bâtiments',
-                    data: nbBatimentsData,
-                    backgroundColor: colors.map(c => hexToRgba(c.backgroundColor, 0.3))  // Utilisation de la fonction hexToRgba
-                }, {
-                    label: 'Aire moyenne des bâtiments',
-                    data: aireMoyenneData,
-                    backgroundColor: colors.map(c => hexToRgba(c.backgroundColor, 0.3))  // Utilisation de la fonction hexToRgba
-                }, {
-                    label: 'Distance moyenne entre bâtiments',
-                    data: distanceMoyenneData,
-                    backgroundColor: colors.map(c => hexToRgba(c.backgroundColor, 0.3))  // Utilisation de la fonction hexToRgba
-                }]
+                labels: ['Nombre de bâtiments', 'Aire moyenne des bâtiments', 'Distance moyenne entre bâtiments', 'Aire minimale', 'Aire maximale'],
+                datasets: fileNames.map((fileName, index) => ({
+                    label: fileName,
+                    data: [
+                        nbBatimentsData[index],
+                        aireMoyenneData[index],
+                        distanceMoyenneData[index],
+                        aireMinData[index],
+                        aireMaxData[index]
+                    ],
+                    backgroundColor: hexToRgba(colors[index].backgroundColor, 0.65)
+                }))
             },
             options: {
                 responsive: true,
@@ -105,6 +114,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+
 
 
     function updateChartType(newType) {
@@ -129,16 +139,6 @@ document.addEventListener('DOMContentLoaded', function () {
         updateChartType(chartTypeElement.value);
     });
 
-    function updateChartColors() {
-        fileNames.forEach((_, index) => {
-            const colorPicker = document.getElementById(`colorRecap_${index}`);
-            if (colorPicker) {
-                colors[index].backgroundColor = colorPicker.value;
-                colors[index].borderColor = colorPicker.value;
-            }
-        });
-    }
-
     fileNames.forEach((_, index) => {
         const colorPicker = document.getElementById(`colorRecap_${index}`);
         if (colorPicker) {
@@ -155,15 +155,12 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     function hexToRgba(hex, alpha) {
-        // Supprime le '#' si nécessaire
         hex = hex.replace('#', '');
 
-        // Récupère les valeurs RGB
         const r = parseInt(hex.substring(0, 2), 16);
         const g = parseInt(hex.substring(2, 4), 16);
         const b = parseInt(hex.substring(4, 6), 16);
 
-        // Retourne la couleur en format rgba avec l'opacité spécifiée
         return `rgba(${r}, ${g}, ${b}, ${alpha})`;
     }
 
