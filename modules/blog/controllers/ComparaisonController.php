@@ -261,9 +261,9 @@ class ComparaisonController
         $dataG3 = $geoJsonModel->recupereDistanceMoyenneBatiments($dataGeoJson);
         $view->afficherGraphiqueDistanceMoyenne($dataG3, $fileNamesGeojson);
 
-        echo '<script>console.log("aireMin dans le controller : ' . $dataAire['aire_min'] . '")</script>';
-        echo '<script>console.log("aireMax dans le controller : ' . $dataAire['aire_max'] . '")</script>';
+        echo '<script>console.log("aireMin dans le controller : ' . $dataAire['aire_min_par_fichier'] . '")</script>';
+        echo '<script>console.log("aireMax dans le controller : ' . $dataAire['aire_max_par_fichier'] . '")</script>';
 
-        $view->afficherGraphiqueRecap($dataAire['aire_min'], $dataAire['aire_max'], $fileNamesGeojson);
+        $view->afficherGraphiqueRecap($dataAire['aire_min_par_fichier'], $dataAire['aire_max_par_fichier'], $fileNamesGeojson);
     }
 }
