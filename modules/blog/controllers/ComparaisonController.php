@@ -272,7 +272,5 @@ class ComparaisonController
 
 
         // print_r($dataHausdorff);
-
-        $view->afficherGraphiqueRecap($dataAire['aire_min_par_fichier'], $dataAire['aire_max_par_fichier'], $fileNamesGeojson);
     }
 }
