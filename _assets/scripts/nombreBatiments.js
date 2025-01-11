@@ -194,32 +194,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Met à jour les couleurs du graphique en fonction des sélections de l'utilisateur
-    function updateChartColors() {
-        fileNames.forEach((_, index) => {
-            const colorPicker = document.getElementById(`colorNbBatiments_${index}`);
-            if (colorPicker) {
-                colors[index].backgroundColor = colorPicker.value;
-                colors[index].borderColor = colorPicker.value;
-            }
-        });
-
-        chart.data.datasets[0].backgroundColor = colors.map(c => c.backgroundColor);
-        chart.data.datasets[0].borderColor = colors.map(c => c.borderColor);
-        chart.update(); // Met à jour le graphique avec les nouvelles couleurs
-    }
-
     // Ajoute un écouteur d'événement pour changer le type de graphique
     chartTypeElement.addEventListener('change', (event) => {
         const newType = event.target.value;
         updateChartType(newType); // Met à jour le type de graphique en fonction de la sélection de l'utilisateur
     });
 
-    // Ajoute des écouteurs d'événements pour mettre à jour les couleurs des graphiques
-    fileNames.forEach((_, index) => {
-        const colorPicker = document.getElementById(`colorNbBatiments_${index}`);
-        if (colorPicker) {
-            colorPicker.addEventListener('input', updateChartColors); // Met à jour les couleurs du graphique en fonction des sélections de l'utilisateur
-        }
-    });
 });

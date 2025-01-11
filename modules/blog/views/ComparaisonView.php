@@ -161,7 +161,7 @@ class ComparaisonView extends AbstractView
     {
         $graphique = "
     <div class='graphiqueBox' id='zoneAireMoyenne'>
-        <h2>Aire moyenne par fichier</h2>
+        <h2>Aire moyenne des batiments par fichier</h2>
         <div class='mainContentGraph'>
                 <div>
                     <label for='chartTypeAireMoyenne'>Choisir un type de graphique :</label>
