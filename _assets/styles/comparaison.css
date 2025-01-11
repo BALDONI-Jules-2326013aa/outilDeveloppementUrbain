@@ -211,6 +211,15 @@ input[type="checkbox"] {
     cursor: pointer;
 }
 
+#graphsBox {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    height: auto;
+}
+
 .graphs {
     min-height: 70vh;
     min-width: 70vh;
@@ -243,7 +252,10 @@ canvas {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(5px);
     border: 1px solid #e0e0e0;
-    min-width: 70vh;
+    min-width: 60vh;
+    max-width: 60vh;
+    min-height: 40vh;
+    max-height: 40vh;
 }
 
 #espace {
@@ -255,8 +267,10 @@ canvas {
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    height: 85vh;
-    width: 70%;
+    min-height: 60vh;
+    max-height: 60vh;
+    min-width: 40%;
+    max-width: 40%;
     border-radius: 20px;
     background-color: #9bc6ca;
     padding: 2vh;
@@ -265,13 +279,35 @@ canvas {
     animation: slideIn 0.5s ease;
 }
 
+
+#zoneRecap {
+    background-color: #5fa5aa;
+    min-height: 60vh;
+    max-height: 60vh;
+    min-width: 47%;
+    max-width: 47%;
+    border: 5px solid black;
+}
+
+#zoneRecap h2 {
+    font-size: 2.5rem;
+}
+
 .mainContentGraph {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     width: 100%;
     justify-content: space-around;
+    align-items: center;
     height: 100%;
+}
 
+.mainContentGraph div {
+    min-height: 5vh;
+    min-width: 52%;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
 }
 
 .chart-options {
@@ -395,6 +431,8 @@ canvas {
 .btn-chart:hover {
     background-color: #357ab8;
 }
+
+
 @media (max-width: 800px){
     #color-selectors label {
 
