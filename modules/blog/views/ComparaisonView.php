@@ -65,8 +65,8 @@ class ComparaisonView extends AbstractView
         $geojsonDataJsArray = json_encode($dataArray);
         $fileNamesJsArray = json_encode($fileNames);
 
-        // Crée le script pour inclure Leaflet et les données GeoJSON
-        $script =  "<link rel='stylesheet' href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css' />" .
+        // Crée le script pour inclure les librairies nécessaires
+        $script = "<link rel='stylesheet' href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css' />" .
             "<script src='https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.8.1/proj4.js'></script>" .
             "<script src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'></script>" .
             "<script src='https://cdnjs.cloudflare.com/ajax/libs/proj4leaflet/1.0.2/proj4leaflet.js'></script>" .
@@ -87,7 +87,8 @@ class ComparaisonView extends AbstractView
      * @param array $fileNames Les noms des fichiers.
      * @return void
      */
-    public function afficherGraphiqueRecap(array $nbBatiments, array $airesMoyennes, array $distanceMoyenne, array $aireMin, array $aireMax, array $fileNames): void
+    public function afficherGraphiqueRecap(array $nbBatiments, array $airesMoyennes, array $distanceMoyenne, array $aireMin,
+                                           array $aireMax, array $perimetreMoyen, array $perimetreMin, array $perimetreMax, array $fileNames): void
     {
         // Encode les données en JSON
         $fileNamesJson = json_encode($fileNames);
@@ -96,6 +97,9 @@ class ComparaisonView extends AbstractView
         $distanceMoyenneJson = json_encode($distanceMoyenne);
         $aireMoyenneJson = json_encode($airesMoyennes);
         $nbBatimentsJson = json_encode($nbBatiments);
+        $perimetreMoyenJson = json_encode($perimetreMoyen);
+        $perimetreMinJson = json_encode($perimetreMin);
+        $perimetreMaxJson = json_encode($perimetreMax);
 
         // Crée le HTML pour le graphique récapitulatif
         $graphique = "
@@ -105,6 +109,9 @@ class ComparaisonView extends AbstractView
         <div style='display: none;' id='distanceMoyenneJson'>$distanceMoyenneJson</div>
         <div style='display: none;' id='aireMoyenneJson'>$aireMoyenneJson</div>
         <div style='display: none;' id='nbBatimentsJson'>$nbBatimentsJson</div>
+        <div style='display: none;' id='perimetreMoyenJson'>$perimetreMoyenJson</div>
+        <div style='display: none;' id='perimetreMinJson'>$perimetreMinJson</div>
+        <div style='display: none;' id='perimetreMaxJson'>$perimetreMaxJson</div>
         <div class='graphiqueBox' id='zoneRecap'>
             <h2>Récapitulatif</h2>
             <div class='mainContentGraph'>
@@ -155,7 +162,6 @@ class ComparaisonView extends AbstractView
                     <canvas id='barBatiments'></canvas>
             </div>
         </div>
-        <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
         <script src='/_assets/scripts/nombreBatiments.js'></script>
         ";
 
@@ -186,10 +192,9 @@ class ComparaisonView extends AbstractView
                         <option value='pieChartAireMoyenne'>Camembert</option>
                     </select>
                 </div>
-                <canvas id='radarAireMoyenne'></canvas>
+                <canvas id='barAireMoyenne'></canvas>
         </div>
     </div>
-    <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
     <script src='/_assets/scripts/aireMoyenneBatiments.js'></script>
     ";
 
@@ -225,8 +230,6 @@ class ComparaisonView extends AbstractView
                     <canvas id='barDistanceMoyenne'></canvas>
             </div>
         </div>
-        </div>
-        <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
         <script src='/_assets/scripts/distanceMoyenneBatiments.js'></script>
         ";
 
@@ -234,7 +237,35 @@ class ComparaisonView extends AbstractView
         $this->body .= $graphique;
     }
 
+    public function afficherGraphiquePerimetreMoyen(): void
+    {
+        // Crée le HTML pour le graphique de la distance moyenne
+        $graphique =  "
 
+        <div class='graphiqueBox' id='zonePerimetreMoyen'>
+            <h2>Périmètre moyen des batiments par fichier</h2>
+            <div class='mainContentGraph'>
+                    <div>
+                        <label for='chartTypePerimetreMoyen'>Choisir un type de graphique :</label>
+                        <select id='chartTypePerimetreMoyen' class='combobox-chart'>
+                            <option value='barChartPerimetreMoyen' selected>Barres</option>
+                            <option value='lineChartPerimetreMoyen'>Ligne</option>
+                            <option value='radarChartPerimetreMoyen'>Radar</option>
+                            <option value='polarChartPerimetreMoyen'>Polaire</option>
+                            <option value='doughnutChartPerimetreMoyen'>Donut</option>
+                            <option value='pieChartPerimetreMoyen'>Camembert</option>
+                        </select>
+                    </div>
+                    <canvas id='barPerimetreMoyen'></canvas>
+            </div>
+        </div>
+        </div>
+        <script src='/_assets/scripts/perimetreMoyen.js'></script>
+        ";
+
+        // Ajoute le graphique au corps de la page
+        $this->body .= $graphique;
+    }
 
     /**
      * Affiche les visualisations Hillshade pour les fichiers TIFF.
