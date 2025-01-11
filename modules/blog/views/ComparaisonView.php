@@ -242,6 +242,25 @@ class ComparaisonView extends AbstractView
         $this->body .= $htmlOutput;
     }
 
+    public function afficheComparaisonTestIa($dataArray, $fileNames): void
+    {
+        $this->body .= '<form method="POST" action="/testIa">';
+        $this->body .= '<div style="display: flex; flex-direction: column;">';
+
+        foreach ($fileNames as $index => $fileName) {
+            $checked = (isset($_POST['files']) && in_array((string)$index, $_POST['files'], true)) ? 'checked' : '';
+            $this->body .= '<label>';
+            $this->body .= '<input type="checkbox" name="files[]" value="' . htmlspecialchars($fileName) . '" ' . $checked . '> ' . htmlspecialchars($fileName);
+            $this->body .= '</label>';
+        }
+
+        $this->body .= '</div>';
+        $this->body .= '<button type="submit">Tester I.A</button>';
+        $this->body .= '</form>';
+
+
+    }
+
     public function afficher(): void
     {
         parent::afficher();

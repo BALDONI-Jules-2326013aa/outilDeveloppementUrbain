@@ -1,5 +1,7 @@
 
 <?php
+echo'glop';
+die();
 include __DIR__ . '/AutoLoader.php';
 
 use blog\controllers\ComparaisonController;
@@ -45,6 +47,14 @@ switch ($request_uri) {
         $comparaison = new ComparaisonController();
         $comparaison::resetSession();
         $comparaison::afficheFichier();
+        break;
+    case 'testIa':
+        echo'glop';
+        print_r($_POST);
+
+        $comparaison = new ComparaisonController();
+        $comparaison::calculeTaux();
+
         break;
     case 'Simulation':
         $controller = new SimulationController();

@@ -35,7 +35,6 @@ class GeoJSONModel
             }
             $listNbBatiments[] = $buildingCount;
         }
-
         return $listNbBatiments;
     }
 
@@ -181,8 +180,30 @@ class GeoJSONModel
         return abs($aire * $R * $R / 2);
     }
 
+    public static function calculeTauxErreurDeuxFichiers($fileArray, $fileArray2): float|int
+    {
 
+
+        $nbBatiment1 = self::recupereNombreBatiment([$fileArray])[0];
+        $nbBatiment2 = self::recupereNombreBatiment([$fileArray2])[0];
+        $tauxNbBatiment = min($nbBatiment1, $nbBatiment2)/max($nbBatiment1, $nbBatiment2) * 100;
+
+        $aireMoyenne1 = self::calculerAireMoyMinMax([$fileArray])[0];
+        $aireMoyenne2 = self::calculerAireMoyMinMax([$fileArray2])[0];
+        $tauxAireMoyenne = min($aireMoyenne1, $aireMoyenne2)/max($aireMoyenne1, $aireMoyenne2) * 100;
+        /*
+        $aireMax1 = self::calculerAireMoyMinMax([$fileArray])[1];
+        $aireMax2 = self::calculerAireMoyMinMax([$fileArray2])[1];
+        $tauxAireMax = max($aireMax2, $aireMax1)/min($aireMax2, $aireMax1) * 100;
+    */
+        $distanceMoyenne1 = self::recupereDistanceMoyenneBatiments([$fileArray])[0];
+        $distanceMoyenne2 = self::recupereDistanceMoyenneBatiments([$fileArray2])[0];
+        $tauxDistanceMoyenne = min($distanceMoyenne1, $distanceMoyenne2)/max($distanceMoyenne1, $distanceMoyenne2) * 100;
+
+        return round( ($tauxDistanceMoyenne + $tauxAireMoyenne + $tauxNbBatiment) / 3, 2);
+
+        //return 0;
+    }
 
 }
-
 

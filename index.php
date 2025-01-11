@@ -23,12 +23,8 @@ switch ($request_uri) {
     case 'fichier':
         FileController::affichePage();
         break;
-    case 'telechargerFichier':
-        $model = new FileModel($pdo);
-        $controller = new FileController($model);
-        $controller->handleRequest();
-        break;  
     case 'supprimerFichier':
+    case 'telechargerFichier':
         $model = new FileModel($pdo);
         $controller = new FileController($model);
         $controller->handleRequest();
@@ -37,6 +33,11 @@ switch ($request_uri) {
         $comparaison = new ComparaisonController();
         //$comparaison::resetSession();
         $comparaison::afficheFichier();
+        break;
+    case 'testIa':
+        $comparaison = new ComparaisonController();
+        $quotien = $comparaison::calculeTaux();
+        echo $quotien . "%";
         break;
     case 'comparaisonFichier':
         $comparaison = new ComparaisonController();

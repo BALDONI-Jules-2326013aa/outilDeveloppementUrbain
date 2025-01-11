@@ -146,6 +146,7 @@ class ComparaisonController
         if (!empty($dataGeoJson)) {
             $view->afficherAvecFichiers($dataGeoJson, $fileNamesGeojson);
             self::afficheGraphiques($dataGeoJson, $fileNamesGeojson, $view);
+            (new ComparaisonController)->lanceCalculeTaux($dataGeoJson, $fileNamesGeojson, $view);
         }
 
         if (!empty($dataTif)) {
@@ -154,6 +155,7 @@ class ComparaisonController
             $autreAffichage = true;
 
         }
+
         if (!$autreAffichage){
             $view->afficher();;
         }
@@ -174,6 +176,35 @@ class ComparaisonController
             return "Pas de fichier reconnu";
         }
     }
+
+    public function lanceCalculeTaux($dataArray, $fileName, $view): void
+    {
+        $view->afficheComparaisonTestIa($dataArray, $fileName);
+    }
+
+    public static function calculeTaux(): float | int
+    {
+        session_start();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['files']) && count($_POST['files']) === 2) {
+                $selectedData1 = $_POST['files'][0];
+                $selectedData2 = $_POST['files'][1];
+                
+                if(isset($_SESSION['fileNamesGeojson']) && isset($_SESSION['dataGeoJson']) ){
+                    $indexFichier1 = array_search($selectedData1,$_SESSION['fileNamesGeojson']);
+                    $indexFichier2 = array_search($selectedData2,$_SESSION['fileNamesGeojson']);
+                    $result1 = $_SESSION['dataGeoJson'][$indexFichier1];
+                    $result2 = $_SESSION['dataGeoJson'][$indexFichier2];
+                    $geoJsonModel = new GeoJSONModel();
+                    return $geoJsonModel->calculeTauxErreurDeuxFichiers($result1, $result2);
+
+                }
+
+            }
+        }
+        return 0;
+    }
+
     public static function affichePage(): void
     {
         if (session_status() === PHP_SESSION_NONE) {
