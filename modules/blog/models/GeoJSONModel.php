@@ -80,7 +80,152 @@ class GeoJSONModel
         ];
     }
 
-    // Récupère la distance moyenne entre les bâtiments dans chaque fichier GeoJSON
+    public static function distanceHausdorff($filesArray): float
+    {
+        $pointsCentrauxParFichier = [];
+
+        foreach ($filesArray as $file) {
+            $pointsCentraux = [];
+            if (isset($file['features'])) {
+                foreach ($file['features'] as $feature) {
+                    if (isset($feature['geometry']['type']) && $feature['geometry']['type'] === 'Polygon') {
+                        $coordinates = $feature['geometry']['coordinates'][0];
+                        $pointCentral = self::calculPointCentral($coordinates);
+                        $pointsCentraux[] = $pointCentral;
+                    }
+                }
+            }
+            $pointsCentrauxParFichier[] = $pointsCentraux;
+        }
+
+        $distanceMax = 0;
+
+        for ($i = 0; $i < count($pointsCentrauxParFichier); $i++) {
+            for ($j = $i + 1; $j < count($pointsCentrauxParFichier); $j++) {
+                $distance = self::distanceHausdorffEntrePoints($pointsCentrauxParFichier[$i], $pointsCentrauxParFichier[$j]);
+                if ($distance > $distanceMax) {
+                    $distanceMax = $distance;
+                }
+            }
+        }
+
+        return $distanceMax;
+    }
+
+    private static function distanceHausdorffEntrePoints(array $set1, array $set2): float
+    {
+        $maxDist1 = 0;
+        foreach ($set1 as $point1) {
+            $minDist = PHP_FLOAT_MAX;
+            foreach ($set2 as $point2) {
+                $dist = self::formuleHaversine($point1['lat'], $point1['lon'], $point2['lat'], $point2['lon']);
+                if ($dist < $minDist) {
+                    $minDist = $dist;
+                }
+            }
+            if ($minDist > $maxDist1) {
+                $maxDist1 = $minDist;
+            }
+        }
+
+        $maxDist2 = 0;
+        foreach ($set2 as $point2) {
+            $minDist = PHP_FLOAT_MAX;
+            foreach ($set1 as $point1) {
+                $dist = self::formuleHaversine($point2['lat'], $point2['lon'], $point1['lat'], $point1['lon']);
+                if ($dist < $minDist) {
+                    $minDist = $dist;
+                }
+            }
+            if ($minDist > $maxDist2) {
+                $maxDist2 = $minDist;
+            }
+        }
+
+        return max($maxDist1, $maxDist2);
+    }
+
+
+    public static function calculerPerimetreMoyMinMax($fileArray): array
+    {
+        $resultats = [
+            'perimetre_moyen' => [],
+            'perimetre_min_par_fichier' => [],
+            'perimetre_max_par_fichier' => [],
+            'perimetre_min_global' => null,
+            'perimetre_max_global' => null,
+        ];
+
+        $globalPerimetres = [];
+
+        foreach ($fileArray as $file) {
+            $perimetres = [];
+            $nombreDePolygones = 0;
+
+            if (isset($file['features'])) {
+                foreach ($file['features'] as $feature) {
+                    if (isset($feature['geometry']['type']) && $feature['geometry']['type'] === 'Polygon') {
+                        $coordinates = $feature['geometry']['coordinates'][0];
+                        $perimetre = self::calculerPerimetreBatiment($coordinates);
+
+                        $perimetres[] = $perimetre;
+                        $nombreDePolygones++;
+                    }
+                }
+            }
+
+            if ($nombreDePolygones > 0) {
+                $resultats['perimetre_moyen'][] = array_sum($perimetres) / $nombreDePolygones;
+                $resultats['perimetre_min_par_fichier'][] = min($perimetres);
+                $resultats['perimetre_max_par_fichier'][] = max($perimetres);
+
+                $globalPerimetres = array_merge($globalPerimetres, $perimetres);
+            } else {
+                $resultats['perimetre_moyen'][] = 0;
+                $resultats['perimetre_min_par_fichier'][] = 0;
+                $resultats['perimetre_max_par_fichier'][] = 0;
+            }
+        }
+
+        if (!empty($globalPerimetres)) {
+            $resultats['perimetre_min_global'] = min($globalPerimetres);
+            $resultats['perimetre_max_global'] = max($globalPerimetres);
+        }
+
+        return $resultats;
+    }
+
+    public static function calculerPerimetreBatiment(array $coordinates): float
+    {
+        $R = 6371000;
+        $n = count($coordinates);
+
+        if ($n < 2) {
+            return 0;
+        }
+
+        $perimetre = 0.0;
+
+        for ($i = 0; $i < $n; $i++) {
+            $lat1 = deg2rad($coordinates[$i][1]);
+            $lon1 = deg2rad($coordinates[$i][0]);
+            $lat2 = deg2rad($coordinates[($i + 1) % $n][1]);
+            $lon2 = deg2rad($coordinates[($i + 1) % $n][0]);
+
+            $dLat = $lat2 - $lat1;
+            $dLon = $lon2 - $lon1;
+
+            $a = sin($dLat / 2) ** 2 + cos($lat1) * cos($lat2) * sin($dLon / 2) ** 2;
+            $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
+
+            $perimetre += $R * $c;
+        }
+
+        return $perimetre;
+    }
+
+
+
     public static function recupereDistanceMoyenneBatiments($fileArray): array
     {
         $moyennesParFichier = []; // Initialise un tableau pour stocker les distances moyennes par fichier
@@ -121,7 +266,6 @@ class GeoJSONModel
         return $moyennesParFichier; // Retourne le tableau des distances moyennes par fichier
     }
 
-    // Calcule l'aire moyenne, minimale et maximale des bâtiments dans chaque fichier GeoJSON
     public static function calculerAireMoyMinMax($fileArray): array
     {
         $resultats = [
@@ -174,7 +318,6 @@ class GeoJSONModel
         return $resultats; // Retourne les résultats
     }
 
-    // Calcule l'aire d'un bâtiment à partir de ses coordonnées
     public static function calculerAireBatiment(array $coordinates): float
     {
         $R = 6371000; // Rayon de la Terre en mètres
@@ -207,19 +350,23 @@ class GeoJSONModel
         $nbBatiment2 = self::recupereNombreBatiment([$fileArray2])[0];
         $tauxNbBatiment = min($nbBatiment1, $nbBatiment2)/max($nbBatiment1, $nbBatiment2) * 100;
 
-        $aireMoyenne1 = self::calculerAireMoyMinMax([$fileArray])[0];
-        $aireMoyenne2 = self::calculerAireMoyMinMax([$fileArray2])[0];
+        $aireMoyenne1 = self::calculerAireMoyMinMax([$fileArray])['aire_moyenne'][0];
+        $aireMoyenne2 = self::calculerAireMoyMinMax([$fileArray2])['aire_moyenne'][0];
         $tauxAireMoyenne = min($aireMoyenne1, $aireMoyenne2)/max($aireMoyenne1, $aireMoyenne2) * 100;
-        /*
-        $aireMax1 = self::calculerAireMoyMinMax([$fileArray])[1];
-        $aireMax2 = self::calculerAireMoyMinMax([$fileArray2])[1];
-        $tauxAireMax = max($aireMax2, $aireMax1)/min($aireMax2, $aireMax1) * 100;
-    */
+
+        $aireMax1 = self::calculerAireMoyMinMax([$fileArray])['aire_max_par_fichier'][0];
+        $aireMax2 = self::calculerAireMoyMinMax([$fileArray2])['aire_max_par_fichier'][0];
+        $tauxAireMax = min($aireMax1, $aireMax2)/max($aireMax1, $aireMax2) * 100;
+
+        $aireMin1 = self::calculerAireMoyMinMax([$fileArray])['aire_min_par_fichier'][0];
+        $aireMin2 = self::calculerAireMoyMinMax([$fileArray2])['aire_min_par_fichier'][0];
+        $tauxAireMin = min($aireMin1, $aireMin2)/max($aireMin1, $aireMin2) * 100;
+
         $distanceMoyenne1 = self::recupereDistanceMoyenneBatiments([$fileArray])[0];
         $distanceMoyenne2 = self::recupereDistanceMoyenneBatiments([$fileArray2])[0];
         $tauxDistanceMoyenne = min($distanceMoyenne1, $distanceMoyenne2)/max($distanceMoyenne1, $distanceMoyenne2) * 100;
 
-        return round( ($tauxDistanceMoyenne + $tauxAireMoyenne + $tauxNbBatiment) / 3, 2);
+        return round(($tauxNbBatiment + $tauxAireMoyenne + $tauxAireMax + $tauxAireMin + $tauxDistanceMoyenne) / 5, 2);
 
         //return 0;
     }

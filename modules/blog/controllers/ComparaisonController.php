@@ -264,6 +264,9 @@ class ComparaisonController
         echo '<script>console.log("aireMin dans le controller : ' . $dataAire['aire_min_par_fichier'] . '")</script>';
         echo '<script>console.log("aireMax dans le controller : ' . $dataAire['aire_max_par_fichier'] . '")</script>';
 
+        $dataHausdorff = $geoJsonModel->distanceHausdorff($dataGeoJson);
+        // print_r($dataHausdorff);
+
         $view->afficherGraphiqueRecap($dataAire['aire_min_par_fichier'], $dataAire['aire_max_par_fichier'], $fileNamesGeojson);
     }
 }
