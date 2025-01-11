@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Récupère les éléments du DOM nécessaires
-    const canvas = document.getElementById('barAireMoyenne');
-    const chartTypeElement = document.getElementById('chartTypeAireMoyenne');
+    const canvas = document.getElementById('barPerimetreMoyen');
+    const chartTypeElement = document.getElementById('chartTypePerimetreMoyen');
     const fileNames = JSON.parse(document.getElementById('fileNamesJson').textContent);
-    const aireMoyenneData = JSON.parse(document.getElementById('aireMoyenneJson').textContent);
+    const perimetreMoyenData = JSON.parse(document.getElementById('perimetreMoyenJson').textContent);
 
     // Définit les couleurs par défaut pour les graphiques
     let colors = [
@@ -26,11 +26,11 @@ document.addEventListener('DOMContentLoaded', function () {
     })));
 
     // Affiche ou cache la zone de l'aire moyenne en fonction de la case à cocher
-    document.getElementById('aireMoyenne').addEventListener('change', function () {
-        if (document.getElementById('aireMoyenne').checked) {
-            document.getElementById('zoneAireMoyenne').style.display = 'flex';
+    document.getElementById('perimetreMoyen').addEventListener('change', function () {
+        if (document.getElementById('perimetreMoyen').checked) {
+            document.getElementById('zonePerimetreMoyen').style.display = 'flex';
         } else {
-            document.getElementById('zoneAireMoyenne').style.display = 'none';
+            document.getElementById('zonePerimetreMoyen').style.display = 'none';
         }
     });
 
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 labels: fileNames,
                 datasets: [{
                     label: 'Aire moyenne des bâtiments',
-                    data: aireMoyenneData,
+                    data: perimetreMoyenData,
                     backgroundColor: colors.map(c => c.backgroundColor)
                 }]
             },
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 labels: fileNames,
                 datasets: [{
                     label: 'Aire moyenne des bâtiments',
-                    data: aireMoyenneData,
+                    data: perimetreMoyenData,
                     backgroundColor: colors.map(c => c.backgroundColor),
                     fill: true
                 }]
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
             data: {
                 labels: fileNames,
                 datasets: [{
-                    data: aireMoyenneData,
+                    data: perimetreMoyenData,
                     backgroundColor: colors.map(c => c.backgroundColor)
                 }]
             },
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 labels: fileNames,
                 datasets: [{
                     label: 'Aire moyenne des bâtiments',
-                    data: aireMoyenneData,
+                    data: perimetreMoyenData,
                     backgroundColor: colors.map(c => c.backgroundColor)
                 }]
             },
@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function () {
             data: {
                 labels: fileNames,
                 datasets: [{
-                    data: aireMoyenneData,
+                    data: perimetreMoyenData,
                     backgroundColor: colors.map(c => c.backgroundColor)
                 }]
             },
@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function () {
             data: {
                 labels: fileNames,
                 datasets: [{
-                    data: aireMoyenneData,
+                    data: perimetreMoyenData,
                     backgroundColor: colors.map(c => c.backgroundColor)
                 }]
             },
@@ -166,22 +166,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Crée un nouveau graphique en fonction du type sélectionné
         switch (newType) {
-            case 'barChartAireMoyenne':
+            case 'barChartPerimetreMoyen':
                 chart = createBarChart();
                 break;
-            case 'lineChartAireMoyenne':
+            case 'lineChartPerimetreMoyen':
                 chart = createLineChart();
                 break;
-            case 'radarChartAireMoyenne':
+            case 'radarChartPerimetreMoyen':
                 chart = createRadarChart();
                 break;
-            case 'polarChartAireMoyenne':
+            case 'polarChartPerimetreMoyen':
                 chart = createPolarChart();
                 break;
-            case 'doughnutChartAireMoyenne':
+            case 'doughnutChartPerimetreMoyen':
                 chart = createDoughnutChart();
                 break;
-            case 'pieChartAireMoyenne':
+            case 'pieChartPerimetreMoyen':
                 chart = createPieChart();
                 break;
             default:

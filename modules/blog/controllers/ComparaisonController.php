@@ -264,11 +264,15 @@ class ComparaisonController
         $dataAire = $geoJsonModel->calculerAireMoyMinMax($dataGeoJson);
         $dataDistance = $geoJsonModel->recupereDistanceMoyenneBatiments($dataGeoJson);
         $dataHausdorff = $geoJsonModel->distanceHausdorff($dataGeoJson);
+        $dataPerimetre = $geoJsonModel->calculerPerimetreMoyMinMax($dataGeoJson);
 
-        $view->afficherGraphiqueRecap($dataNbBatiments, $dataAire['aire_moyenne'],$dataDistance, $dataAire['aire_min_par_fichier'], $dataAire['aire_max_par_fichier'], $fileNamesGeojson);
+        $view->afficherGraphiqueRecap($dataNbBatiments, $dataAire['aire_moyenne'],$dataDistance, $dataAire['aire_min_par_fichier'],
+            $dataAire['aire_max_par_fichier'], $dataPerimetre['perimetre_moyen'], $dataPerimetre['perimetre_min_par_fichier'],
+            $dataPerimetre['perimetre_max_par_fichier'], $fileNamesGeojson);
         $view->afficherGraphiqueBatiments();
         $view->afficherGraphiqueRadarAireMoyenne();
         $view->afficherGraphiqueDistanceMoyenne();
+        $view->afficherGraphiquePerimetreMoyen();
 
 
         // print_r($dataHausdorff);

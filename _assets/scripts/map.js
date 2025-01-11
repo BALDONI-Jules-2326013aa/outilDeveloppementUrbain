@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-
     // Vérifie si le bouton de téléchargement des fichiers existe et ajoute un écouteur d'événement pour le clic
     if(document.getElementById('downloadFilesButton')) {
         document.getElementById('downloadFilesButton').addEventListener('click', () => {
@@ -95,7 +94,6 @@ function initializeMap() {
         center: [0, 0],
         zoom: 2
     });
-
     // Ajout du TileLayer
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 18,
