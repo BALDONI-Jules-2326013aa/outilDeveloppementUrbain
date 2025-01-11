@@ -38,51 +38,67 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Crée le graphique initial (bar chart)
-    let chart = createBarChart();
+    // Crée le graphique initial (radar chart normalisé)
+    let chart = createRadarChartNormalized();
 
     // Fonction pour créer un bar chart
-    function createBarChart() {
+    function createRadarChartNormalized() {
         return new Chart(canvas.getContext('2d'), {
-            type: 'bar',
+            type: 'radar',
             data: {
-                labels: fileNames,
-                datasets: [{
-                    label: 'Nombre de bâtiments',
-                    data: nbBatimentsData,
-                    backgroundColor: colors.map(c => c.backgroundColor)
-                }, {
-                    label: 'Aire moyenne des bâtiments',
-                    data: aireMoyenneData,
-                    backgroundColor: colors.map(c => c.backgroundColor)
-                }, {
-                    label: 'Distance moyenne entre bâtiments',
-                    data: distanceMoyenneData,
-                    backgroundColor: colors.map(c => c.backgroundColor)
-                }, {
-                    label: 'Aire minimale',
-                    data: aireMinData,
-                    backgroundColor: colors.map(c => c.backgroundColor)
-                }, {
-                    label: 'Aire maximale',
-                    data: aireMaxData,
-                    backgroundColor: colors.map(c => c.backgroundColor)
-                }]
+                labels: ['Nombre de bâtiments', 'Aire moyenne des bâtiments', 'Distance moyenne entre bâtiments', 'Aire minimale', 'Aire maximale'],
+                datasets: fileNames.map((fileName, index) => ({
+                    label: fileName,
+                    data: [
+                        normalizeValue(nbBatimentsData[index], nbBatimentsData),
+                        normalizeValue(aireMoyenneData[index], aireMoyenneData),
+                        normalizeValue(distanceMoyenneData[index], distanceMoyenneData),
+                        normalizeValue(aireMinData[index], aireMinData),
+                        normalizeValue(aireMaxData[index], aireMaxData)
+                    ],
+                    backgroundColor: `${colors[index].backgroundColor}B3`, // Ajout d'une transparence
+                    borderColor: colors[index].borderColor,
+                    borderWidth: 1
+                }))
             },
             options: {
                 responsive: true,
                 plugins: {
                     legend: {
                         display: true
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                const originalValues = [
+                                    nbBatimentsData[context.dataIndex],
+                                    aireMoyenneData[context.dataIndex],
+                                    distanceMoyenneData[context.dataIndex],
+                                    aireMinData[context.dataIndex],
+                                    aireMaxData[context.dataIndex]
+                                ];
+                                const originalValue = originalValues[context.rawIndex];
+                                return `${context.dataset.label}: ${originalValue}`;
+                            }
+                        }
                     }
                 },
                 scales: {
-                    y: {
-                        beginAtZero: true
+                    r: {
+                        beginAtZero: true,
+                        suggestedMin: 0,
+                        suggestedMax: 1
                     }
                 }
             }
         });
+    }
+
+// Fonction pour normaliser une valeur dans un tableau donné
+    function normalizeValue(value, dataset) {
+        const min = Math.min(...dataset);
+        const max = Math.max(...dataset);
+        return (value - min) / (max - min);
     }
 
     // Fonction pour créer un radar chart
@@ -100,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         aireMinData[index],
                         aireMaxData[index]
                     ],
-                    backgroundColor: hexToRgba(colors[index].backgroundColor, 0.65)
+                    backgroundColor: `${colors[index].backgroundColor}B3`, // Ajout d'une transparence
                 }))
             },
             options: {
@@ -119,56 +135,21 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Met à jour le type de graphique en fonction de la sélection de l'utilisateur
-    function updateChartType(newType) {
+
+    // Ajoute un écouteur d'événement pour changer le type de graphique
+    chartTypeElement.addEventListener('change', function () {
         if (chart) {
             chart.destroy(); // Détruit le graphique existant
         }
 
         // Crée un nouveau graphique en fonction du type sélectionné
-        switch (newType) {
-            case 'barChartRecap':
-                chart = createBarChart();
-                break;
-            case 'radarChartRecap':
+        switch (chartTypeElement.value) {
+            case 'classic':
                 chart = createRadarChart();
                 break;
             default:
-                chart = createBarChart();
+                chart = createRadarChartNormalized();
                 break;
         }
-    }
-
-    // Ajoute un écouteur d'événement pour changer le type de graphique
-    chartTypeElement.addEventListener('change', function () {
-        updateChartType(chartTypeElement.value);
     });
-
-    // Ajoute des écouteurs d'événements pour mettre à jour les couleurs des graphiques
-    fileNames.forEach((_, index) => {
-        const colorPicker = document.getElementById(`colorRecap_${index}`);
-        if (colorPicker) {
-            colorPicker.addEventListener('change', function () {
-                colors[index].backgroundColor = colorPicker.value;
-                colors[index].borderColor = colorPicker.value;
-                chart.data.datasets.forEach((dataset) => {
-                    dataset.backgroundColor[index] = colorPicker.value;
-                    dataset.borderColor[index] = colorPicker.value;
-                });
-                chart.update();
-            });
-        }
-    });
-
-    // Fonction pour convertir une couleur hexadécimale en rgba
-    function hexToRgba(hex, alpha) {
-        hex = hex.replace('#', '');
-
-        const r = parseInt(hex.substring(0, 2), 16);
-        const g = parseInt(hex.substring(2, 4), 16);
-        const b = parseInt(hex.substring(4, 6), 16);
-
-        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-    }
-
 });
