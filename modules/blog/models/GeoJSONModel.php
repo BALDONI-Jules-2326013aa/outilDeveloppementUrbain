@@ -24,6 +24,18 @@ class GeoJSONModel
         return ''; // Retourne une chaîne vide si l'année n'est pas trouvée
     }
 
+    // Renvoie le crs d'un fichier GeoJSON
+    public static function getGeoJSONCRS($file): string
+    {
+        if (isset($file['crs']['properties']['name'])) {
+            return $file['crs']['properties']['name']; // Retourne le crs si trouvé
+        }
+        else {
+            return 'default'; // Retourne 'default' si le crs n'est pas trouvé
+        }
+
+    }
+
     // Récupère le nombre de bâtiments dans chaque fichier GeoJSON
     public static function recupereNombreBatiment($fileArray): array
     {

@@ -38,7 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Ajuste la hauteur de l'élément 'espace' et affiche le menu graphique
     document.getElementById('espace').style.height = '30vh';
     setElementDisplay('menuGraphique', 'flex');
-
 });
 
 // Fonction pour définir l'affichage d'un élément
@@ -48,12 +47,61 @@ function setElementDisplay(elementId, displayStyle) {
 
 // Fonction pour initialiser la carte avec une vue centrée et une couche de tuiles OpenStreetMap
 function initializeMap() {
-    const map = L.map('map').setView([0, 0], 2);
+    // on définit espg3460 car il est utilisé dans les données qu'on a pour tester
+    const epsg3460 = new L.Proj.CRS('EPSG:3460',
+        '+proj=tmerc +lat_0=0 +lon_0=173 +k=0.9996 +x_0=1600000 +y_0=10000000 +datum=WGS84 +units=m +no_defs',
+        {
+            resolutions: [
+                8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1
+            ],
+            origin: [0, 0]
+        }
+    );
+
+    // Liste étendue des CRS valides
+    const validCrs = {
+        '4326': L.CRS.EPSG4326, // WGS 84 (latitude/longitude)
+        '3857': L.CRS.EPSG3857, // Pseudo-Mercator
+        '3395': L.CRS.EPSG3395, // Mercator
+        '2154': L.CRS.EPSG2154, // RGF93 / Lambert-93 (France)
+        '27700': L.CRS.EPSG27700, // OSGB36 / British National Grid
+        '3035': L.CRS.EPSG3035, // ETRS89 / Lambert Azimuthal Equal Area
+        '3413': L.CRS.EPSG3413, // NSIDC Sea Ice Polar Stereographic North
+        '32633': L.CRS.EPSG32633, // WGS 84 / UTM zone 33N
+        '32733': L.CRS.EPSG32733, // WGS 84 / UTM zone 33S
+        '3460': epsg3460, // NZGD2000 / NZTM2000
+    };
+
+    // On récupère le contenu de la balise #crs
+    let crs = document.getElementById('crs').textContent;
+
+    // Détermine le CRS à utiliser
+    let crsOption;
+    if (crs !== 'default') {
+        const crsKey = crs.slice(-4); // Garde les 4 derniers caractères (ou 5 si nécessaire)
+        crsOption = validCrs[crsKey] || null;
+
+        if (!crsOption) {
+            console.warn(`CRS non reconnu : ${crs}. Utilisation du CRS par défaut EPSG3857.`);
+            crsOption = L.CRS.EPSG3857; // Par défaut, EPSG3857
+        }
+    } else {
+        crsOption = L.CRS.EPSG3857; // Par défaut, EPSG3857
+    }
+
+    // Initialisation de la carte
+    const map = L.map('map', {
+        crs: crsOption,
+        center: [0, 0],
+        zoom: 2
+    });
+
+    // Ajout du TileLayer
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 18,
-        zoomControl: true,
-        attribution: '&copy; OpenStreetMap contributors'
+        attribution: 'Données cartographiques © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
+
     return map;
 }
 
