@@ -273,7 +273,7 @@ class ComparaisonView extends AbstractView
         }
 
         $this->body .= '</div>';
-        $this->body .= '<button type="submit">Tester I.A</button>';
+        $this->body .= '<button type="submit">Pourcentage de fiabilité</button>';
         $this->body .= '</form>';
     }
 

@@ -53,7 +53,7 @@ switch ($request_uri) {
     case 'testIa':
         $comparaison = new ComparaisonController();
         $quotien = $comparaison::calculeTaux();
-        echo $quotien . "%";
+        echo "Fiabilité de l'ia : " . $quotien . "%";
         break;
     case 'comparaisonFichier':
         // Gère la requête de comparaison de fichier
