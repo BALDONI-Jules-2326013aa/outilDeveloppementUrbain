@@ -7,19 +7,22 @@ use blog\views\SimulationView;
 
 class SimulationController
 {
+    /**
+     * Affiche la page de simulation.
+     * @return void
+     */
     public static function affichePage(): void
     {
         session_start();
-
 
         $view = new SimulationView();
         $view->afficher();
     }
 
-    //Va récupérer les fichiers GeoJSON qui auront été mis sur la page simulation
-    //Va les stocker dans la session
-    //Va retourner un tablea contenant les données GeoJSON
-    //
+    /**
+     * Récupère les fichiers GeoJSON mis sur la page de simulation, les stocke dans la session et retourne un tableau contenant les données GeoJSON.
+     * @return void
+     */
     public static function afficheGetYears(): void
     {
         session_start(); // Démarre une nouvelle session ou reprend une session existante
@@ -46,10 +49,13 @@ class SimulationController
         $view->afficher(); // Affiche la vue
     }
 
+    /**
+     * Démarre la simulation en utilisant des fichiers GeoJSON prédéfinis.
+     * @return void
+     */
     public static function startSimulation(): void
     {
         session_start();
-
 
         $geoData = [];
         $filesNames = [];
@@ -62,7 +68,6 @@ class SimulationController
         $geoData[] = GeoJSONModel::litGeoJSON("/home/jules/Téléchargements/valenicina/donnes_projet/Road_3-2019.geojson");
         $filesNames[] = "Household_3-2019.geojson";
         $filesNames[] = "Road_3-2019.geojson";
-
 
         $view = new SimulationView();
         $view->resultatSimulation($geoData, $filesNames);

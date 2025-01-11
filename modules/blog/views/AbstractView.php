@@ -4,13 +4,22 @@ namespace blog\views;
 
 abstract class AbstractView
 {
-    // Méthode abstraite pour obtenir le CSS spécifique à la vue
+    /**
+     * Méthode abstraite pour obtenir le CSS spécifique à la vue
+     * @return string Le CSS spécifique à la vue
+     */
     abstract function css(): string;
 
-    // Méthode abstraite pour obtenir le titre de la page
+    /**
+     * Méthode abstraite pour obtenir le titre de la page
+     * @return string Le titre de la page
+     */
     abstract function pageTitle(): string;
 
-    // Affiche l'en-tête de la page
+    /**
+     * Affiche l'en-tête de la page
+     * @return void
+     */
     private function header(): void
     {
         // Vérifie si l'utilisateur est connecté
@@ -21,17 +30,26 @@ abstract class AbstractView
         echo $headerView->afficher();
     }
 
-    // Affiche le pied de page de la page
+    /**
+     * Affiche le pied de page de la page
+     * @return void
+     */
     private function footer(): void
     {
         // Inclut le fichier HTML du pied de page
         include __DIR__ . '/Fragments/footer.html';
     }
 
-    // Méthode abstraite pour afficher le corps de la page
+    /**
+     * Méthode abstraite pour afficher le corps de la page
+     * @return void
+     */
     abstract protected function body();
 
-    // Affiche la page complète
+    /**
+     * Affiche la page complète
+     * @return void
+     */
     public function afficher(): void
     {
         // Crée une instance de HeadView avec le titre de la page et le CSS

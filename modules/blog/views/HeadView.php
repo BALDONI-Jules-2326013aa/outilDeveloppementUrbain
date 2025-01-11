@@ -4,11 +4,18 @@ namespace blog\views;
 
 class HeadView
 {
-    // Constructeur de la classe HeadView
-    // Initialise les propriétés $titre et $css avec les valeurs fournies
+    /**
+     * Constructeur de la classe HeadView
+     * Initialise les propriétés $titre et $css avec les valeurs fournies
+     * @param string $titre Le titre de la page
+     * @param string $css Le chemin vers le fichier CSS
+     */
     public function __construct(private string $titre, private string $css){}
 
-    // Affiche le contenu de la balise <head> de la page
+    /**
+     * Affiche le contenu de la balise <head> de la page
+     * @return void
+     */
     function afficher(): void
     {
         $filePath = __DIR__ . '/Fragments/head.html'; // Chemin vers le fichier HTML du head

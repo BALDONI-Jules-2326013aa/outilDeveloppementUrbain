@@ -4,7 +4,11 @@ namespace blog\models;
 
 class TifModel
 {
-    // Fonction pour générer une visualisation Hillshade à partir d'un fichier TIFF
+    /**
+     * Fonction pour générer une visualisation Hillshade à partir d'un fichier TIFF.
+     * @param string $file Le chemin du fichier TIFF.
+     * @return string La balise img contenant l'image Hillshade encodée en base64 ou un message d'erreur.
+     */
     public static function visualisationHillShade($file): string {
         // Crée un fichier temporaire pour le fichier TIFF converti
         $convertedFile = tempnam(sys_get_temp_dir(), 'converted_') . '.tif';

@@ -9,7 +9,10 @@ class ComparaisonView extends AbstractView
 {
     private string $body = '';
 
-    // Affiche le corps de la page
+    /**
+     * Affiche le corps de la page.
+     * @return void
+     */
     protected function body(): void
     {
         // Inclut le formulaire de téléchargement de fichiers
@@ -22,19 +25,30 @@ class ComparaisonView extends AbstractView
         }
     }
 
-    // Retourne le nom du fichier CSS spécifique à cette vue
+    /**
+     * Retourne le nom du fichier CSS spécifique à cette vue.
+     * @return string Le nom du fichier CSS.
+     */
     function css(): string
     {
         return 'comparaison.css';
     }
 
-    // Retourne le titre de la page
+    /**
+     * Retourne le titre de la page.
+     * @return string Le titre de la page.
+     */
     function pageTitle(): string
     {
         return 'Comparaison';
     }
 
-    // Affiche la page avec les fichiers GeoJSON
+    /**
+     * Affiche la page avec les fichiers GeoJSON.
+     * @param array $dataArray Les données GeoJSON.
+     * @param array $fileNames Les noms des fichiers GeoJSON.
+     * @return void
+     */
     public function afficherAvecFichiers(array $dataArray, array $fileNames): void
     {
         // Encode les données GeoJSON et les noms de fichiers en JSON
@@ -52,10 +66,14 @@ class ComparaisonView extends AbstractView
 
         // Ajoute le script au corps de la page
         $this->body .= $script;
-
     }
 
-    // Affiche le graphique du nombre de bâtiments par fichier
+    /**
+     * Affiche le graphique du nombre de bâtiments par fichier.
+     * @param array $dataArray Les données du nombre de bâtiments.
+     * @param array $fileNames Les noms des fichiers.
+     * @return void
+     */
     public function afficherGraphiqueBatiments(array $dataArray, array $fileNames): void {
         // Encode les données et les noms de fichiers en JSON
         $nbBatimentsJson = json_encode($dataArray);
@@ -71,7 +89,7 @@ class ComparaisonView extends AbstractView
         </div>";
         }
 
-        // Crée le HTML pour le graphique du nombre de batiments
+        // Crée le HTML pour le graphique du nombre de bâtiments
         $graphique = "
         <div style='display: none;' id='nbBatimentsJson'>$nbBatimentsJson</div>
         <div style='display: none;' id='fileNamesJson'>$fileNamesJson</div>
@@ -107,7 +125,12 @@ class ComparaisonView extends AbstractView
         $this->body .= $graphique;
     }
 
-    // Affiche le graphique radar de l'aire moyenne par fichier
+    /**
+     * Affiche le graphique radar de l'aire moyenne par fichier.
+     * @param array $dataArray Les données de l'aire moyenne.
+     * @param array $fileNames Les noms des fichiers.
+     * @return void
+     */
     public function afficherGraphiqueRadarAireMoyenne(array $dataArray, array $fileNames): void {
         // Encode les données et les noms de fichiers en JSON
         $aireMoyenneJson = json_encode($dataArray);
@@ -160,7 +183,12 @@ class ComparaisonView extends AbstractView
         $this->body .= $graphique;
     }
 
-    // Affiche le graphique de la distance moyenne entre bâtiments
+    /**
+     * Affiche le graphique de la distance moyenne entre bâtiments.
+     * @param mixed $dataGeoJson Les données GeoJSON.
+     * @param mixed $fileNamesGeojson Les noms des fichiers GeoJSON.
+     * @return void
+     */
     public function afficherGraphiqueDistanceMoyenne(mixed $dataGeoJson, mixed $fileNamesGeojson): void
     {
         // Encode les données et les noms de fichiers en JSON
@@ -212,10 +240,15 @@ class ComparaisonView extends AbstractView
 
         // Ajoute le graphique au corps de la page
         $this->body .= $graphique;
-
     }
 
-    // Affiche le graphique récapitulatif des aires minimales et maximales
+    /**
+     * Affiche le graphique récapitulatif des aires minimales et maximales.
+     * @param array $aireMin Les aires minimales.
+     * @param array $aireMax Les aires maximales.
+     * @param array $fileNames Les noms des fichiers.
+     * @return void
+     */
     public function afficherGraphiqueRecap(array $aireMin, array $aireMax, array $fileNames): void
     {
         // Encode les données en JSON
@@ -268,7 +301,11 @@ class ComparaisonView extends AbstractView
         $this->body .= $graphique;
     }
 
-    // Affiche les visualisations Hillshade pour les fichiers TIFF
+    /**
+     * Affiche les visualisations Hillshade pour les fichiers TIFF.
+     * @param array $dataArray Les données des fichiers TIFF.
+     * @return void
+     */
     public function afficheTif(array $dataArray): void {
         $tifModel = new TifModel();
         $htmlOutput = '';
@@ -282,7 +319,12 @@ class ComparaisonView extends AbstractView
         $this->body .= $htmlOutput;
     }
 
-
+    /**
+     * Affiche le formulaire de comparaison pour tester l'I.A.
+     * @param array $dataArray Les données GeoJSON.
+     * @param array $fileNames Les noms des fichiers GeoJSON.
+     * @return void
+     */
     public function afficheComparaisonTestIa($dataArray, $fileNames): void
     {
         $this->body .= '<form method="POST" action="/testIa">';
@@ -298,11 +340,12 @@ class ComparaisonView extends AbstractView
         $this->body .= '</div>';
         $this->body .= '<button type="submit">Tester I.A</button>';
         $this->body .= '</form>';
-
-
     }
 
-    //  affiche la page complete
+    /**
+     * Affiche la page complète.
+     * @return void
+     */
     public function afficher(): void
     {
         parent::afficher();

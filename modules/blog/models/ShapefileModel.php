@@ -3,7 +3,11 @@ namespace blog\models;
 
 class ShapefileModel
 {
-    // Convertit un ensemble de fichiers Shapefile en GeoJSON
+    /**
+     * Convertit un ensemble de fichiers Shapefile en GeoJSON.
+     * @param array $shapeFiles Les fichiers Shapefile (SHP, SHX, DBF, etc.).
+     * @return array|null Le GeoJSON converti ou null en cas d'erreur.
+     */
     public static function convertToGeoJSON(array $shapeFiles): ?array
     {
         // Vérifie si les fichiers SHP, SHX et DBF sont présents
@@ -87,7 +91,11 @@ class ShapefileModel
         return $geojson;
     }
 
-    // Fonction de parsing pour les points simples
+    /**
+     * Fonction de parsing pour les points simples.
+     * @param resource $handle Le handle du fichier SHP.
+     * @return array Le point converti en GeoJSON.
+     */
     private static function parsePoint($handle): array
     {
         $pointData = fread($handle, 16); // 16 octets pour un point (X et Y, chacun 8 octets)
@@ -102,7 +110,11 @@ class ShapefileModel
         ];
     }
 
-    // Fonction de parsing pour les points avec valeur Z
+    /**
+     * Fonction de parsing pour les points avec valeur Z.
+     * @param resource $handle Le handle du fichier SHP.
+     * @return array Le point avec valeur Z converti en GeoJSON.
+     */
     private static function parsePointZ($handle): array
     {
         $pointData = fread($handle, 24); // 24 octets pour un PointZ (X, Y, Z, chacun 8 octets)
@@ -117,7 +129,11 @@ class ShapefileModel
         ];
     }
 
-    // Fonction de parsing pour les polylignes
+    /**
+     * Fonction de parsing pour les polylignes.
+     * @param resource $handle Le handle du fichier SHP.
+     * @return array La polyligne convertie en GeoJSON.
+     */
     private static function parsePolyline($handle): array
     {
         // Lit l'enveloppe (bounding box)
@@ -155,7 +171,11 @@ class ShapefileModel
         ];
     }
 
-    // Fonction de parsing pour les polylignes avec valeur Z
+    /**
+     * Fonction de parsing pour les polylignes avec valeur Z.
+     * @param resource $handle Le handle du fichier SHP.
+     * @return array La polyligne avec valeur Z convertie en GeoJSON.
+     */
     private static function parsePolylineZ($handle): array
     {
         // Lit l'enveloppe (bounding box)
@@ -193,7 +213,11 @@ class ShapefileModel
         ];
     }
 
-    // Fonction de parsing pour les polygones simples
+    /**
+     * Fonction de parsing pour les polygones simples.
+     * @param resource $handle Le handle du fichier SHP.
+     * @return array Le polygone converti en GeoJSON.
+     */
     private static function parsePolygon($handle): array
     {
         // Lit l'enveloppe (bounding box)
@@ -231,7 +255,11 @@ class ShapefileModel
         ];
     }
 
-    // Fonction de parsing pour les polygones avec valeur Z
+    /**
+     * Fonction de parsing pour les polygones avec valeur Z.
+     * @param resource $handle Le handle du fichier SHP.
+     * @return array Le polygone avec valeur Z converti en GeoJSON.
+     */
     private static function parsePolygonZ($handle): array
     {
         // Lit l'enveloppe (bounding box)
@@ -269,7 +297,12 @@ class ShapefileModel
         ];
     }
 
-    // Fonction utilitaire pour assembler les parties et points dans un format MultiLineString ou Polygon
+    /**
+     * Fonction utilitaire pour assembler les parties et points dans un format MultiLineString ou Polygon.
+     * @param array $parts Les index des parties.
+     * @param array $points Les points.
+     * @return array Les coordonnées assemblées.
+     */
     private static function buildParts(array $parts, array $points): array
     {
         $coordinates = [];

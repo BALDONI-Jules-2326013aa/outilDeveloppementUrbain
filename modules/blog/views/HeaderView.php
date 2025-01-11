@@ -3,12 +3,18 @@ namespace blog\views;
 
 class HeaderView
 {
-    // Constructeur de la classe HeaderView
+    /**
+     * Constructeur de la classe HeaderView
+     * @param bool $loggedin Indique si l'utilisateur est connecté
+     */
     public function __construct(private bool $loggedin)
     {
     }
 
-    // Affiche le menu en fonction de l'état de connexion
+    /**
+     * Affiche le menu en fonction de l'état de connexion
+     * @return string Le menu HTML
+     */
     public function afficher(): string
     {
         if ($this->loggedin) {
@@ -18,7 +24,10 @@ class HeaderView
         }
     }
 
-    // Affiche le menu pour les utilisateurs connectés
+    /**
+     * Affiche le menu pour les utilisateurs connectés
+     * @return string Le menu HTML pour les utilisateurs connectés
+     */
     private function menuLogged(): string
     {
         $filePath = __DIR__ . '/Fragments/header-logged.html';
@@ -32,7 +41,10 @@ class HeaderView
         }
     }
 
-    // Affiche le menu pour les utilisateurs non connectés
+    /**
+     * Affiche le menu pour les utilisateurs non connectés
+     * @return string Le menu HTML pour les utilisateurs non connectés
+     */
     private function menu(): string
     {
         $filePath = __DIR__ . '/Fragments/header.html';

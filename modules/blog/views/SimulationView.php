@@ -6,24 +6,35 @@ class SimulationView extends AbstractView
 {
     private $body;
 
-    // Constructeur de la classe SimulationView
+    /**
+     * Constructeur de la classe SimulationView
+     */
     public function __construct() {
         $this->body = '';
     }
 
-    // Retourne le nom du fichier CSS pour la vue de simulation
+    /**
+     * Retourne le nom du fichier CSS pour la vue de simulation
+     * @return string Le nom du fichier CSS
+     */
     public function css(): string
     {
         return 'simulation.css';
     }
 
-    // Retourne le titre de la page pour la vue de simulation
+    /**
+     * Retourne le titre de la page pour la vue de simulation
+     * @return string Le titre de la page
+     */
     public function pageTitle(): string
     {
         return 'SimulationController';
     }
 
-    // Affiche le corps de la page
+    /**
+     * Affiche le corps de la page
+     * @return void
+     */
     protected function body(): void
     {
         if (is_readable($this->body)) {
@@ -34,7 +45,12 @@ class SimulationView extends AbstractView
         }
     }
 
-    // Affiche le formulaire pour les années des fichiers
+    /**
+     * Affiche le formulaire pour les années des fichiers
+     * @param array $fileYears Les années des fichiers
+     * @param array $fileNames Les noms des fichiers
+     * @return void
+     */
     public function afficherGetYears(array $fileYears, array $fileNames): void
     {
         // Vérifie s'il y a des années de fichiers à afficher
@@ -60,7 +76,12 @@ class SimulationView extends AbstractView
         $this->body = $simulation;
     }
 
-    // Affiche le résultat de la simulation
+    /**
+     * Affiche le résultat de la simulation
+     * @param array $dataArray Les données GeoJSON
+     * @param array $fileNames Les noms des fichiers GeoJSON
+     * @return void
+     */
     public function resultatSimulation(array $dataArray, array $fileNames): void
     {
         $geojsonDataJsArray = json_encode($dataArray);
@@ -77,7 +98,10 @@ class SimulationView extends AbstractView
         $this->body = $script;
     }
 
-    // Affiche la vue de simulation
+    /**
+     * Affiche la vue de simulation
+     * @return void
+     */
     public function afficher(): void
     {
         parent::afficher();
