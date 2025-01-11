@@ -16,26 +16,34 @@ class SimulationController
         $view->afficher();
     }
 
+    //Va récupérer les fichiers GeoJSON qui auront été mis sur la page simulation
+    //Va les stocker dans la session
+    //Va retourner un tablea contenant les données GeoJSON
+    //
     public static function afficheGetYears(): void
     {
-        session_start();
+        session_start(); // Démarre une nouvelle session ou reprend une session existante
 
-        $filesNames = [];
-        $filesYears = [];
+        $filesNames = []; // Initialise un tableau vide pour stocker les noms des fichiers
+        $filesYears = []; // Initialise un tableau vide pour stocker les années extraites des fichiers GeoJSON
 
+        // Vérifie si des fichiers ont été téléchargés et si $_FILES['files']['tmp_name'] est un tableau
         if (isset($_FILES['files']) && is_array($_FILES['files']['tmp_name'])) {
+            // Parcourt chaque fichier téléchargé
             foreach ($_FILES['files']['tmp_name'] as $key => $tmpName) {
+                // Vérifie si le fichier a été téléchargé avec succès
                 if (is_uploaded_file($tmpName)) {
+                    // Extrait l'année du fichier GeoJSON en utilisant la méthode getGeoJSONYear de GeoJSONModel
                     $data = GeoJSONModel::getGeoJSONYear($tmpName);
-                    $filesYears[] = $data;
-                    $filesNames[] = $_FILES['files']['name'][$key];
+                    $filesYears[] = $data; // Ajoute l'année extraite au tableau $filesYears
+                    $filesNames[] = $_FILES['files']['name'][$key]; // Ajoute le nom du fichier au tableau $filesNames
                 }
             }
         }
 
-        $view = new SimulationView();
-        $view->afficherGetYears($filesYears, $filesNames);
-        $view->afficher();
+        $view = new SimulationView(); // Crée une nouvelle instance de SimulationView
+        $view->afficherGetYears($filesYears, $filesNames); // Affiche les années et les noms des fichiers
+        $view->afficher(); // Affiche la vue
     }
 
     public static function startSimulation(): void

@@ -8,24 +8,30 @@ use blog\views\FileView;
 class FileController {
     private $model;
 
+    // Constructeur pour initialiser le modèle
     public function __construct(FileModel $model) {
         $this->model = $model;
     }
 
+    // Méthode statique pour afficher la page
     public static function affichePage(): void {
         session_start();
-        
+
+        // Connexion à la base de données PostgreSQL
         $pdo = new \PDO('pgsql:host=postgresql-siti.alwaysdata.net;dbname=siti_db', 'siti', 'motdepassesitia1');
         $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
+        // Récupère les fichiers à partir du modèle
         $model = new FileModel($pdo);
         $files = $model->getFiles();
 
+        // Affiche la vue avec les fichiers
         $view = new FileView();
         $view->setFiles($files);
         $view->afficher();
     }
 
+    // Méthode pour gérer les requêtes HTTP
     public function handleRequest() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_FILES['file'])) {
@@ -42,6 +48,7 @@ class FileController {
         }
     }
 
+    // Méthode pour télécharger un fichier
     private function uploadFile() {
         if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
             $fileTmpPath = $_FILES['file']['tmp_name'];
@@ -62,7 +69,7 @@ class FileController {
                     $userId = $connexionModel->getID($username);
 
                     if ($userId) {
-                        $folder_id = $this->model->getFolderId($folder_id,$userId)['id'];
+                        $folder_id = $this->model->getFolderId($folder_id, $userId)['id'];
                         $this->model->uploadFile($fileName, $fileContent, $userId, $folder_id);
                         echo "Fichier téléchargé avec succès.";
                         header("Location: /fichier");
@@ -81,6 +88,7 @@ class FileController {
         }
     }
 
+    // Méthode pour supprimer un fichier
     private function deleteFile() {
         $fileId = $_POST['file_id'];
         $this->model->deleteFile($fileId);
@@ -88,6 +96,7 @@ class FileController {
         exit();
     }
 
+    // Méthode pour télécharger un fichier
     private function downloadFile() {
         $fileId = $_POST['file_id'];
         $file = $this->model->getFileById($fileId);
@@ -107,6 +116,7 @@ class FileController {
         }
     }
 
+    // Méthode pour afficher les fichiers
     private function showFiles() {
         $files = $this->model->getFiles();
         $view = new FileView();

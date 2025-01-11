@@ -3,90 +3,104 @@
 namespace blog\models;
 class GeoJSONModel
 {
+    // Lit le contenu d'un fichier GeoJSON et le retourne sous forme de tableau associatif
     public static function litGeoJSON($file): array
     {
-        $jsonData = file_get_contents($file);
-        return json_decode($jsonData, true);
+        $jsonData = file_get_contents($file); // Lit le contenu du fichier
+        return json_decode($jsonData, true); // Décode le JSON en tableau associatif
     }
 
+    // Extrait l'année d'un fichier GeoJSON
     public static function getGeoJSONYear($file): string
     {
-        $content = file_get_contents($file);
-        $data = json_decode($content, true);
+        $content = file_get_contents($file); // Lit le contenu du fichier
+        $data = json_decode($content, true); // Décode le JSON en tableau associatif
 
+        // Vérifie si l'année est présente dans les propriétés du premier élément
         if (isset($data['features'][0]['properties']['Year'])) {
-            return (string)$data['features'][0]['properties']['Year'];
+            return (string)$data['features'][0]['properties']['Year']; // Retourne l'année en chaîne de caractères
         }
 
-        return '';
+        return ''; // Retourne une chaîne vide si l'année n'est pas trouvée
     }
 
+    // Récupère le nombre de bâtiments dans chaque fichier GeoJSON
     public static function recupereNombreBatiment($fileArray): array
     {
-        $listNbBatiments = [];
+        $listNbBatiments = []; // Initialise un tableau pour stocker le nombre de bâtiments
         foreach ($fileArray as $file) {
-            $buildingCount = 0;
+            $buildingCount = 0; // Compteur de bâtiments
             if (isset($file['features'])) {
                 foreach ($file['features'] as $feature) {
+                    // Vérifie si le type de géométrie est un polygone ou un multipolygone
                     if (isset($feature['geometry']['type']) && in_array($feature['geometry']['type'], ['Polygon', 'MultiPolygon'])) {
-                        $buildingCount++;
+                        $buildingCount++; // Incrémente le compteur de bâtiments
                     }
                 }
             }
-            $listNbBatiments[] = $buildingCount;
+            $listNbBatiments[] = $buildingCount; // Ajoute le nombre de bâtiments au tableau
         }
-        return $listNbBatiments;
+
+        return $listNbBatiments; // Retourne le tableau des nombres de bâtiments
     }
 
+    // Calcule la distance entre deux points géographiques en utilisant la formule de Haversine
     public static function formuleHaversine($lat1, $lon1, $lat2, $lon2): float
     {
-        $R = 6371000; // Rayon de la Terre en kilomètres
-        $phi1 = deg2rad($lat1);
-        $phi2 = deg2rad($lat2);
-        $deltaPhi = deg2rad($lat2 - $lat1);
-        $deltaLambda = deg2rad($lon2 - $lon1);
+        $R = 6371000; // Rayon de la Terre en mètres
+        $phi1 = deg2rad($lat1); // Convertit la latitude du premier point en radians
+        $phi2 = deg2rad($lat2); // Convertit la latitude du deuxième point en radians
+        $deltaPhi = deg2rad($lat2 - $lat1); // Différence de latitude en radians
+        $deltaLambda = deg2rad($lon2 - $lon1); // Différence de longitude en radians
 
+        // Calcule la distance en utilisant la formule de Haversine
         $a = sin($deltaPhi / 2) ** 2 + cos($phi1) * cos($phi2) * sin($deltaLambda / 2) ** 2;
         $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
 
-        return $R * $c;
+        return $R * $c; // Retourne la distance en mètres
     }
 
+    // Calcule le point central d'un ensemble de coordonnées
     public static function calculPointCentral($coordinates): array
     {
-        $sumLat = 0;
-        $sumLon = 0;
-        $count = count($coordinates);
+        $sumLat = 0; // Somme des latitudes
+        $sumLon = 0; // Somme des longitudes
+        $count = count($coordinates); // Nombre de coordonnées
 
+        // Calcule la somme des latitudes et des longitudes
         foreach ($coordinates as $coordinate) {
             $sumLon += $coordinate[0];
             $sumLat += $coordinate[1];
         }
 
+        // Retourne le point central
         return [
             'lon' => $sumLon / $count,
             'lat' => $sumLat / $count,
         ];
     }
 
+    // Récupère la distance moyenne entre les bâtiments dans chaque fichier GeoJSON
     public static function recupereDistanceMoyenneBatiments($fileArray): array
     {
-        $moyennesParFichier = [];
+        $moyennesParFichier = []; // Initialise un tableau pour stocker les distances moyennes par fichier
 
         foreach ($fileArray as $file) {
-            $pointsCentraux = [];
-            $distances = [];
+            $pointsCentraux = []; // Tableau pour stocker les points centraux des bâtiments
+            $distances = []; // Tableau pour stocker les distances entre les points centraux
 
             if (isset($file['features'])) {
                 foreach ($file['features'] as $feature) {
+                    // Vérifie si le type de géométrie est un polygone
                     if (isset($feature['geometry']['type']) && $feature['geometry']['type'] === 'Polygon') {
-                        $coordinates = $feature['geometry']['coordinates'][0];
-                        $pointCentral = self::calculPointCentral($coordinates);
-                        $pointsCentraux[] = $pointCentral;
+                        $coordinates = $feature['geometry']['coordinates'][0]; // Récupère les coordonnées du polygone
+                        $pointCentral = self::calculPointCentral($coordinates); // Calcule le point central du polygone
+                        $pointsCentraux[] = $pointCentral; // Ajoute le point central au tableau
                     }
                 }
             }
 
+            // Calcule les distances entre tous les points centraux
             for ($i = 0; $i < count($pointsCentraux); $i++) {
                 for ($j = $i + 1; $j < count($pointsCentraux); $j++) {
                     $distance = self::formuleHaversine(
@@ -95,79 +109,84 @@ class GeoJSONModel
                         $pointsCentraux[$j]['lat'],
                         $pointsCentraux[$j]['lon']
                     );
-                    $distances[] = $distance;
+                    $distances[] = $distance; // Ajoute la distance au tableau
                 }
             }
 
+            // Calcule la distance moyenne
             $moyenne = count($distances) > 0 ? array_sum($distances) / count($distances) : 0;
-            $moyennesParFichier[] = $moyenne;
+            $moyennesParFichier[] = $moyenne; // Ajoute la distance moyenne au tableau
         }
 
-        return $moyennesParFichier;
+        return $moyennesParFichier; // Retourne le tableau des distances moyennes par fichier
     }
 
+    // Calcule l'aire moyenne, minimale et maximale des bâtiments dans chaque fichier GeoJSON
     public static function calculerAireMoyMinMax($fileArray): array
     {
-        $resultats = [];
-        $airesMoyennes = [];
+        $resultats = [
+            'aire_moyenne' => [],
+            'aire_min_par_fichier' => [],
+            'aire_max_par_fichier' => [],
+            'aire_min_globale' => null,
+            'aire_max_globale' => null,
+        ];
 
-        foreach ($fileArray as $index => $file) {
-            $aires = [];
-            $nombreDePolygones = 0;
+        $globalAires = []; // Tableau pour stocker les aires de tous les fichiers
+
+        foreach ($fileArray as $file) {
+            $aires = []; // Tableau pour stocker les aires des bâtiments dans le fichier
+            $nombreDePolygones = 0; // Compteur de polygones
 
             if (isset($file['features'])) {
                 foreach ($file['features'] as $feature) {
+                    // Vérifie si le type de géométrie est un polygone
                     if (isset($feature['geometry']['type']) && $feature['geometry']['type'] === 'Polygon') {
-                        $coordinates = $feature['geometry']['coordinates'][0];
-                        $aire = self::calculerAireBatiment($coordinates);
+                        $coordinates = $feature['geometry']['coordinates'][0]; // Récupère les coordonnées du polygone
+                        $aire = self::calculerAireBatiment($coordinates); // Calcule l'aire du polygone
 
-                        $aires[] = $aire;
-                        $nombreDePolygones++;
+                        $aires[] = $aire; // Ajoute l'aire au tableau
+                        $nombreDePolygones++; // Incrémente le compteur de polygones
                     }
                 }
             }
 
+            // Calcule les aires moyenne, minimale et maximale pour le fichier
             if ($nombreDePolygones > 0) {
-                $aireMoyenne = array_sum($aires) / $nombreDePolygones;
-                $aireMin = min($aires);
-                $aireMax = max($aires);
+                $resultats['aire_moyenne'][] = array_sum($aires) / $nombreDePolygones;
+                $resultats['aire_min_par_fichier'][] = min($aires);
+                $resultats['aire_max_par_fichier'][] = max($aires);
+
+                $globalAires = array_merge($globalAires, $aires); // Ajoute les aires au tableau global
             } else {
-                $aireMoyenne = 0;
-                $aireMin = 0;
-                $aireMax = 0;
+                $resultats['aire_moyenne'][] = 0;
+                $resultats['aire_min_par_fichier'][] = 0;
+                $resultats['aire_max_par_fichier'][] = 0;
             }
-
-            $resultats[$index] = [
-                'aire_moyenne' => $aireMoyenne,
-                'aire_min' => $aireMin,
-                'aire_max' => $aireMax,
-            ];
-
-            $airesMoyennes[] = $aireMoyenne;
         }
 
-        // Retourne tous les détails : moyenne, minimum et maximum
-        // return $resultats;
+        // Calcule les aires minimale et maximale globales
+        if (!empty($globalAires)) {
+            $resultats['aire_min_globale'] = min($globalAires);
+            $resultats['aire_max_globale'] = max($globalAires);
+        }
 
-        // Retourne uniquement les moyennes sous forme de liste
-        return $airesMoyennes;
+        return $resultats; // Retourne les résultats
     }
 
-
-
-
-
+    // Calcule l'aire d'un bâtiment à partir de ses coordonnées
     public static function calculerAireBatiment(array $coordinates): float
     {
-        $R = 6371000;
-        $n = count($coordinates);
+        $R = 6371000; // Rayon de la Terre en mètres
+        $n = count($coordinates); // Nombre de coordonnées
 
         if ($n < 3) {
-            return 0;
+            return 0; // Retourne 0 si le nombre de coordonnées est inférieur à 3
         }
 
-        $aire = 0.0;
+        $aire = 0.0; // Initialise l'aire
 
+        // Calcule l'aire en utilisant la formule de l'aire sphérique
         for ($i = 0; $i < $n; $i++) {
             $lat1 = deg2rad($coordinates[$i][1]);
             $lon1 = deg2rad($coordinates[$i][0]);
@@ -177,7 +196,7 @@ class GeoJSONModel
             $aire += ($lon2 - $lon1) * (sin($lat1) + sin($lat2));
         }
 
-        return abs($aire * $R * $R / 2);
+        return abs($aire * $R * $R / 2); // Retourne l'aire absolue
     }
 
     public static function calculeTauxErreurDeuxFichiers($fileArray, $fileArray2): float|int
