@@ -251,20 +251,17 @@ class ComparaisonController
     public static function afficheGraphiques($dataGeoJson, $fileNamesGeojson, $view): void
     {
         $geoJsonModel = new GeoJSONModel();
-        $dataG1 = $geoJsonModel->recupereNombreBatiment($dataGeoJson);
-        $view->afficherGraphiqueBatiments($dataG1, $fileNamesGeojson);
-
+        $dataNbBatiments = $geoJsonModel->recupereNombreBatiment($dataGeoJson);
         $dataAire = $geoJsonModel->calculerAireMoyMinMax($dataGeoJson);
-        $dataG2 = $dataAire['aire_moyenne'];
-        $view->afficherGraphiqueRadarAireMoyenne($dataG2, $fileNamesGeojson);
-
-        $dataG3 = $geoJsonModel->recupereDistanceMoyenneBatiments($dataGeoJson);
-        $view->afficherGraphiqueDistanceMoyenne($dataG3, $fileNamesGeojson);
-
-        echo '<script>console.log("aireMin dans le controller : ' . $dataAire['aire_min_par_fichier'] . '")</script>';
-        echo '<script>console.log("aireMax dans le controller : ' . $dataAire['aire_max_par_fichier'] . '")</script>';
-
+        $dataDistance = $geoJsonModel->recupereDistanceMoyenneBatiments($dataGeoJson);
         $dataHausdorff = $geoJsonModel->distanceHausdorff($dataGeoJson);
+
+        $view->afficherGraphiqueRecap($dataNbBatiments, $dataAire['aire_moyenne'],$dataDistance, $dataAire['aire_min_par_fichier'], $dataAire['aire_max_par_fichier'], $fileNamesGeojson);
+        $view->afficherGraphiqueBatiments();
+        $view->afficherGraphiqueRadarAireMoyenne();
+        $view->afficherGraphiqueDistanceMoyenne();
+
+
         // print_r($dataHausdorff);
 
         $view->afficherGraphiqueRecap($dataAire['aire_min_par_fichier'], $dataAire['aire_max_par_fichier'], $fileNamesGeojson);
