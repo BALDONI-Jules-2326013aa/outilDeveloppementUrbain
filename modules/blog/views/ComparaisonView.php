@@ -43,6 +43,16 @@ class ComparaisonView extends AbstractView
         return 'Comparaison';
     }
 
+    function afficherCRS(string $crs, bool $erreur) {
+        $crsBox = "<div id='crs' style='display: none;'>$crs</div>
+        ";
+        if ($erreur) {
+            $crsBox .= "<p>Attention, les fichiers GeoJSON ne sont pas sous le même système de coordonnées ! Cela peut entraîner des erreurs d'affichage.</p>";
+        }
+        $this->body .= $crsBox;
+    }
+
+
     /**
      * Affiche la page avec les fichiers GeoJSON.
      * @param array $dataArray Les données GeoJSON.
@@ -57,7 +67,9 @@ class ComparaisonView extends AbstractView
 
         // Crée le script pour inclure Leaflet et les données GeoJSON
         $script =  "<link rel='stylesheet' href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css' />" .
+            "<script src='https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.8.1/proj4.js'></script>" .
             "<script src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'></script>" .
+            "<script src='https://cdnjs.cloudflare.com/ajax/libs/proj4leaflet/1.0.2/proj4leaflet.js'></script>" .
             "<script>
             const geojsonDataArray = $geojsonDataJsArray;
             const fileNamesArray = $fileNamesJsArray;
@@ -197,7 +209,7 @@ class ComparaisonView extends AbstractView
         $graphique =  "
 
         <div class='graphiqueBox' id='zoneDistanceMoyenne'>
-            <h2>Distance moyenne entre bâtiments</h2>
+            <h2>Densité par fichier</h2>
             <div class='mainContentGraph'>
                     <div>
                         <label for='chartTypeDistanceMoyenne'>Choisir un type de graphique :</label>

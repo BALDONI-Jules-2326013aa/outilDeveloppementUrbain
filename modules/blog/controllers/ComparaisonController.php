@@ -153,6 +153,15 @@ class ComparaisonController
         $autreAffichage = false;
 
         if (!empty($dataGeoJson)) {
+            // On vérifie si tous les fichiers GeoJSON ont le même CRS
+            $crs = GeoJSONModel::getGeoJSONCRS($dataGeoJson[0]);
+            $erreur = false;
+            foreach ($dataGeoJson as $file) {
+                if (GeoJSONModel::getGeoJSONCRS($file) !== $crs) {
+                    $erreur = true;
+                }
+            }
+            $view->afficherCRS($crs, $erreur);
             $view->afficherAvecFichiers($dataGeoJson, $fileNamesGeojson);
             self::afficheGraphiques($dataGeoJson, $fileNamesGeojson, $view);
             (new ComparaisonController)->lanceCalculeTaux($dataGeoJson, $fileNamesGeojson, $view);
@@ -262,5 +271,7 @@ class ComparaisonController
         $view->afficherGraphiqueRadarAireMoyenne();
         $view->afficherGraphiqueDistanceMoyenne();
 
+
+        // print_r($dataHausdorff);
     }
 }
