@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const distanceMoyenneData = JSON.parse(document.getElementById('distanceMoyenneJson').textContent);
     const aireMinData = JSON.parse(document.getElementById('aireMinJson').textContent);
     const aireMaxData = JSON.parse(document.getElementById('aireMaxJson').textContent);
+    const perimetreMoyenData = JSON.parse(document.getElementById('perimetreMoyenJson').textContent);
+    const perimetreMinData = JSON.parse(document.getElementById('perimetreMinJson').textContent);
+    const perimetreMaxData = JSON.parse(document.getElementById('perimetreMaxJson').textContent);
 
     // Définit les couleurs par défaut pour les graphiques
     let colors = [
@@ -46,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return new Chart(canvas.getContext('2d'), {
             type: 'radar',
             data: {
-                labels: ['Nombre de bâtiments', 'Aire moyenne des bâtiments', 'Distance moyenne entre bâtiments', 'Aire minimale', 'Aire maximale'],
+                labels: ['Nombre de bâtiments', 'Aire moyenne des bâtiments', 'Distance moyenne entre bâtiments', 'Aire minimale', 'Aire maximale', 'Périmètre moyen', 'Périmètre minimal', 'Périmètre maximal'],
                 datasets: fileNames.map((fileName, index) => ({
                     label: fileName,
                     data: [
@@ -54,7 +57,10 @@ document.addEventListener('DOMContentLoaded', function () {
                         normalizeValue(aireMoyenneData[index], aireMoyenneData),
                         normalizeValue(distanceMoyenneData[index], distanceMoyenneData),
                         normalizeValue(aireMinData[index], aireMinData),
-                        normalizeValue(aireMaxData[index], aireMaxData)
+                        normalizeValue(aireMaxData[index], aireMaxData),
+                        normalizeValue(perimetreMoyenData[index], perimetreMoyenData),
+                        normalizeValue(perimetreMinData[index], perimetreMinData),
+                        normalizeValue(perimetreMaxData[index], perimetreMaxData)
                     ],
                     backgroundColor: `${colors[index].backgroundColor}B3`, // Ajout d'une transparence
                     borderColor: colors[index].borderColor,
@@ -75,7 +81,10 @@ document.addEventListener('DOMContentLoaded', function () {
                                     aireMoyenneData[context.dataIndex],
                                     distanceMoyenneData[context.dataIndex],
                                     aireMinData[context.dataIndex],
-                                    aireMaxData[context.dataIndex]
+                                    aireMaxData[context.dataIndex],
+                                    perimetreMoyenData[context.dataIndex],
+                                    perimetreMinData[context.dataIndex],
+                                    perimetreMaxData[context.dataIndex]
                                 ];
                                 const originalValue = originalValues[context.rawIndex];
                                 return `${context.dataset.label}: ${originalValue}`;
@@ -106,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return new Chart(canvas.getContext('2d'), {
             type: 'radar',
             data: {
-                labels: ['Nombre de bâtiments', 'Aire moyenne des bâtiments', 'Distance moyenne entre bâtiments', 'Aire minimale', 'Aire maximale'],
+                labels: ['Nombre de bâtiments', 'Aire moyenne des bâtiments', 'Distance moyenne entre bâtiments', 'Aire minimale', 'Aire maximale', 'Périmètre moyen', 'Périmètre minimal', 'Périmètre maximal'],
                 datasets: fileNames.map((fileName, index) => ({
                     label: fileName,
                     data: [
@@ -114,7 +123,10 @@ document.addEventListener('DOMContentLoaded', function () {
                         aireMoyenneData[index],
                         distanceMoyenneData[index],
                         aireMinData[index],
-                        aireMaxData[index]
+                        aireMaxData[index],
+                        perimetreMoyenData[index],
+                        perimetreMinData[index],
+                        perimetreMaxData[index]
                     ],
                     backgroundColor: `${colors[index].backgroundColor}B3`, // Ajout d'une transparence
                 }))
