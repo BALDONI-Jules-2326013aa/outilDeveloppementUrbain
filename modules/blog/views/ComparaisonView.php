@@ -43,15 +43,8 @@ class ComparaisonView extends AbstractView
         return 'Comparaison';
     }
 
-    function afficherCRS(string $crs, string $erreur) {
-        echo 'afficherCRS';
-        $crsBox = "<div id='crs' style='display: none;'>$crs</div>
-        ";
-        if ($crs === 'errorCRS') {
-            $crsBox .= "<div class='erreur'>Ce type de CRS n'est pas supporté.</div>";
-        } else if ($erreur === 'CRSdiff') {
-            $crsBox .= "<div class='erreur'>Les fichiers ne sont pas tous dans le même CRS.</div>";
-        }
+    function afficherCRS(string $crs) {
+        $crsBox = "<div id='crs' style='display: none;'>$crs</div>";
         $this->body .= $crsBox;
     }
 

@@ -46,46 +46,40 @@ function setElementDisplay(elementId, displayStyle) {
 
 // Fonction pour initialiser la carte avec une vue centrée et une couche de tuiles OpenStreetMap
 function initializeMap() {
-    // on définit espg3460 car il est utilisé dans les données qu'on a pour tester
-    const epsg3460 = new L.Proj.CRS('EPSG:3460',
-        '+proj=tmerc +lat_0=0 +lon_0=173 +k=0.9996 +x_0=1600000 +y_0=10000000 +datum=WGS84 +units=m +no_defs',
-        {
-            resolutions: [
-                8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1
-            ],
-            origin: [0, 0]
-        }
-    );
 
-    // Liste étendue des CRS valides
+    // Liste des CRS valides (doit correspondre aux CRS définis dans le fichier PHP)
     const validCrs = {
-        '4326': L.CRS.EPSG4326, // WGS 84 (latitude/longitude)
-        '3857': L.CRS.EPSG3857, // Pseudo-Mercator
-        '3395': L.CRS.EPSG3395, // Mercator
-        '2154': L.CRS.EPSG2154, // RGF93 / Lambert-93 (France)
-        '27700': L.CRS.EPSG27700, // OSGB36 / British National Grid
-        '3035': L.CRS.EPSG3035, // ETRS89 / Lambert Azimuthal Equal Area
-        '3413': L.CRS.EPSG3413, // NSIDC Sea Ice Polar Stereographic North
-        '32633': L.CRS.EPSG32633, // WGS 84 / UTM zone 33N
-        '32733': L.CRS.EPSG32733, // WGS 84 / UTM zone 33S
-        '3460': epsg3460, // NZGD2000 / NZTM2000
+        'EPSG:4326': L.CRS.EPSG4326, // WGS 84 (latitude/longitude)
+        'EPSG:3857': L.CRS.EPSG3857, // Pseudo-Mercator
+        'EPSG:4269': L.CRS.EPSG4326, // NAD83 (traité comme EPSG:4326 car Leaflet ne gère pas directement NAD83)
+        'EPSG:3395': L.CRS.EPSG3395, // Mercator projeté
+        'EPSG:2154': L.CRS.EPSG2154, // RGF93 / Lambert-93 (France)
+        'EPSG:27700': L.CRS.EPSG27700, // OSGB36 / British National Grid
+        'EPSG:3035': L.CRS.EPSG3035, // ETRS89 / Lambert Azimuthal Equal Area
+        'EPSG:3111': L.CRS.EPSG4326, // GDA94 / VicGrid94 (traité comme EPSG:4326 dans Leaflet)
     };
 
     // On récupère le contenu de la balise #crs
     let crs = document.getElementById('crs').textContent;
 
+    if (crs === 'errorCRS') {
+        document.getElementById('errorMsg').innerText = "Le CRS n'est pas reconnu. L'affichage risque d'être incorrect.";
+    } else if (crs === 'CRSdiff') {
+        document.getElementById('errorMsg').innerText = "Les fichiers ont des CRS différents. L'affichage risque d'être incorrect.";
+    }
+
     // Détermine le CRS à utiliser
     let crsOption;
     if (crs !== 'default') {
-        const crsKey = crs.slice(-4); // Garde les 4 derniers caractères (ou 5 si nécessaire)
-        crsOption = validCrs[crsKey] || null;
+        // Vérification si le CRS est dans la liste valide
+        crsOption = validCrs[crs] || null;
 
         if (!crsOption) {
-            console.warn(`CRS non reconnu : ${crs}. Utilisation du CRS par défaut EPSG3857.`);
-            crsOption = L.CRS.EPSG3857; // Par défaut, EPSG3857
+            console.warn(`CRS non reconnu : ${crs}. Utilisation du CRS par défaut EPSG:3857.`);
+            crsOption = L.CRS.EPSG3857; // Par défaut, EPSG:3857
         }
     } else {
-        crsOption = L.CRS.EPSG3857; // Par défaut, EPSG3857
+        crsOption = L.CRS.EPSG3857; // Par défaut, EPSG:3857
     }
 
     // Initialisation de la carte
@@ -94,6 +88,7 @@ function initializeMap() {
         center: [0, 0],
         zoom: 2
     });
+
     // Ajout du TileLayer
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 18,
@@ -102,6 +97,7 @@ function initializeMap() {
 
     return map;
 }
+
 
 // Couleurs prédéfinies pour les couches
 const predefinedColors = [

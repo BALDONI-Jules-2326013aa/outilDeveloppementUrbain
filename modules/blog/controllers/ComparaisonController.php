@@ -155,16 +155,16 @@ class ComparaisonController
         if (!empty($dataGeoJson)) {
             // On vérifie si tous les fichiers GeoJSON ont le même CRS
             $crs = GeoJSONModel::getGeoJSONCRS($dataGeoJson[0]);
-            $erreur = '';
             if($crs !== 'errorCRS') {
                 foreach ($dataGeoJson as $file) {
                     if (GeoJSONModel::getGeoJSONCRS($file) !== $crs) {
-                        $erreur = 'CRSdiff';
+                        $crs = 'CRSdiff';
+                        break;
                     }
                 }
             }
 
-            $view->afficherCRS($crs, $erreur);
+            $view->afficherCRS($crs);
             $view->afficherAvecFichiers($dataGeoJson, $fileNamesGeojson);
             self::afficheGraphiques($dataGeoJson, $fileNamesGeojson, $view);
             (new ComparaisonController)->lanceCalculeTaux($dataGeoJson, $fileNamesGeojson, $view);
