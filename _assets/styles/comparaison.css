@@ -258,6 +258,13 @@ canvas {
     max-height: 40vh;
 }
 
+#recapChartCanva {
+    min-width: 70vh;
+    max-width: 70vh;
+    min-height: 60vh;
+    max-height: 60vh;
+}
+
 #espace {
     height: 50vh;
 }
@@ -282,10 +289,10 @@ canvas {
 
 #zoneRecap {
     background-color: #5fa5aa;
-    min-height: 60vh;
-    max-height: 60vh;
-    min-width: 47%;
-    max-width: 47%;
+    min-height: 80vh;
+    max-height: 80vh;
+    min-width: 52%;
+    max-width: 52%;
     border: 5px solid black;
 }
 

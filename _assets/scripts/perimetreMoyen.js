@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
             data: {
                 labels: fileNames,
                 datasets: [{
-                    label: 'Aire moyenne des bâtiments',
+                    label: 'Périmètre moyen des bâtiments',
                     data: perimetreMoyenData,
                     backgroundColor: colors.map(c => c.backgroundColor)
                 }]

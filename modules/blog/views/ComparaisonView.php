@@ -115,13 +115,6 @@ class ComparaisonView extends AbstractView
         <div class='graphiqueBox' id='zoneRecap'>
             <h2>Récapitulatif</h2>
             <div class='mainContentGraph'>
-                <div>
-                    <label for='chartTypeRecap'>Choisir un type de graphique :</label>
-                    <select id='chartTypeRecap' class='combobox-chart'>
-                        <option value='normalized' selected>Normalisé</option>
-                        <option value='classic'>Non normalisé</option>
-                    </select>
-                </div>
                 <canvas id='recapChartCanva'></canvas>
             </div>
         </div>
