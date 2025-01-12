@@ -6,6 +6,25 @@ require_once __DIR__ . '/../models/GeoJSONModel.php';
 class GeoJSONModelTest extends TestCase
 {
 
+    public function testGeoJSONgetCrs()
+    {
+        $mockFile = __DIR__ . '/mock.json';
+        file_put_contents($mockFile, json_encode([
+            'crs' => [
+                'type' => 'name',
+                'properties' => [
+                    'name' => 'urn:ogc:def:crs:EPSG::4326'
+                ]
+            ]
+        ]));
+
+        $geoJSONModel = new GeoJSONModel();
+        $result = $geoJSONModel::getGeoJSONCRS($mockFile);
+        $this->assertEquals('EPSG:4326', $result);
+
+        unlink($mockFile);
+
+    }
 
     public function testGetGeoJSONYearReturnsYear()
     {
