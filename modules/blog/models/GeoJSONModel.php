@@ -85,6 +85,9 @@ class GeoJSONModel
             $sumLat += $coordinate[1];
         }
 
+        if ($count === 0) {
+            return ['lon' => 0, 'lat' => 0]; // Retourne 0 si le nombre de coordonnées est nul
+        }
         // Retourne le point central
         return [
             'lon' => $sumLon / $count,
@@ -382,6 +385,7 @@ class GeoJSONModel
 
         //return 0;
     }
+
 
 }
 
