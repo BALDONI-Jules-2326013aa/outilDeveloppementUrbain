@@ -137,8 +137,17 @@ class FileModel {
                 echo '<li>';
                 echo htmlspecialchars($file['name']) . ' (User ID: ' . $file['utilisateur_id'] . ')';
                 echo '<br>';
-                echo '<button>Télécharger</button>';
-                echo '<button>Supprimer</button>';
+                // Formulaire pour télécharger le fichier
+                echo '<form action="/telechargerFichier" method="post" style="display:inline;">';
+                echo '<input type="hidden" name="file_id" value="' . htmlspecialchars($file['id']) . '">';
+                echo '<button type="submit">Télécharger</button>';
+                echo '</form>';
+                // Formulaire pour supprimer le fichier
+                echo '<form action="/supprimerFichier" method="post" style="display:inline;">';
+                echo '<input type="hidden" name="file_id" value="' . htmlspecialchars($file['id']) . '">';
+                echo '<input type="hidden" name="action" value="supprimer">';
+                echo '<button type="submit">Supprimer</button>';
+                echo '</form>';
                 echo '</li>';
             }
         }
