@@ -48,32 +48,41 @@ class FileController {
         }
     }
 
-    // Méthode pour télécharger un fichier
     private function uploadFile() {
         if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
             $fileTmpPath = $_FILES['file']['tmp_name'];
-            $fileSize = $_FILES['file']['size'];
-            $fileType = $_FILES['file']['type'];
-            $folder_id = $_POST['folder'];
             $fileName = $_FILES['file']['name'];
-            $fileNameCmps = explode(".", $fileName);
-            $fileExtension = strtolower(end($fileNameCmps));
-            $allowedfileExtensions = array('geojson');
-            if (in_array($fileExtension, $allowedfileExtensions)) {
+            $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+            $allowedFileExtensions = ['geojson'];
+    
+            if (in_array($fileExtension, $allowedFileExtensions)) {
                 $fileContent = file_get_contents($fileTmpPath);
-
+    
                 session_start();
                 $username = $_COOKIE['courrielSiti'] ?? null;
+    
                 if ($username) {
                     $connexionModel = new ConnexionModel($this->model->getPDO());
                     $userId = $connexionModel->getID($username);
-
+    
                     if ($userId) {
-                        $folder_id = $this->model->getFolderId($folder_id, $userId)['id'];
-                        $this->model->uploadFile($fileName, $fileContent, $userId, $folder_id);
-                        echo "Fichier téléchargé avec succès.";
-                        header("Location: /fichier");
-                        exit();
+                        // Récupération des noms des dossiers
+                        $folderName = $_POST['folder'] ?? null;
+                        $parentFolderName = $_POST['parent_folder'] ?? null; // Nom du dossier parent (optionnel)
+    
+                        // Création ou récupération du dossier
+                        try {
+                            $folderId = $this->model->getOrCreateFolder($folderName, $userId, $parentFolderName);
+    
+                            // Téléversement du fichier
+                            $this->model->uploadFile($fileName, $fileContent, $userId, $folderId);
+    
+                            // Redirection en cas de succès
+                            header("Location: /fichier");
+                            exit();
+                        } catch (\Exception $e) {
+                            echo "Erreur : " . htmlspecialchars($e->getMessage());
+                        }
                     } else {
                         echo "Utilisateur non trouvé.";
                     }
@@ -81,13 +90,14 @@ class FileController {
                     echo "Utilisateur non connecté.";
                 }
             } else {
-                echo "Type de fichier non autorisé.";
+                echo "Type de fichier non autorisé. Seuls les fichiers .geojson sont acceptés.";
             }
         } else {
             echo "Erreur lors du téléchargement du fichier.";
         }
     }
-
+    
+    
     // Méthode pour supprimer un fichier
     private function deleteFile() {
         $fileId = $_POST['file_id'];
