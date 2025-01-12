@@ -6,12 +6,24 @@ class InscriptionModel
 {
     private $db;
 
+    /**
+     * InscriptionModel constructor.
+     *
+     * @param \PDO $db Instance de la connexion à la base de données.
+     */
     public function __construct($db)
     {
         $this->db = $db;
     }
 
-    // fonction d'inscription
+    /**
+     * Inscrit un nouvel utilisateur.
+     *
+     * @param string $email L'email de l'utilisateur.
+     * @param string $username Le nom d'utilisateur.
+     * @param string $password Le mot de passe.
+     * @return bool True si l'inscription est réussie, sinon false.
+     */
     public function registerUser($email, $username, $password): bool
     {
         // Vérification si l'email existe déjà

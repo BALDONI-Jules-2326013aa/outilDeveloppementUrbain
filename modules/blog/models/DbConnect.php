@@ -13,6 +13,11 @@ class DbConnect
     private $password = 'motdepassesitia1';
     private $conn;
 
+    /**
+     * Établit une connexion à la base de données.
+     *
+     * @return PDO|null L'instance de connexion PDO ou null en cas d'échec.
+     */
     public function connect()
     {
         $this->conn = null;
@@ -27,6 +32,11 @@ class DbConnect
         return $this->conn;
     }
 
+    /**
+     * Vérifie si la connexion à la base de données est établie.
+     *
+     * @return bool True si la connexion est établie, sinon false.
+     */
     public function isConnected(): bool
     {
         return $this->conn !== null;

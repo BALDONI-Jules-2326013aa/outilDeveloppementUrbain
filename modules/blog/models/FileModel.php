@@ -6,22 +6,40 @@ use PDO;
 class FileModel {
     private $pdo;
 
+    /**
+     * Constructeur de FileModel.
+     *
+     * @param PDO $pdo Instance de la connexion PDO.
+     */
     public function __construct(PDO $pdo) {
         $this->pdo = $pdo;
     }
+
+    /**
+     * Obtient l'instance PDO.
+     *
+     * @return PDO L'instance PDO.
+     */
     public function getPDO() {
         return $this->pdo;
     }
+
+    /**
+     * Obtient ou crée un dossier.
+     *
+     * @param string $folderName Le nom du dossier.
+     * @param int $userId L'ID de l'utilisateur.
+     * @param string|null $parentFolderName Le nom du dossier parent (optionnel).
+     * @return int L'ID du dossier.
+     * @throws \Exception Si le dossier parent n'est pas trouvé.
+     */
     public function getOrCreateFolder($folderName, $userId, $parentFolderName = null) {
-        // If parentFolderName is an empty string, treat it as null
         if (empty($parentFolderName)) {
             $parentFolderName = null;
         }
-    
-        // Initialize parent folder ID as null
+
         $parentFolderId = null;
-    
-        // If a parent folder name is provided, retrieve its ID
+
         if ($parentFolderName !== null) {
             $stmt = $this->pdo->prepare("
                 SELECT id FROM folders WHERE name = :name AND user_id = :user_id
@@ -30,18 +48,17 @@ class FileModel {
             $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
             $stmt->execute();
             $parentFolder = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+
             if (!$parentFolder) {
-                throw new \Exception("Parent folder not found: $parentFolderName");
+                throw new \Exception("Dossier parent non trouvé: $parentFolderName");
             }
-    
+
             $parentFolderId = $parentFolder['id'];
         }
-    
-        // Check if the folder already exists (with the same name and parent)
+
         $stmt = $this->pdo->prepare("
-            SELECT id FROM folders 
-            WHERE name = :name AND user_id = :user_id 
+            SELECT id FROM folders
+            WHERE name = :name AND user_id = :user_id
             AND parent_folder_id IS NOT DISTINCT FROM :parent_folder_id
         ");
         $stmt->bindParam(':name', $folderName);
@@ -49,13 +66,11 @@ class FileModel {
         $stmt->bindParam(':parent_folder_id', $parentFolderId, PDO::PARAM_INT);
         $stmt->execute();
         $folder = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+
         if ($folder) {
-            // Folder exists, return its ID
             return $folder['id'];
         }
-    
-        // Create the folder if it doesn't exist
+
         $stmt = $this->pdo->prepare("
             INSERT INTO folders (name, user_id, parent_folder_id)
             VALUES (:name, :user_id, :parent_folder_id)
@@ -64,85 +79,103 @@ class FileModel {
         $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
         $stmt->bindParam(':parent_folder_id', $parentFolderId, PDO::PARAM_INT);
         $stmt->execute();
-    
-        // Return the newly created folder's ID
+
         return $this->pdo->lastInsertId();
     }
-    
-    
+
+    /**
+     * Obtient les fichiers par ID de dossier.
+     *
+     * @param int|null $folderId L'ID du dossier (optionnel).
+     * @return array Les fichiers dans le dossier.
+     */
     public function getFilesByFolder($folderId = null) {
         $stmt = $this->pdo->prepare("
-            SELECT id, name, utilisateur_id, folder_id 
-            FROM geojson_files 
+            SELECT id, name, utilisateur_id, folder_id
+            FROM geojson_files
             WHERE folder_id IS NOT DISTINCT FROM :folder_id
         ");
         $stmt->bindParam(':folder_id', $folderId, PDO::PARAM_INT);
         $stmt->execute();
-    
+
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
+
+    /**
+     * Obtient les sous-dossiers par ID de dossier parent.
+     *
+     * @param int|null $parentFolderId L'ID du dossier parent (optionnel).
+     * @return array Les sous-dossiers.
+     */
     public function getSubfolders($parentFolderId = null) {
         $stmt = $this->pdo->prepare("
-            SELECT id, name 
-            FROM folders 
+            SELECT id, name
+            FROM folders
             WHERE parent_folder_id IS NOT DISTINCT FROM :parent_folder_id
         ");
         $stmt->bindParam(':parent_folder_id', $parentFolderId, PDO::PARAM_INT);
         $stmt->execute();
-    
+
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-        
+
+    /**
+     * Obtient le nom d'un dossier par son ID.
+     *
+     * @param int $folderId L'ID du dossier.
+     * @return array|null Le nom du dossier ou null si non trouvé.
+     */
     public function getFolderName($folderId) {
         if (empty($folderId) || !is_numeric($folderId)) {
-            return null; // Gérer les cas invalides ou renvoyer une valeur par défaut
+            return null;
         }
-    
+
         $stmt = $this->pdo->prepare("SELECT name FROM folders WHERE id = :id");
         $stmt->bindParam(':id', $folderId, PDO::PARAM_INT);
         $stmt->execute();
-    
+
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-    
+
+    /**
+     * Obtient tous les dossiers.
+     *
+     * @return array Les dossiers.
+     */
     public function getFolders() {
         $stmt = $this->pdo->query("SELECT id, name, parent_folder_id FROM folders ORDER BY id DESC");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
 
+    /**
+     * Affiche les dossiers et fichiers dans une liste imbriquée.
+     *
+     * @param array $folders Les dossiers.
+     * @param array $files Les fichiers.
+     * @param int|null $parentId L'ID du dossier parent (optionnel).
+     */
     public function displayFoldersAndFiles($folders, $files, $parentId = null) {
         echo '<ul>';
         foreach ($folders as $folder) {
-            // Vérifiez si le dossier est un enfant du dossier parent actuel
             if ($folder['parent_folder_id'] == $parentId) {
                 echo '<li>';
-                
-                // Ajoutez un élément <details> pour créer un menu déroulant
                 echo '<details>';
                 echo '<summary>' . htmlspecialchars($folder['name']) . '</summary>';
-                
-                // Appel récursif pour afficher les sous-dossiers de ce dossier
                 $this->displayFoldersAndFiles($folders, $files, $folder['id']);
-                
                 echo '</details>';
                 echo '</li>';
             }
         }
-    
-        // Affichez les fichiers qui appartiennent au dossier parent actuel
+
         foreach ($files as $file) {
             if ($file['folder_id'] == $parentId) {
                 echo '<li>';
                 echo htmlspecialchars($file['name']) . ' (User ID: ' . $file['utilisateur_id'] . ')';
                 echo '<br>';
-                // Formulaire pour télécharger le fichier
                 echo '<form action="/telechargerFichier" method="post" style="display:inline;">';
                 echo '<input type="hidden" name="file_id" value="' . htmlspecialchars($file['id']) . '">';
                 echo '<button type="submit">Télécharger</button>';
                 echo '</form>';
-                // Formulaire pour supprimer le fichier
                 echo '<form action="/supprimerFichier" method="post" style="display:inline;">';
                 echo '<input type="hidden" name="file_id" value="' . htmlspecialchars($file['id']) . '">';
                 echo '<input type="hidden" name="action" value="supprimer">';
@@ -151,37 +184,43 @@ class FileModel {
                 echo '</li>';
             }
         }
-    
         echo '</ul>';
     }
 
-    
-    
+    /**
+     * Télécharge un fichier GeoJSON.
+     *
+     * @param string $name Le nom du fichier.
+     * @param string $geojsonContent Le contenu du fichier GeoJSON.
+     * @param int $userId L'ID de l'utilisateur.
+     * @param int $folder_id L'ID du dossier.
+     */
     public function uploadFile($name, $geojsonContent, $userId, $folder_id) {
-
-
-        // Ajoutez un message de débogage pour vérifier le contenu du fichier avant l'insertion
         error_log("Insertion du fichier GeoJSON: " . $geojsonContent);
 
         $stmt = $this->pdo->prepare("
             INSERT INTO geojson_files (name, geojson, utilisateur_id, folder_id)
             VALUES (:name, :geojson_text, :user_id, :folder_id)
         ");
-    
         $stmt->bindParam(':name', $name);
-        $stmt->bindParam(':geojson_text', $geojsonContent); // Pour sauvegarder le texte brut
+        $stmt->bindParam(':geojson_text', $geojsonContent);
         $stmt->bindParam(':user_id', $userId);
-        $stmt->bindParam(':folder_id', $folder_id); 
+        $stmt->bindParam(':folder_id', $folder_id);
         $stmt->execute();
     }
 
+    /**
+     * Valide le contenu GeoJSON.
+     *
+     * @param string $geojsonContent Le contenu du fichier GeoJSON.
+     * @return bool True si valide, sinon false.
+     */
     private function isValidGeoJSON($geojsonContent) {
         $geojson = json_decode($geojsonContent, true);
         if (json_last_error() !== JSON_ERROR_NONE) {
             return false;
         }
 
-        // Vérifiez que le GeoJSON contient les clés nécessaires
         if (!isset($geojson['type']) || !isset($geojson['features'])) {
             return false;
         }
@@ -189,11 +228,22 @@ class FileModel {
         return true;
     }
 
+    /**
+     * Obtient tous les fichiers.
+     *
+     * @return array Les fichiers.
+     */
     public function getFiles() {
         $stmt = $this->pdo->query("SELECT id, name, utilisateur_id, folder_id FROM geojson_files ORDER BY id DESC");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Obtient un fichier par son ID.
+     *
+     * @param int $fileId L'ID du fichier.
+     * @return array Les données du fichier.
+     */
     public function getFileById($fileId) {
         $stmt = $this->pdo->prepare("SELECT * FROM geojson_files WHERE id = :id");
         $stmt->bindParam(':id', $fileId, PDO::PARAM_INT);
@@ -201,6 +251,11 @@ class FileModel {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Supprime un fichier par son ID.
+     *
+     * @param int $fileId L'ID du fichier.
+     */
     public function deleteFile($fileId) {
         $stmt = $this->pdo->prepare("DELETE FROM geojson_files WHERE id = :id");
         $stmt->bindParam(':id', $fileId, PDO::PARAM_INT);

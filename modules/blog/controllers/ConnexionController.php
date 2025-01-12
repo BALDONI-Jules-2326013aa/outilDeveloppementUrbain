@@ -5,9 +5,14 @@ namespace blog\controllers;
 use blog\views\ConnexionView;
 use blog\models\ConnexionModel;
 use blog\models\DbConnect;
+use JetBrains\PhpStorm\NoReturn;
 
 class ConnexionController
 {
+    /**
+     * Affiche la page de connexion.
+     * Démarre une session si elle n'est pas déjà démarrée.
+     */
     public static function affichePage(): void
     {
         // Démarrage de la session si elle n'est pas déjà démarrée
@@ -18,8 +23,12 @@ class ConnexionController
         $view->afficher();
     }
 
-    // fonction de connexion
-    public static function connecter(array $post): void
+    /**
+     * Gère la connexion de l'utilisateur.
+     *
+     * @param array $post Les données POST contenant 'username' et 'password'.
+     */
+    #[NoReturn] public static function connecter(array $post): void
     {
         $username = htmlspecialchars($post["username"] ?? '');
         $password = htmlspecialchars($post["password"] ?? '');
@@ -42,7 +51,7 @@ class ConnexionController
                         'httponly' => true,
                     ]
                 );
-                //redirection vers la page d'accueil
+                // Redirection vers la page d'accueil
                 header("Location: /");
                 exit();
             } else {
@@ -57,14 +66,17 @@ class ConnexionController
         }
     }
 
-    // fonction de déconnexion
-    public static function deconnecter(): void
+    /**
+     * Gère la déconnexion de l'utilisateur.
+     * Redirige vers la page de connexion après la déconnexion.
+     */
+    #[NoReturn] public static function deconnecter(): void
     {
         $connexionModel = new ConnexionModel(new DbConnect());
         // Déconnexion
         $connexionModel->logout();
 
-        //redirection vers la page de connexion
+        // Redirection vers la page de connexion
         header("Location: /connexion");
         exit();
     }

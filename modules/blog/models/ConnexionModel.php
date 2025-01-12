@@ -6,29 +6,45 @@ class ConnexionModel
 {
     private $db;
 
+    /**
+     * ConnexionModel constructor.
+     *
+     * @param \PDO $db Instance de la connexion à la base de données.
+     */
     public function __construct($db)
     {
         $this->db = $db;
     }
 
-    // fonction de connexion
+    /**
+     * Récupère l'ID de l'utilisateur par son nom d'utilisateur.
+     *
+     * @param string $username Le nom d'utilisateur.
+     * @return int|null L'ID de l'utilisateur ou null si non trouvé.
+     */
     public function getID($username): ?int
     {
-        //requete pour récupérer l'id de l'utilisateur
+        // Requête pour récupérer l'ID de l'utilisateur
         $sql = "SELECT id FROM utilisateurs WHERE username = :username";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':username', $username);
 
         $stmt->execute();
         $user = $stmt->fetch();
-        //retourne l'id de l'utilisateur
+        // Retourne l'ID de l'utilisateur
         return $user ? (int)$user['id'] : null;
     }
 
-    // fonction pour verifier la connexion
+    /**
+     * Vérifie les informations de connexion de l'utilisateur.
+     *
+     * @param string $username Le nom d'utilisateur.
+     * @param string $password Le mot de passe.
+     * @return bool True si la connexion est réussie, sinon false.
+     */
     public function verifConnexion($username, $password): bool
     {
-        //requete pour vérifier la connexion
+        // Requête pour vérifier la connexion
         $sql = "SELECT * FROM utilisateurs WHERE username = :username";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':username', $username);
@@ -36,7 +52,7 @@ class ConnexionModel
         $stmt->execute();
         $user = $stmt->fetch();
 
-        //vérification du mot de passe
+        // Vérification du mot de passe
         if ($user && password_verify($password, $user['password'])) {
             session_start();
             $_SESSION['loggedin'] = true;
@@ -46,11 +62,13 @@ class ConnexionModel
         return false;
     }
 
-    //fonction de déconnexion
+    /**
+     * Déconnecte l'utilisateur en détruisant la session.
+     */
     public function logout(): void
     {
-        //destruction de la session
-        //destruction des variables de session
+        // Destruction de la session
+        // Destruction des variables de session
         session_start();
         session_unset();
         session_destroy();

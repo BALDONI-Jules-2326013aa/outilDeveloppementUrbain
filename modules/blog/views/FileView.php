@@ -2,28 +2,47 @@
 namespace blog\views;
 
 class FileView extends AbstractView {
-    private $files = []; 
+    private $files = [];
 
+    /**
+     * Définit les fichiers à afficher.
+     *
+     * @param array $files Un tableau de fichiers.
+     */
     public function setFiles(array $files): void {
         $this->files = $files;
     }
 
-    // Méthode pour afficher le corps de la page
+    /**
+     * Affiche le corps de la page.
+     */
     protected function body(): void {
         include __DIR__ . '/Fragments/File.html';
     }
 
-    // Méthode pour obtenir le CSS spécifique à la vue
+    /**
+     * Retourne le CSS spécifique à la vue.
+     *
+     * @return string Le chemin vers le fichier CSS.
+     */
     function css(): string {
         return 'File.css';
     }
 
-    // Méthode pour obtenir le titre de la page
+    /**
+     * Retourne le titre de la page.
+     *
+     * @return string Le titre de la page.
+     */
     function pageTitle(): string {
         return 'Page de file';
     }
 
-    // Méthode pour obtenir les fichiers
+    /**
+     * Obtient les fichiers.
+     *
+     * @return array Un tableau de fichiers.
+     */
     public function getFiles(): array {
         return $this->files;
     }

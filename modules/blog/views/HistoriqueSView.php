@@ -3,29 +3,40 @@ namespace blog\views;
 
 class HistoriqueSView extends AbstractView {
 
-    // direction vers la page d'historique
+    /**
+     * Affiche le corps de la page d'historique.
+     */
     protected function body(): void
     {
         include __DIR__ . '/Fragments/historiqueS.html';
     }
 
-    // direction vers le fichier css de la page d'historique
+    /**
+     * Retourne le chemin vers le fichier CSS de la page d'historique.
+     *
+     * @return string Le chemin vers le fichier CSS.
+     */
     function css(): string
     {
         return 'historique.css';
     }
 
-    // titre de la page d'historique
+    /**
+     * Retourne le titre de la page d'historique.
+     *
+     * @return string Le titre de la page.
+     */
     function pageTitle(): string
     {
         return 'HistoriqueSimulation';
     }
 
-    // affichage de la page d'historique
+    /**
+     * Affiche la page d'historique en appelant la méthode afficher() de la classe parente.
+     */
     #[Override] public function afficher(): void
     {
         parent::afficher();
     }
 
 }
-

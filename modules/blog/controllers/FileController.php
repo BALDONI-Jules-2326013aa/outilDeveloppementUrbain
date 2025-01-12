@@ -8,12 +8,19 @@ use blog\views\FileView;
 class FileController {
     private $model;
 
-    // Constructeur pour initialiser le modèle
+    /**
+     * Constructeur pour initialiser le modèle.
+     *
+     * @param FileModel $model Le modèle de fichier.
+     */
     public function __construct(FileModel $model) {
         $this->model = $model;
     }
 
-    // Méthode statique pour afficher la page
+    /**
+     * Méthode statique pour afficher la page.
+     * Démarre une session et affiche les fichiers.
+     */
     public static function affichePage(): void {
         session_start();
 
@@ -31,7 +38,10 @@ class FileController {
         $view->afficher();
     }
 
-    // Méthode pour gérer les requêtes HTTP
+    /**
+     * Méthode pour gérer les requêtes HTTP.
+     * Gère les requêtes POST pour téléverser, supprimer ou télécharger des fichiers.
+     */
     public function handleRequest() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_FILES['file'])) {
@@ -48,35 +58,39 @@ class FileController {
         }
     }
 
+    /**
+     * Méthode pour téléverser un fichier.
+     * Vérifie le type de fichier et l'utilisateur avant de téléverser.
+     */
     private function uploadFile() {
         if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
             $fileTmpPath = $_FILES['file']['tmp_name'];
             $fileName = $_FILES['file']['name'];
             $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
             $allowedFileExtensions = ['geojson'];
-    
+
             if (in_array($fileExtension, $allowedFileExtensions)) {
                 $fileContent = file_get_contents($fileTmpPath);
-    
+
                 session_start();
                 $username = $_COOKIE['courrielSiti'] ?? null;
-    
+
                 if ($username) {
                     $connexionModel = new ConnexionModel($this->model->getPDO());
                     $userId = $connexionModel->getID($username);
-    
+
                     if ($userId) {
                         // Récupération des noms des dossiers
                         $folderName = $_POST['folder'] ?? null;
                         $parentFolderName = $_POST['parent_folder'] ?? null; // Nom du dossier parent (optionnel)
-    
+
                         // Création ou récupération du dossier
                         try {
                             $folderId = $this->model->getOrCreateFolder($folderName, $userId, $parentFolderName);
-    
+
                             // Téléversement du fichier
                             $this->model->uploadFile($fileName, $fileContent, $userId, $folderId);
-    
+
                             // Redirection en cas de succès
                             header("Location: /fichier");
                             exit();
@@ -96,9 +110,11 @@ class FileController {
             echo "Erreur lors du téléchargement du fichier.";
         }
     }
-    
-    
-    // Méthode pour supprimer un fichier
+
+    /**
+     * Méthode pour supprimer un fichier.
+     * Supprime le fichier spécifié par l'ID et redirige vers la page des fichiers.
+     */
     private function deleteFile() {
         $fileId = $_POST['file_id'];
         $this->model->deleteFile($fileId);
@@ -106,7 +122,10 @@ class FileController {
         exit();
     }
 
-    // Méthode pour télécharger un fichier
+    /**
+     * Méthode pour télécharger un fichier.
+     * Télécharge le fichier spécifié par l'ID.
+     */
     private function downloadFile() {
         $fileId = $_POST['file_id'];
         $file = $this->model->getFileById($fileId);
@@ -126,7 +145,10 @@ class FileController {
         }
     }
 
-    // Méthode pour afficher les fichiers
+    /**
+     * Méthode pour afficher les fichiers.
+     * Récupère les fichiers à partir du modèle et les affiche.
+     */
     private function showFiles() {
         $files = $this->model->getFiles();
         $view = new FileView();

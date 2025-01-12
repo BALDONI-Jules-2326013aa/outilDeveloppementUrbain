@@ -1,16 +1,32 @@
 <?php
 
 namespace blog\models;
+
+/**
+ * Class GeoJSONModel
+ *
+ * Cette classe fournit des méthodes pour manipuler et analyser des fichiers GeoJSON.
+ */
 class GeoJSONModel
 {
-    // Lit le contenu d'un fichier GeoJSON et le retourne sous forme de tableau associatif
+    /**
+     * Lit le contenu d'un fichier GeoJSON et le retourne sous forme de tableau associatif.
+     *
+     * @param string $file Chemin vers le fichier GeoJSON.
+     * @return array Tableau associatif représentant le contenu du fichier GeoJSON.
+     */
     public static function litGeoJSON($file): array
     {
         $jsonData = file_get_contents($file); // Lit le contenu du fichier
         return json_decode($jsonData, true); // Décode le JSON en tableau associatif
     }
 
-    // Extrait l'année d'un fichier GeoJSON
+    /**
+     * Extrait l'année d'un fichier GeoJSON.
+     *
+     * @param string $file Chemin vers le fichier GeoJSON.
+     * @return string Année extraite du fichier GeoJSON.
+     */
     public static function getGeoJSONYear($file): string
     {
         $content = file_get_contents($file); // Lit le contenu du fichier
@@ -24,7 +40,12 @@ class GeoJSONModel
         return ''; // Retourne une chaîne vide si l'année n'est pas trouvée
     }
 
-    // Renvoie le crs d'un fichier GeoJSON
+    /**
+     * Extrait le CRS d'un fichier GeoJSON.
+     *
+     * @param array $file Tableau associatif représentant le contenu du fichier GeoJSON.
+     * @return string Code EPSG du CRS du fichier GeoJSON.
+     */
     public static function getGeoJSONCRS($file): string
     {
         // Liste des CRS pris en charge par Leaflet
@@ -62,7 +83,12 @@ class GeoJSONModel
 
 
 
-    // Récupère le nombre de bâtiments dans chaque fichier GeoJSON
+    /**
+     * Récupère le nombre de bâtiments dans chaque fichier GeoJSON.
+     *
+     * @param array $fileArray Tableau de tableaux associatifs représentant les fichiers GeoJSON.
+     * @return array Tableau des nombres de bâtiments par fichier.
+     */
     public static function recupereNombreBatiment($fileArray): array
     {
         $listNbBatiments = []; // Initialise un tableau pour stocker le nombre de bâtiments
@@ -82,7 +108,16 @@ class GeoJSONModel
         return $listNbBatiments; // Retourne le tableau des nombres de bâtiments
     }
 
-    // Calcule la distance entre deux points géographiques en utilisant la formule de Haversine
+
+    /**
+     * Calcule la distance entre deux points géographiques en utilisant la formule de Haversine.
+     *
+     * @param float $lat1 Latitude du premier point.
+     * @param float $lon1 Longitude du premier point.
+     * @param float $lat2 Latitude du deuxième point.
+     * @param float $lon2 Longitude du deuxième point.
+     * @return float Distance en mètres.
+     */
     public static function formuleHaversine($lat1, $lon1, $lat2, $lon2): float
     {
         $R = 6371000; // Rayon de la Terre en mètres
@@ -98,7 +133,12 @@ class GeoJSONModel
         return $R * $c; // Retourne la distance en mètres
     }
 
-    // Calcule le point central d'un ensemble de coordonnées
+    /**
+     * Calcule le point central d'un ensemble de coordonnées.
+     *
+     * @param array $coordinates Tableau de coordonnées [longitude, latitude].
+     * @return array Point central [lon, lat].
+     */
     public static function calculPointCentral($coordinates): array
     {
         $sumLat = 0; // Somme des latitudes
@@ -121,6 +161,12 @@ class GeoJSONModel
         ];
     }
 
+    /**
+     * Calcule la distance de Hausdorff entre deux fichiers GeoJSON.
+     *
+     * @param array $filesArray Tableau de tableaux associatifs représentant les fichiers GeoJSON.
+     * @return float Distance de Hausdorff en mètres.
+     */
     public static function distanceHausdorff($filesArray): float
     {
         $pointsCentrauxParFichier = [];
@@ -153,6 +199,13 @@ class GeoJSONModel
         return $distanceMax;
     }
 
+    /**
+     * Calcule la distance de Hausdorff entre deux ensembles de points.
+     *
+     * @param array $set1 Premier ensemble de points.
+     * @param array $set2 Deuxième ensemble de points.
+     * @return float Distance de Hausdorff en mètres.
+     */
     private static function distanceHausdorffEntrePoints(array $set1, array $set2): float
     {
         $maxDist1 = 0;
@@ -187,6 +240,12 @@ class GeoJSONModel
     }
 
 
+    /**
+     * Calcule le périmètre moyen, minimum et maximum des bâtiments dans chaque fichier GeoJSON.
+     *
+     * @param array $fileArray Tableau de tableaux associatifs représentant les fichiers GeoJSON.
+     * @return array Tableau des résultats.
+     */
     public static function calculerPerimetreMoyMinMax($fileArray): array
     {
         $resultats = [
@@ -236,6 +295,12 @@ class GeoJSONModel
         return $resultats;
     }
 
+    /**
+     * Calcule le périmètre d'un bâtiment à partir de ses coordonnées.
+     *
+     * @param array $coordinates Tableau de coordonnées [longitude, latitude].
+     * @return float Périmètre en mètres.
+     */
     public static function calculerPerimetreBatiment(array $coordinates): float
     {
         $R = 6371000;
@@ -267,6 +332,12 @@ class GeoJSONModel
 
 
 
+    /**
+     * Récupère la distance moyenne entre les bâtiments dans chaque fichier GeoJSON.
+     *
+     * @param array $fileArray Tableau de tableaux associatifs représentant les fichiers GeoJSON.
+     * @return array Tableau des distances moyennes par fichier.
+     */
     public static function recupereDistanceMoyenneBatiments($fileArray): array
     {
         $moyennesParFichier = []; // Initialise un tableau pour stocker les distances moyennes par fichier
@@ -307,6 +378,12 @@ class GeoJSONModel
         return $moyennesParFichier; // Retourne le tableau des distances moyennes par fichier
     }
 
+    /**
+     * Calcule l'aire moyenne, minimale et maximale des bâtiments dans chaque fichier GeoJSON.
+     *
+     * @param array $fileArray Tableau de tableaux associatifs représentant les fichiers GeoJSON.
+     * @return array Tableau des résultats.
+     */
     public static function calculerAireMoyMinMax($fileArray): array
     {
         $resultats = [
@@ -359,6 +436,12 @@ class GeoJSONModel
         return $resultats; // Retourne les résultats
     }
 
+    /**
+     * Calcule l'aire d'un bâtiment à partir de ses coordonnées.
+     *
+     * @param array $coordinates Tableau de coordonnées [longitude, latitude].
+     * @return float Aire en mètres carrés.
+     */
     public static function calculerAireBatiment(array $coordinates): float
     {
         $R = 6371000; // Rayon de la Terre en mètres
@@ -383,6 +466,13 @@ class GeoJSONModel
         return abs($aire * $R * $R / 2); // Retourne l'aire absolue
     }
 
+    /**
+     * Calcule le taux d'erreur entre deux fichiers GeoJSON.
+     *
+     * @param array $fileArray Tableau de tableaux associatifs représentant les fichiers GeoJSON.
+     * @param array $fileArray2 Tableau de tableaux associatifs représentant les fichiers GeoJSON.
+     * @return float|int Taux d'erreur en pourcentage.
+     */
     public static function calculeTauxErreurDeuxFichiers($fileArray, $fileArray2): float|int
     {
 

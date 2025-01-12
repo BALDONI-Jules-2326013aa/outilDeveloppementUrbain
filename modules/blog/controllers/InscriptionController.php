@@ -3,12 +3,16 @@
 namespace blog\controllers;
 
 use blog\views\inscriptionView;
-
 use blog\models\InscriptionModel;
 use blog\models\DbConnect;
+use JetBrains\PhpStorm\NoReturn;
 
 class InscriptionController
 {
+    /**
+     * Affiche la page d'inscription.
+     * Démarre une session si elle n'est pas déjà démarrée et affiche la vue d'inscription.
+     */
     public static function affichePage(): void
     {
         // Démarrage de la session si elle n'est pas déjà démarrée
@@ -19,10 +23,14 @@ class InscriptionController
         $view->afficher();
     }
 
-    // fonction d'inscription
-    public static function inscrire(array $post): void
+    /**
+     * Fonction d'inscription.
+     * Gère l'inscription de l'utilisateur en vérifiant les champs et en enregistrant l'utilisateur dans la base de données.
+     *
+     * @param array $post Les données POST contenant 'email', 'username' et 'password'.
+     */
+    #[NoReturn] public static function inscrire(array $post): void
     {
-
         $email = htmlspecialchars($post["email"] ?? '');
         $username = htmlspecialchars($post["username"] ?? '');
         $password = htmlspecialchars($post["password"] ?? '');
@@ -36,11 +44,11 @@ class InscriptionController
             $inscriptionModel = new InscriptionModel($db);
 
             if ($inscriptionModel->registerUser($email, $username, $password)) {
-                //redirection vers la page de connexion
+                // Redirection vers la page de connexion
                 header("Location: /connexion");
                 exit();
             } else {
-                // Si l'utilisateur n'est pas trouvé dans la base de données
+                // Si l'utilisateur existe déjà dans la base de données
                 echo "L'email existe déjà.";
                 exit();
             }
