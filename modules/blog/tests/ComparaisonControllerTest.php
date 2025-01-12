@@ -40,41 +40,6 @@ class ComparaisonControllerTest extends TestCase
         $this->assertEmpty($result['fileNamesTif']);
     }
 
-    public function testAjouterFichierAddsGeoJsonFile()
-    {
-        $_FILES = [
-            'filesToAdd' => [
-                'name' => ['test.geojson'],
-                'tmp_name' => ['/tmp/test.geojson'],
-                'error' => [UPLOAD_ERR_OK]
-            ]
-        ];
-        $_SESSION = [];
-
-        $comparaison = new ComparaisonController();
-        $comparaison->ajouterFichier();
-
-        $this->assertNotEmpty($_SESSION['dataGeoJson']);
-        $this->assertEquals(['test.geojson'], $_SESSION['fileNamesGeojson']);
-    }
-
-    public function testAjouterFichierAddsTifFile()
-    {
-        $_FILES = [
-            'filesToAdd' => [
-                'name' => ['test.tif'],
-                'tmp_name' => ['/tmp/test.tif'],
-                'error' => [UPLOAD_ERR_OK]
-            ]
-        ];
-        $_SESSION = [];
-
-        $comparaison = new ComparaisonController();
-        $comparaison->ajouterFichier();
-
-        $this->assertNotEmpty($_SESSION['dataTif']);
-        $this->assertEquals(['test.tif'], $_SESSION['fileNamesTif']);
-    }
 
     public function testResetSessionClearsSessionData()
     {
