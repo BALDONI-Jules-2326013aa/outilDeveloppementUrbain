@@ -48,7 +48,6 @@ class ComparaisonView extends AbstractView
         $this->body .= $crsBox;
     }
 
-
     /**
      * Affiche la page avec les fichiers GeoJSON.
      * @param array $dataArray Les données GeoJSON.
@@ -57,7 +56,6 @@ class ComparaisonView extends AbstractView
      */
     public function afficherAvecFichiers(array $dataArray, array $fileNames): void
     {
-        echo 'afficherAvecFichiers';
         // Encode les données GeoJSON et les noms de fichiers en JSON
         $geojsonDataJsArray = json_encode($dataArray);
         $fileNamesJsArray = json_encode($fileNames);
