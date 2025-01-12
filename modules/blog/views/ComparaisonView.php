@@ -43,11 +43,14 @@ class ComparaisonView extends AbstractView
         return 'Comparaison';
     }
 
-    function afficherCRS(string $crs, bool $erreur) {
+    function afficherCRS(string $crs, string $erreur) {
+        echo 'afficherCRS';
         $crsBox = "<div id='crs' style='display: none;'>$crs</div>
         ";
-        if ($erreur) {
-            $crsBox .= "<p>Attention, les fichiers GeoJSON ne sont pas sous le même système de coordonnées ! Cela peut entraîner des erreurs d'affichage.</p>";
+        if ($crs === 'errorCRS') {
+            $crsBox .= "<div class='erreur'>Ce type de CRS n'est pas supporté.</div>";
+        } else if ($erreur === 'CRSdiff') {
+            $crsBox .= "<div class='erreur'>Les fichiers ne sont pas tous dans le même CRS.</div>";
         }
         $this->body .= $crsBox;
     }
@@ -61,6 +64,7 @@ class ComparaisonView extends AbstractView
      */
     public function afficherAvecFichiers(array $dataArray, array $fileNames): void
     {
+        echo 'afficherAvecFichiers';
         // Encode les données GeoJSON et les noms de fichiers en JSON
         $geojsonDataJsArray = json_encode($dataArray);
         $fileNamesJsArray = json_encode($fileNames);

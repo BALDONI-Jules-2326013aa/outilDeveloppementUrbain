@@ -27,14 +27,40 @@ class GeoJSONModel
     // Renvoie le crs d'un fichier GeoJSON
     public static function getGeoJSONCRS($file): string
     {
-        if (isset($file['crs']['properties']['name'])) {
-            return $file['crs']['properties']['name']; // Retourne le crs si trouvé
-        }
-        else {
-            return 'default'; // Retourne 'default' si le crs n'est pas trouvé
-        }
+        // Liste des CRS pris en charge par Leaflet
+        $supportedCRS = [
+            'EPSG:4326', // WGS 84
+            'EPSG:3857', // Web Mercator
+            'EPSG:4269', // NAD83
+            'EPSG:3395', // Mercator projected
+            'EPSG:2154', // RGF93 / Lambert-93
+            'EPSG:27700', // OSGB36 / British National Grid
+            'EPSG:3035', // ETRS89 / LAEA Europe
+            'EPSG:3111', // GDA94 / VicGrid94
+        ];
 
+        // Vérifier si le CRS est défini dans le fichier GeoJSON
+        if (isset($file['crs']['properties']['name'])) {
+            $crsRaw = $file['crs']['properties']['name'];
+
+            // Extraire le code EPSG (si le format est 'urn:ogc:def:crs:EPSG::XXXX')
+            if (preg_match('/EPSG::(\d+)/', $crsRaw, $matches)) {
+                $crs = 'EPSG:' . $matches[1]; // Reformater en 'EPSG:XXXX'
+            } else {
+                $crs = $crsRaw; // Utiliser tel quel si le format n'est pas celui attendu
+            }
+            // Vérifier si le CRS est pris en charge par Leaflet
+            if (in_array($crs, $supportedCRS, true)) {
+                return $crs; // Retourne le CRS si pris en charge
+            } else {
+                return 'errorCRS'; // Retourne 'errorCRS' si non pris en charge
+            }
+        } else {
+            return 'default'; // Retourne 'default' si aucun CRS n'est défini
+        }
     }
+
+
 
     // Récupère le nombre de bâtiments dans chaque fichier GeoJSON
     public static function recupereNombreBatiment($fileArray): array
