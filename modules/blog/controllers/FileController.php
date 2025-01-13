@@ -126,25 +126,43 @@ class FileController {
      * Méthode pour télécharger un fichier.
      * Télécharge le fichier spécifié par l'ID.
      */
-    private function downloadFile() {
+
+     private function downloadFile() {
         $fileId = $_POST['file_id'];
         $file = $this->model->getFileById($fileId);
-
+    
         if ($file) {
+            $geojson = $file['geojson'];
+    
+            // Validation JSON
+            $decodedGeojson = json_decode($geojson, true);
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                echo "Erreur : le fichier contient un JSON invalide.";
+                exit();
+            }
+    
+            // Réencodage propre
+            $geojson = json_encode($decodedGeojson);
+    
+            // Envoi des en-têtes
             header('Content-Description: File Transfer');
-            header('Content-Type: application/octet-stream');
+            header('Content-Type: application/json');
             header('Content-Disposition: attachment; filename="' . basename($file['name']) . '"');
             header('Expires: 0');
             header('Cache-Control: must-revalidate');
             header('Pragma: public');
-            header('Content-Length: ' . strlen($file['geojson']));
-            echo $file['geojson'];
+            header('Content-Length: ' . strlen($geojson));
+    
+            // Envoi du fichier
+            echo $geojson;
+            flush();
             exit();
         } else {
             echo "Fichier non trouvé.";
         }
     }
-
+    
+    
     /**
      * Méthode pour afficher les fichiers.
      * Récupère les fichiers à partir du modèle et les affiche.
