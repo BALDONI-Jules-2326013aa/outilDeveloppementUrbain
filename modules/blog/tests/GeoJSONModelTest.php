@@ -8,23 +8,24 @@ class GeoJSONModelTest extends TestCase
 
     public function testGeoJSONgetCrs()
     {
-        $mockFile = __DIR__ . '/mock.json';
-        file_put_contents($mockFile, json_encode([
+        // Contenu mocké du fichier GeoJSON sous forme de tableau associatif
+        $mockData = [
             'crs' => [
                 'type' => 'name',
                 'properties' => [
                     'name' => 'urn:ogc:def:crs:EPSG::4326'
                 ]
             ]
-        ]));
+        ];
 
+        // Crée une instance de votre modèle ou utilisez la méthode statique
         $geoJSONModel = new GeoJSONModel();
-        $result = $geoJSONModel::getGeoJSONCRS($mockFile);
+        $result = $geoJSONModel::getGeoJSONCRS($mockData);
+
+        // Vérifiez que le résultat est correct
         $this->assertEquals('EPSG:4326', $result);
-
-        unlink($mockFile);
-
     }
+
 
     public function testGetGeoJSONYearReturnsYear()
     {
